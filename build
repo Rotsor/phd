@@ -1,0 +1,25 @@
+set -e
+ToolDir=`pwd`
+BuildDir="$ToolDir/buildDir"
+OutDir="$ToolDir/outDir"
+rm -rf $OutDir
+mkdir $OutDir
+rm -rf $BuildDir
+cp -r src $BuildDir
+cd $BuildDir
+lhs2TeX --agda agda.tex > agda-processed.tex
+runhaskell $ToolDir/breaker.hs -o1 agda-preamble.tex -o2 agda-processed-body.tex < agda-processed.tex
+export TEXINPUTS=$BuildDir/styles:$BuildDir/DATE10_Balsa:$BuildDir/par_comp:
+export BIBINPUTS=$BuildDir/par_comp:
+echo RRR Latex 1
+latex main
+echo RRR Bibtex
+bibtex main
+echo RRR Latex 2
+latex main
+echo RRR Latex 3
+latex main
+echo RRR DVIPDF
+dvipdf main.dvi
+cp $BuildDir/main.pdf $OutDir/
+cp $BuildDir/main.pdf $ToolDir/
