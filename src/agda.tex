@@ -1,0 +1,563 @@
+
+%include lhs2TeX.fmt
+%include polycode.fmt
+
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+
+\DeclareMathAlphabet{\mathkw}{OT1}{cmss}{bx}{n}
+
+\newcommand{\redFG}[1]{\textcolor[rgb]{0.6,0,0}{#1}}
+\newcommand{\greenFG}[1]{\textcolor[rgb]{0,0.4,0}{#1}}
+\newcommand{\blueFG}[1]{\textcolor[rgb]{0,0,0.8}{#1}}
+\newcommand{\orangeFG}[1]{\textcolor[rgb]{0.8,0.4,0}{#1}}
+\newcommand{\purpleFG}[1]{\textcolor[rgb]{0.4,0,0.4}{#1}}
+\newcommand{\yellowFG}[1]{\textcolor{yellow}{#1}}
+\newcommand{\brownFG}[1]{\textcolor[rgb]{0.5,0.2,0.2}{#1}}
+\newcommand{\blackFG}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\whiteFG}[1]{\textcolor[rgb]{1,1,1}{#1}}
+\newcommand{\yellowBG}[1]{\colorbox[rgb]{1,1,0.2}{#1}}
+\newcommand{\brownBG}[1]{\colorbox[rgb]{1.0,0.7,0.4}{#1}}
+
+\newcommand{\ColourStuff}{
+  \newcommand{\red}{\redFG}
+  \newcommand{\green}{\greenFG}
+  \newcommand{\blue}{\blueFG}
+  \newcommand{\orange}{\orangeFG}
+  \newcommand{\purple}{\purpleFG}
+  \newcommand{\yellow}{\yellowFG}
+  \newcommand{\brown}{\brownFG}
+  \newcommand{\black}{\blackFG}
+  \newcommand{\white}{\whiteFG}
+}
+
+\newcommand{\MonochromeStuff}{
+  \newcommand{\red}{\blackFG}
+  \newcommand{\green}{\blackFG}
+  \newcommand{\blue}{\blackFG}
+  \newcommand{\orange}{\blackFG}
+  \newcommand{\purple}{\blackFG}
+  \newcommand{\yellow}{\blackFG}
+  \newcommand{\brown}{\blackFG}
+  \newcommand{\black}{\blackFG}
+  \newcommand{\white}{\blackFG}
+}
+
+\ColourStuff
+
+\newcommand{\K}[1]{\yellow{\mathsf{#1}}}
+\newcommand{\Q}[1]{\green{\mathsf{#1}}}
+\newcommand{\D}[1]{\blue{\mathsf{#1}}}
+\newcommand{\C}[1]{\red{\mathsf{#1}}}
+\newcommand{\F}[1]{\green{\mathsf{#1}}}
+\newcommand{\V}[1]{\purple{\mathit{#1}}}
+
+%%%%%%% BREAK HERE %%%%%%%
+
+\chapter{Machine-assisted Formalisation of Parametrised Graph Algebra}
+
+\DeclareUnicodeCharacter{949}{\varepsilon} % ε
+\DeclareUnicodeCharacter{8702}{QQQQQQQQQQQQQQQQQQ} % QQQ
+\DeclareUnicodeCharacter{737}{^{l}} % ˡ
+\DeclareUnicodeCharacter{8759}{\colon\colon} % ∷
+
+\newcommand{\seq}{\gg}
+\newcommand{\hyp}{\text{-}}
+
+%format Set = "\Q{Set}"
+%format List = "\Q{List}"
+%format × = "\Q{×}"
+%format ⊎ = "\Q{⊎}"
+%format ∘ = "\Q{∘}"
+%format map = "\Q{map}"
+%format flip = "\Q{flip}"
+%format foldr = "\Q{foldr}"
+
+
+%format + = "\D{+}"
+%format _+_ = "\_" + "\_"
+%format ⇾ = "\D{\seq}"
+%format _⇾_ = "\_" ⇾ "\_"
+%format ⇾-assoc ="\D{\seq{}assoc}"
+%format +-assoc ="\D{+assoc}"
+%format +-comm = "\D{+comm}"
+%format ⇾-identityˡ = "\D{\seq{}identity^l}"
+%format ⇾-identityʳ = "\D{\seq{}identity^r}"
+%format distribʳ = "\D{distrib^r}"
+%format distribˡ = "\D{distrib^l}"
+%format decomposition = "\D{decomposition}"
+%format ⇾ʳ = "\D{\seq{}_r}"
+%format ⇾₁ = "\D{\seq{}_1}"
+%format _⇾₁_ = "\_" ⇾₁ "\_"
+%format _⇾ʳ_ = "\_" ⇾ʳ "\_"
+%format ∷ = "\C{::}"
+%format ε = "\D{\varepsilon}"
+%format G = "\D{G}"
+%format B = "\D{B}"
+%format ≈ = "\D{≈}"
+%format _≈_ = "\_" ≈ "\_"
+
+\section{Graph Algebra}
+We start with defining an algebra of non-parametrised graphs, to extend them with conditions later.
+
+We define graph algebra as an algebraic structure over a set |G| with an equivalence relation |≈| supporting the following operations:
+\begin{itemize}
+\item{An empty graph, denoting no actions.
+\begin{code}
+ε : G
+\end{code}}
+\item{Graph overlay, denoting the parallel composition of actions from both graphs.
+\begin{code}
+_+_ : G → G → G
+\end{code}}
+\item{Graph sequencing, denoting the causal dependency between actions in the first graph and in the second graph.
+\begin{code}
+_⇾_ : G → G → G
+\end{code}
+}
+\end{itemize}
+
+Additionally, the operations must satisfy the following properties:
+
+\begin{itemize}
+\item{Overlay is commutative and associative.
+\begin{code}
+  +-assoc : ∀ p q r → (p + q) + r ≈ p + (q + r)
+  +-comm : ∀ p q → p + q ≈ q + p
+\end{code}}
+\item{Sequencing is associative.
+\begin{code}
+  ⇾-assoc : ∀ p q r → 
+    (p ⇾ q) ⇾ r ≈ p ⇾ (q ⇾ r)
+\end{code}}
+\item{Empty graph is a no-op in relation to sequencing.
+\begin{code}
+  ⇾-identityˡ : ∀ p → ε ⇾ p ≈ p
+  ⇾-identityʳ : ∀ p → p ⇾ ε ≈ p
+\end{code}}
+\item{Sequencing distributes over overlay.
+\begin{code}
+  distribˡ : ∀ p q r → 
+    p ⇾ (q + r) ≈ p ⇾ q + p ⇾ r
+  distribʳ : ∀ p q r → 
+    (p + q) ⇾ r ≈ p ⇾ r + q ⇾ r
+\end{code}}
+\item{Sequence of more than two actions may be decomposed into shorter sequences, 
+forming the original sequence with overlay.
+\begin{code}
+  decomposition : ∀ p q r → 
+                  p ⇾ q ⇾ r ≈ p ⇾ q + p ⇾ r + q ⇾ r
+\end{code}}
+\end{itemize}
+
+\subsection{Derived theorems}
+
+%format +-identity = "\D{+identity}"
+%format +-idempotence = "\D{+idempotence}"
+%format absorptionʳ = "\D{absorption^r}"
+%format absorptionˡ = "\D{absorption^l}"
+
+The following theorems has been derived from the axioms:
+
+\begin{itemize}
+\item{Empty graph is a no-op in relation to overlay.
+\begin{code}
+  +-identity : ∀ p → p + ε ≈ p
+\end{code}}
+\item{Overlay is idempotent.
+\begin{code}
+  +-idempotence : ∀ p → p + p ≈ p
+\end{code}}
+\item{Absorption.
+\begin{code}
+  absorptionˡ : ∀ p q → p ⇾ q + p ≈ p ⇾ q
+  absorptionʳ : ∀ p q → p ⇾ q + q ≈ p ⇾ q
+\end{code}}
+\end{itemize}
+
+\section{Parametrised Graphs}
+
+%format ∧ = "\D{∧}"
+%format _∧_ = "\_" ∧ "\_"
+%format ∨ = "\D{∨}"
+%format _∨_ = "\_" ∨ "\_"
+%format ¬_ = ¬ "\_"
+%format ¬ = "\D{¬}"
+%format ⊤ = "\D{⊤}"
+%format ⊥ = "\D{⊥}"
+
+The graph algebra introduced in the previous section can only describe static event dependencies.
+To describe complex dynamic systems one has to consider the conditional behaviour as well.
+To do this, we have extended the graph algebra by annotating the graphs with conditions.
+Given a set |G| of the parametrised graphs and a set |B| of all the possible boolean conditions, together with the following operations:
+
+\begin{code}
+  _∨_ : B → B → B
+  _∧_ : B → B → B
+  ¬ : B → B
+  ⊤ : B
+  ⊥ : B
+\end{code}
+
+we require a new operation called \emph{condition}:
+
+%format cond0 = "\D{[}\_\D{]}\_"
+
+\begin{code}
+cond0 : B → G → G
+\end{code}
+
+The condition operation must have the following properties:
+
+%format [ = "\D{[}"
+%format ] = "\D{]}"
+%format true-condition = "\D{true\hyp{}condition}"
+%format false-condition = "\D{false\hyp{}condition}"
+%format and-condition = "\D{and\hyp{}condition}"
+%format or-condition = "\D{or\hyp{}condition}"
+%format conditional-+ = "\D{conditional+}"
+%format conditional-⇾ = "\D{conditional\!\seq}"
+
+\begin{code}
+  true-condition : ∀ x → [ ⊤ ] x ≈ x
+  false-condition : ∀ x → [ ⊥ ] x ≈ ε
+  and-condition : ∀ f g x → [ f ∧ g ] x ≈ [ f ] [ g ]  x
+  or-condition : ∀ f g x → [ f ∨ g ] x ≈ [ f ] x + [ g ]  x
+  conditional-+ : ∀ f x y → [ f ] (x + y) ≈ [ f ] x + [ f ] y
+  conditional-⇾ : ∀ f x y → [ f ] (x ⇾ y) ≈ [ f ] x ⇾ [ f ] y
+\end{code}
+
+We say that there is a \emph{parametrised graph algebra} on a set |G| with a condition set |B|
+if there is a graph algebra on |G|, a boolean algebra on |B| and a condition operator satisfying the requirements above.
+
+\subsection{Derived Theorems}
+
+The following theorems has been derived for the Parameterised Graph algebra.
+
+%format choice-propagation₁ = "\D{choice\hyp{}propagation_1}"
+%format choice-propagation₂ = "\D{choice\hyp{}propagation_2}"
+%format condition-regularisation = "\D{condition\hyp{}regularisation}"
+
+Choice propagation. If we have a choice between similar subgraphs, we can factor out the similarity and propagate choice onto the differing parts.
+\begin{code}
+choice-propagation₁ : ∀ b p q r → 
+    [ b ] (p ⇾ q) + [ ¬ b ] (p ⇾ r) ≈ p ⇾ ([ b ] q + [ ¬ b ] r) 
+choice-propagation₂ : ∀ b p q r → 
+    [ b ] (p ⇾ r) + [ ¬ b ] (q ⇾ r) ≈ ([ b ] p + [ ¬ b ] q) ⇾ r
+\end{code}
+
+%format condition-regularisation = "\D{condition\hyp{}regularisation}"
+%format condition-regularisationˢ = "\D{condition\hyp{}regularisation_s}"
+
+Condition regularisation. A sequence of conditional events can be rewritten as an overlay of simpler terms.
+\begin{code}
+  condition-regularisation : ∀ f g p q → 
+    [ f ] p ⇾ [ g ] q ≈ [ f ] p + [ g ] q + [ f ∧ g ] (p ⇾ q)
+\end{code}
+
+Strengthened condition regularisation. This generalizes the regularisation theorem by allowing any |z| containing all the edges between |p| and |q| to be used instead of |p ⇾ q|.
+\begin{code}
+  condition-regularisationˢ : ∀ f g p q z
+                              → p ⇾ q ≈ p + q + z
+                              → [ f ] p ⇾ [ g ] q ≈ [ f ] p + [ g ] q + [ f ∧ g ] z
+\end{code}
+
+\section{Parametrised Graph Formulae}
+
+To perform automated manipulations of PG algebra formulae, we describe the formulae as an algebraic data type in the following way.
+
+%format A = "\D{A}"
+%format PGFormula = "\D{PGFormula}"
+
+%format + = "\C{+}"
+%format _+_ = "\_" + "\_"
+%format ⇾ = "\C{\seq}"
+%format _⇾_ = "\_" ⇾ "\_"
+%format ε = "\C{ε}"
+%format var = "\C{var}"
+%format cond0 = "\C{[}\_\C{]}\_"
+%format [ = "\C{[}"
+%format ] = "\C{]}"
+
+\begin{code}
+ data PGFormula : Set where
+  _+_ : (x y : PGFormula) → PGFormula
+  _⇾_ : (x y : PGFormula) → PGFormula
+  ε : PGFormula
+  var : (a : A) → PGFormula
+  cond0 : (c : B) → PGFormula → PGFormula
+\end{code}
+
+%format _+-s_ = "\_\D{+_s}\_"
+%format _⇾-s_ = "\_\D{\seq_s}\_"
+%format ε-s = "\D{ε_s}"
+%format cond-s = "\D{[}\_\D{]_s}\_"
+%format var-s = "\D{var_s}"
+
+Here |A| is a set of graph variables and |B| is a set of condition variables.
+We also have a constructor of |PGFormula| corresponding to each of the algebra operations and an additional constructor to reference the free variables.
+This way we can construct the formulae in a straightforward way: 
+
+\begin{code}
+var "x" + var "y" ⇾ var "z"
+\end{code}
+
+%format pg-eval = "\D{pg\hyp{}eval}"
+
+Formula evaluation then is catamorphism of PGFormula, replacing constructor applications with the corresponding algebra operations and |var| constructors with the actual variable values.
+\begin{code}
+pg-eval : {A B G : Set} 
+   → (_+-s_ _⇾-s_ : G → G → G) 
+   → (ε-s : G) 
+   → (cond-s : B → G → G) 
+   → (var-s : A → G) 
+   → PGFormula A B 
+   → G
+\end{code}
+
+%format BoolFormula = "\D{BoolFormula}"
+
+%format ∧ = "\C{∧}"
+%format _∧_ = "\_" ∧ "\_"
+%format ∨ = "\C{∨}"
+%format _∨_ = "\_" ∨ "\_"
+%format ¬_ = ¬ "\_"
+%format ¬ = "\C{¬}"
+%format ⊤ = "\C{⊤}"
+%format ⊥ = "\C{⊥}"
+
+We use the same technique to define the |BoolFormula| data structure, with constructors |_∧_|, |_∨_|, |¬_|, |⊤|, |⊥| and |var|.
+
+\section{Formula equivalence}
+
+Naturally, it is possible to write the same mathematical function in many structurally different, but logically equivalent ways.
+Here we define a notion of PG formula equivalence. We say that two formula are equivalent iff they 
+can be structurally transformed one into the other by the set of rules corresponding to the equality rules of PG algebra.
+We express this with an indexed inductive data family by explicitly enumerating all the important constructors.
+
+%format ⇾-assoc ="\C{\seq{}assoc}"
+%format +-assoc ="\C{+assoc}"
+%format +-comm = "\C{+comm}"
+%format V = "\D{V}"
+
+\begin{code}
+ data _≈_ : PGFormula (BoolFormula B) V 
+         → PGFormula (BoolFormula B) V → Set where
+  +-assoc : ∀ p q r → (p + q) + r ≈ p + (q + r)
+  +-comm : ∀ p q → p + q ≈ q + p
+  ⇾-assoc : ∀ p q r → (p ⇾ q) ⇾ r ≈ p ⇾ (q ⇾ r)
+  ...
+\end{code}
+
+This definition allows for convenient formula manipulation, without mentioning its semantics.
+However, the meaning of this definition is dubious because it was constructed manually without any mention of PG Algebra.
+To connect the formulae equivalence with an algebra object equivalence, we have defined the proper equivalence relation on formulae, 
+in terms of their semantics. We say that equivalent formulae must give equivalent results for any algebra they are evaluated in.
+
+%%format let = "\K{let}"
+%%format in = "\K{in}"
+%format ≈ˢ = "\D{≈^s}"
+%format PGAlgebra = "\D{PGAlgebra}"
+%format eval = "\D{eval}"
+
+\begin{code}
+f1 ≈ˢ f2 = 
+   ∀ G → (algebra : PGAlgebra G) → (f : V → G) → 
+   eval algebra f f1 ≈ eval algebra f f2 
+\end{code}
+
+Here we assume that |eval algebra| applies |pg-eval| to all of the |algebra| operations.
+Now we can show that our easier to use equivalence relation is equivalent to the semantics-based definition:
+
+%format ≈→≈ˢ = "\D{≈→≈^s}"
+%format ≈ˢ→≈ = "\D{≈^s→≈}"
+
+\begin{code}
+≈→≈ˢ : ∀ f g → f ≈ g → f ≈ˢ g
+≈ˢ→≈ : ∀ f g → f ≈ˢ g → f ≈ g
+\end{code}
+
+\section{Normal Form}
+
+%format BF = "\D{BF}"
+%format PG = "\D{PG}"
+%format NF = "\D{NF}"
+%format Lit = "\D{Lit}"
+%format Node = "\D{Node}"
+
+We say that a normal form (|NF|) of PG formula (|PG|) is an overlay of literals (|Lit|) where each literal is a |Node| annotated with a condition and each node is either a variable (|V|) or two variables connected with a sequence operator. We encode these definitions assuming boolean formulae (|BF|) as conditions.
+
+\begin{code}
+Node = V ⊎ V × V
+Lit = Node × BF
+NF = List Lit
+\end{code}
+
+So far we have defined the structure of those types without formally saying anything about their semantics. We define the semantics for them by providing a corresponding Parametrised Graph Formulae (|PG|).
+
+%format inj₁ = "\C{inj_1}"
+%format inj₂ = "\C{inj_2}"
+%format fromNode = "\D{fromNode}"
+%format , = "\C{,}"
+%format mkt = "\_\C{,}\_"
+
+A |Node|, depending on its constructor, corresponds to either a single variable or two variables connected via the sequence operator.
+\begin{code}
+   fromNode : Node → PG
+   fromNode (inj₁ x) = var x
+   fromNode (inj₂ (x , y)) = var x ⇾ var y
+\end{code}
+
+A |Lit| of the form |(node , condition)| corresponds to the formula |[ condition ] node|.
+
+%format fromLit = "\D{fromLit}"
+
+\begin{code}
+   fromLit : Lit → PG
+   fromLit (node , cond) = [ cond ] fromNode node
+\end{code}
+
+|NF| corresponds to the overlay of all of its literals.
+
+%format fromNF = "\D{fromNF}"
+
+\begin{code}
+   fromNF : NF → PG
+   fromNF = foldr _+_ ε ∘ map fromLit
+\end{code}
+
+
+\section{Normalisation algorithm}
+
+To automate the translation of formulae to normal form we have developed the algorithm presented in this section.
+
+%format +-nf = "\D{+_{NF}}"
+%format ⇾-nf = "\D{\seq_{NF}}"
+%format _⇾-nf_ = "\_" ⇾-nf "\_"
+%format _+-nf_ = "\_" +-nf "\_"
+%format fromVar = "\D{fromVar}"
+%format addCondition = "\D{addCondition}"
+%format normalise = "\D{normalise}"
+
+The top-level normalisation function traverses the PG formula recursively, normalising all of the subformulae and combining them with the appropriate functions (|_+-nf_| for |+|, |_⇾-nf_| for |⇾|, etc.).
+
+\begin{code}
+  normalise : PG → NF
+  normalise = pg-eval
+                _+-nf_
+                _⇾-nf_
+                []
+                addCondition
+                fromVar
+\end{code}
+
+The individual functions manipulating normal forms are implemented in the following way.
+
+\begin{itemize}
+
+\item{The normal form of |ε| is empty list.}
+\item{The normal form of a variable literal |x| is a singleton list containing |[ ⊤ ] x|.
+\begin{code}
+  fromVar : V → NF
+  fromVar x = (inj₁ x , ⊤) ∷ []
+\end{code}}
+\item{Overlay of two normal forms is concatenation of their literals.
+\begin{code}
+  _+-nf_ : NF → NF → NF
+  a +-nf b = a ++ b
+\end{code}}
+\item{Sequence of two normal forms can be defined by applying the distributivity rules as a sum of pairwise sequencing of their literals.
+\begin{code}
+  _⇾ʳ_ : Lit → NF → NF
+  lit ⇾ʳ [] = lit ∷ []
+  lit ⇾ʳ (x ∷ xs) = (lit ⇾₁ x) + (lit ⇾ʳ xs)
+
+  _⇾-nf_ : NF → NF → NF
+  [] ⇾-nf b = b
+  (h ∷ t) ⇾-nf b = (h ⇾ʳ b) + (t ⇾-nf b)
+\end{code}}
+%format newArrows = "\D{newArrows}"
+%format vertices = "\D{vertices}"
+%format ⊗ = "\Q{⊗}"
+\item{Sequence of two literals |[ f ] p ⇾ [ g ] q| then can be defined as |[ f ] p + [ g ] q + [ f ∧ g ] r| where |r = newArrows p q| is the set of new arc nodes formed by sequencing the nodes |p| and |q|.
+\begin{code}
+  vertices : Node → List V
+  vertices (inj₁ x) = x ∷ []
+  vertices (inj₂ (x , y)) = x ∷ y ∷ []
+  
+  newArrows : Node → Node → List Node
+  newArrows p q = 
+    map inj₂ (vertices p ⊗ vertices q)
+  
+  _⇾₁_ : Lit → Lit → List Lit
+  (p , f) ⇾₁ (q , g) = (p , f) ∷ (q , g) 
+      ∷ (map (flip mkt (f ∧ g)) (newArrows p q))
+\end{code}
+Here |vertices n| is the list of graph vertices contained in node |n| -- one vertex when |n| is a vertex node and two vertices when |n| is an arc node.
+
+|newArrows a b| then is a set of arc nodes connecting each of the vertices in |a| to each of the vertices in |b|.
+}
+\end{itemize}
+
+%format +-correct = "\D{+correct}"
+%format ⇾-correct = "\D{\seq{}correct}"
+%format ⇾ʳ-correct = "\D{\seq_rcorrect}"
+%format ⇾₁-correct = "\D{\seq_1correct}"
+%format normalise-correct = "\D{normalise\hyp{}correct}"
+%format newArrows-correct = "\D{newArrows\hyp{}correct}"
+
+\subsection{Algorithm Correctness}
+We define the correctness of normalisation by saying that the semantics of the resulting normal form must be equivalent to the original formula.
+\begin{code}
+  normalise-correct : ∀ f → f ≈ fromNF (normalise f)
+\end{code}
+
+To prove this theorem we had to prove several simpler statements.
+
+Normal form overlay is correct.
+That is, the semantics of concatenated normal forms is the overlay of their individual semantics.
+\begin{code}
+ +-correct : ∀ x y → 
+   fromNF x + fromNF y ≈ fromNF (x +-nf y)
+\end{code}
+This follows from the monoid structure of overlay.
+
+The normal form sequencing functions are correct.
+\begin{code}
+ ⇾-correct : ∀ x y → 
+   fromNF x ⇾ fromNF y ≈ fromNF (x ⇾-nf y)
+\end{code}
+This relies on the right distributivity and the correctness of |⇾ʳ|.
+\begin{code}
+ ⇾ʳ-correct : ∀ x y → 
+   fromLit x ⇾ fromNF y ≈ fromNF (x ⇾ʳ y)
+\end{code}
+This relies on the left distributivity and the correctness of |⇾₁|.
+\begin{code}
+ ⇾₁-correct : ∀ x y → 
+   fromLit x ⇾ fromLit y ≈ fromNF (x ⇾₁ y)
+\end{code}
+The correctness of |⇾₁| is proven by the following chain of reasoning.
+%format sumNodes = "\D{sumNodes}"
+\begin{code}
+    fromLit (x , f) ⇾ fromLit (y , g)
+     ≈⟨ condition-regularisationˢ; newArrows-correct ⟩
+    fromLit (x , f) + fromLit (y , g) 
+        + [ f ∧ g ] sumNodes (newArrows x y)
+     ≈⟨ propagating the condition to the literals ⟩
+    fromLit (x , f) + fromLit (y , g) 
+       + fromNF (map (flip mkt (f ∧ g)) (newArrows x y))
+     ≈⟨ by +-assoc and definitions ⟩
+    fromNF ((x , f) ⇾₁ (y , g))
+\end{code}
+The desired properties of the |newArrows| function are not as obvious as the properties of the other functions. We have formulated them as follows.
+% \newpage
+\begin{code}
+  newArrows-correct : ∀ x y → 
+     fromNode x ⇾ fromNode y ≈ 
+     fromNode x + fromNode y 
+                       + sumNodes (newArrows x y)
+\end{code}
+
+where |sumNodes = foldr _+_ ε ∘ map fromNode|. Our proof of this property is less than elegant. We manually enumerate all four cases (vertex and vertex, vertex and arc, arc and vertex, arc and arc) and prove four theorems individually, using the decomposition, commutativity and associativity axioms. It's likely possible to simplify the proof by treating the nodes as lists of sequenced vertices and prove by induction on those lists, instead of enumerating all the possible cases.

@@ -1,0 +1,283 @@
+\theoremstyle{plain}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+
+
+\hyphenation{
+bi-simula-tion
+sim-i-lar-i-ty
+sim-i-lar
+e-quiv-a-lent
+e-quiv-a-lence
+de-ter-min-ism
+de-ter-min-is-tic
+desij
+mpsat
+}
+
+
+
+
+
+
+
+
+
+% ******************************************************************************
+% Standard Commands
+% ******************************************************************************
+\newcommand{\RG}        {\mathsf{RG}}
+\newcommand{\pcomp}   {\textsc{PComp}\xspace}
+\newcommand{\petrify}   {\textsc{Petrify}\xspace}
+\newcommand{\balsa}     {\textsc{Balsa}\xspace}
+\newcommand{\haste}     {\textsc{Haste}\xspace}
+\newcommand{\tangram}   {\textsc{Tangram}\xspace}
+\newcommand{\desij}     {\textsc{DesiJ}\xspace}
+\newcommand{\mpsat}     {\textsc{Mpsat}\xspace}
+\newcommand{\ditopn}    {\textsc{DI2PN}\xspace}
+
+\newcommand{\ParArbCall}      {\textsc{ParArbCall}\xspace}
+\newcommand{\SeqCall}         {\textsc{SeqCall}\xspace}
+\newcommand{\SeqCallParSync}  {\textsc{SeqCallParSync}\xspace}
+
+\newcommand{\qqed} {\hfill$\Diamond$}
+\newcommand{\lod} {\approx_\mathit{lod}}
+\newcommand{\tcod} {\preceq_\mathit{tcod}}
+\newcommand{\B}{\ensuremath{\mathcal B}\xspace}
+\newcommand{\R}{\mathcal R}
+\newcommand{\cf}             {cf.\@\xspace}
+\newcommand{\eg}             {e.g.\@\xspace}
+\newcommand{\ie}             {i.e.\@\xspace}
+\newcommand{\wrt}            {w.r.t.\@\xspace}
+\newcommand{\viz}            {viz.\@\xspace}
+\newcommand{\wlogg}          {wlog.\@\xspace}
+\newcommand{\naive}          {na{\"\i}ve\xspace}
+\newcommand{\aka}            {a.k.a.\@\xspace}
+\newcommand{\PSPACE}         {\textsc{PSpace}\xspace}
+\newcommand{\EXPSPACE}       {\textsc{ExpSpace}\xspace}
+\newcommand{\ft}[1]{\ensuremath{\mathfrak{#1}}}
+\newcommand{\rs}[0]{\ensuremath{\rightarrow_{op}} }
+\newcommand{\pre}[1]{{}^\bullet {#1}}
+\newcommand{\post}[1]{{{#1}\rule{0pt}{1.6ex}^\bullet}}
+\newcommand{\pp}[1]{{^\bullet{#1}^\bullet}}
+\newcommand{\quer}[1]{\overline{#1}}
+\newcommand{\tfrs}[1]{[#1\rangle}         %transition fires
+\newcommand{\ifrs}[1]{[#1\rangle\rangle}  %image fires
+\newcommand{\bifrs}[1]{\langle\langle#1]}  %image fires
+\newcommand{\Rar}{\ensuremath{\Rightarrow}}
+\newcommand{\rar}{\ensuremath{\rightarrow}}
+\newcommand{\svi}{\ensuremath{\lhd_{sv}}}
+\newcommand{\cci}{\ensuremath{\lhd_{cc}}}
+\newcommand{\ioc}{\ensuremath{\leftrightharpoons}}
+\def\ini{_{i \in I}}
+\def\jnj{_{j \in J}}
+\newcommand{\up}{\ensuremath{^+}}
+\newcommand{\dw}{\ensuremath{^-}}
+\newcommand{\upd}{\ensuremath{^\pm}}
+\newcommand{\nI}{\mbox{\it In\/}\xspace}
+\newcommand{\nOt}{\mbox{\it Out\/}\xspace}
+\newcommand{\nInt}{\mbox{\it Int\/}\xspace}
+\newcommand{\nLoc}{\mbox{\it Loc\/}\xspace}
+\newcommand{\nExt}{\mbox{\it Ext\/}\xspace}
+\newcommand{\nSig}{\mbox{\it Sig\/}\xspace}
+\def\I{\ifmmode I\hspace{-0.2ex}n\else\nI\fi}
+\def\Int{\ifmmode I\hspace{-0.2ex}nt\else\nInt\fi}
+\def\Ot{{\ifmmode Out\else\nOt\fi}}
+\def\Loc{\ifmmode L\hspace{-0.1ex}oc\else\nLoc\fi}
+\def\Ext{\ifmmode E\hspace{-0.15ex}xt\else\nExt\fi}
+\def\Sig{\ifmmode Si\hspace{-0.1ex}g\else\nSig\fi}
+\newcommand{\tsf}[1]{\ensuremath{\stackrel{#1}{\rightarrow}}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\ganz}{\mathbb{Z}}
+\newcommand{\inc}[1]{\ensuremath{{\mathbf #1}}}
+\def\math#1{\ifmmode #1\else \mbox{$#1$} \fi}
+\def\rest{\math{{\mathbin{\phantom{\rule[2.75pt]{1pt}{5pt}}\kern1pt\rule[-3.25pt]{0.5pt}{11.5pt}}}
+\phantom{\rule[2.75pt]{3pt}{5pt}}}}
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\newcommand{\mc}[1]{\ensuremath{\mathcal #1}}
+\newcommand{\proj}[1]{\ensuremath{\hspace{-0.35em}\downarrow_{#1}}}
+\newcommand{\class}[3]{\ensuremath{(#1_{#2})_{#2\in #3}}}
+\def\comp#1#2{\ensuremath{(C_{#1})_{#1 \in #2}}}
+\def\parcomp#1#2{\ensuremath{||_{#1 \in #2}C_{#1}}}
+\newcommand{\basic}{\textsc{Basic}\xspace}
+\newcommand{\reorder}{\textsc{Reordering}\xspace}
+\newcommand{\lazy}{\textsc{LazyBack}\xspace}
+\newcommand{\lazysingle}{\textsc{LazySingle}\xspace}
+\newcommand{\lazymulti}{\textsc{LazyMulti}\xspace}
+\newcommand{\decotree}{\textsc{Tree}\xspace}
+\newcommand{\fig}[2][1]{{\includegraphics[scale=#1]{figures/#2}}}
+\def\dea#1{\ensuremath{D\kern-0.11emA(#1)}}
+\def\dfa#1{\ensuremath{D\kern-0.11emA(#1)}}
+\newcommand{\DEF}{\stackrel{\mathrm{df}}{=}}
+
+
+
+% ******************************************************************************
+% For programm code
+% ******************************************************************************
+
+\newcommand{\SPACE}       {\hspace{1mm}}
+\newcommand{\hs}         {\hspace*{0.5cm}}
+\newcommand{\integer}     {\mathit{integer}}
+\newcommand{\FUNCTION}    {\mathbf{function} \SPACE}
+\newcommand{\PROCEDURE}   {\mathbf{procedure}\SPACE}
+\newcommand{\INPUT}       {\mathbf{input:}   \SPACE}
+\newcommand{\OUTPUT}      {\mathbf{output:}  \SPACE}
+\newcommand{\RETURN}      {\mathbf{return}   \SPACE}
+\newcommand{\STOP}        {\mathbf{stop}}
+\newcommand{\assign}      {\leftarrow}
+\newcommand{\BEGIN}       {\mathbf{begin}    \SPACE}
+\newcommand{\FOR}         {\mathbf{for}      \SPACE}
+\newcommand{\TO}          {\SPACE\mathbf{to}\SPACE}
+\newcommand{\FORALL}      {\mathbf{for~all}  \SPACE}
+\newcommand{\SUCHTHAT}    {\SPACE\mathbf{such~that}\SPACE}
+\newcommand{\DO}          {\SPACE\mathbf{do}\SPACE}
+\newcommand{\DOPARALLEL}  {\SPACE\mathbf{do~parallel}\SPACE}
+\newcommand{\ENDFOR}      {\mathbf{end~for}  \SPACE}
+\newcommand{\LOOPFOREVER} {\mathbf{loop~forever}  \SPACE}
+\newcommand{\BREAK}       {\mathbf{break}  \SPACE}
+\newcommand{\BEGINCRITICALSECTION}  {\mathbf{begin~critical~section}  \SPACE}
+\newcommand{\ENDCRITICALSECTION}    {\mathbf{end~critical~section}  \SPACE}
+\newcommand{\CHOOSE}      {\mathbf{choose}   \SPACE}
+\newcommand{\ACCEPT}      {\mathbf{accept}   \SPACE}
+\newcommand{\WHILE}       {\mathbf{while}    \SPACE}
+\newcommand{\ENDWHILE}    {\mathbf{end~while}\SPACE}
+\newcommand{\iF}          {\mathbf{if}       \SPACE}
+\newcommand{\THEN}        {\mathbf{then}\SPACE}
+\newcommand{\ELSE}        {\mathbf{else}\SPACE}
+\newcommand{\ENDIF}       {\mathbf{end~if}   \SPACE}
+
+
+% ******************************************************************************
+% For Figures with graphs.sty
+% ******************************************************************************
+
+\newcommand{\pnplace}[3]{
+\roundnode{#1}(#3)[\graphnodesize{0.5} \graphnodecolour(1,1,1)]
+\ifthenelse{#2 = 1}{\roundnode{#1_m}(#3)[\graphnodecolour{0}\graphnodesize{0.2}]}{
+\ifthenelse{#2 = 0}{}{\nodetext{#1}#2}}
+}
+\newcommand{\transition}[3]{
+\textnode{#1}(#3){#2}
+}
+\newcommand{\emptytransition}[2]{
+\rectnode{#1}[0.5,0.5](#2)[\graphnodecolour{1}]
+}
+\newcommand{\sizeT}[1]     {\mbox{     \tiny$#1$}}
+\newcommand{\sizeS}[1]     {\mbox{     \small$#1$}}
+\newcommand{\sizeN}[1]     {\mbox{           $#1$}}
+\newcommand{\StandardSize}   {\setlength{\unitlength}{1.1cm}}
+\newcommand{\StandardNet}    {\graphnodecolour{1}
+                              \graphnodesize{0.5}
+                              \grapharrowlength{0.15}
+                              \graphlinewidth{0.01}
+                              \grapharrowwidth{0.7}
+                              }
+\newcommand{\StandardTS}     {\graphnodecolour{0}
+                              \graphnodesize{0.2}
+                              \grapharrowlength{0.15}
+                              \graphlinewidth{0.01}
+                              \grapharrowwidth{0.7}
+                              }
+\newcommand{\StandardTree}    {\graphnodecolour{0}
+                              \graphnodesize{0.3}
+                              \grapharrowlength{0.15}
+                              \graphlinewidth{0.01}
+                              \grapharrowwidth{0.7}
+                              }
+\newcommand{\SOUTH} [2]    {\autonodetext{#1}[s]{$ #2$}}
+\newcommand{\NORTH} [2]    {\autonodetext{#1}[n]{$ #2$}}
+\newcommand{\WEST} [2]     {\autonodetext{#1}[w]{$ #2$}}
+\newcommand{\EAST} [2]     {\autonodetext{#1}[e]{$ #2$}}
+\newcommand{\Node}[3]      {\roundnode{#1}(#2,#3)}
+\newcommand{\nodE}[4]      {\Node{#1}{#2}{#3}\EAST{#1}{ #4}}
+\newcommand{\nodW}[4]      {\Node{#1}{#2}{#3}\WEST{#1}{ #4}}
+\newcommand{\nodN}[4]      {\Node{#1}{#2}{#3}\NORTH{#1}{#4}}
+\newcommand{\nodS}[4]      {\Node{#1}{#2}{#3}\SOUTH{#1}{#4}}
+\newcommand{\noSE}[4]      {\Node{#1}{#2}{#3}\SEAST{#1}{#4}}
+\newcommand{\noNE}[4]      {\Node{#1}{#2}{#3}\NEAST{#1}{#4}}
+\newcommand{\noSW}[4]      {\Node{#1}{#2}{#3}\SWEST{#1}{#4}}
+\newcommand{\noNW}[4]      {\Node{#1}{#2}{#3}\NWEST{#1}{#4}}
+\newcommand{\place}[4]     {\roundnode{#1}(#2,#3)\freetext(#2,#3){$#4$}}
+\newcommand{\placE}[5]     {\place{#1}{#2}{#3}{#4}\EAST{#1}{ #5}}
+\newcommand{\placW}[5]     {\place{#1}{#2}{#3}{#4}\WEST{#1}{ #5}}
+\newcommand{\placN}[5]     {\place{#1}{#2}{#3}{#4}\NORTH{#1}{ #5}}
+\newcommand{\placS}[5]     {\place{#1}{#2}{#3}{#4}\SOUTH{#1}{ #5}}
+\newcommand{\trans}[4]     {\squarenode{#1}(#2,#3)\freetext(#2,#3){$#4$}}
+\newcommand{\tranE}[5]     {\trans{#1}{#2}{#3}{#4}\EAST{#1}{ #5}}
+\newcommand{\tranW}[5]     {\trans{#1}{#2}{#3}{#4}\WEST{#1}{ #5}}
+\newcommand{\tranN}[5]     {\trans{#1}{#2}{#3}{#4}\NORTH{#1}{ #5}}
+\newcommand{\tranS}[5]     {\trans{#1}{#2}{#3}{#4}\SOUTH{#1}{ #5}}
+\newcommand{\texts}[4]     {\textnode{#1}(#2,#3){$#4$}[\enlargeboxes{0.02}]}
+\newcommand{\textE}[5]     {\texts{#1}{#2}{#3}{#4}\EAST{#1}{ #5}}
+\newcommand{\NOTES}[3]     {\put(#1,#2){\makebox(0,0)[bc]{#3}}}
+\newcommand{\nodI}[3]      {\roundnode{#1}(#2,#3)
+                            \roundnode{PP}(#2,#3)[\graphnodecolour{1}
+                            \graphnodesize{0.15}]}
+\newcommand{\DOT}  {%
+\StandardSize
+\begin{graph}(0,0)
+    \StandardNet
+    \roundnode{P}(0,0)[\graphnodesize{0.15}\graphnodecolour{0}]
+\end{graph}}
+\newcommand{\DOTDOT}  {%
+\StandardSize
+\begin{graph}(0,0)
+      \StandardNet
+      \roundnode{P1}(-0.1,0)[\graphnodesize{0.15}\graphnodecolour{0}]
+      \roundnode{P2}( 0.1,0)[\graphnodesize{0.15}\graphnodecolour{0}]
+\end{graph}}
+\newcommand{\DOTDOTDOT}  {%
+\StandardSize
+\begin{graph}(0,0)
+      \StandardNet
+      \roundnode{P1}(-0.1,-0.06)[\graphnodesize{0.15}\graphnodecolour{0}]
+      \roundnode{P2}( 0.1,-0.06)[\graphnodesize{0.15}\graphnodecolour{0}]
+      \roundnode{P3}(   0, 0.08)[\graphnodesize{0.15}\graphnodecolour{0}]
+\end{graph}}
+\newcommand{\DUMMY}[3]          {\roundnode{#1}(#2,#3)[\graphnodesize{0.001}]}
+\newcommand{\smallNode}[3]      {\roundnode{#1}(#2,#3)[\graphnodecolour{1}\graphnodesize{0.2}]}
+\newcommand{\smallCircle}[3]    {
+                                    \roundnode{#1}(#2,#3)[\graphnodecolour{1}\graphnodesize{0.2}]
+                                    \roundnode{#1_m}(#2,#3)[\graphnodecolour{0}\graphnodesize{0.08}]
+                                }
+\newcommand{\RIGHTDOTS}{%
+\StandardSize
+\begin{graph}(0,0)
+\StandardNet
+    \smallNode{A}{0.0}{0}
+    \smallNode{B}{0.2}{0}
+    \smallNode{C}{0.4}{0}
+\end{graph}}
+\newcommand{\CENTREDOTS}{%
+\StandardSize
+\begin{graph}(0,0)(0.2,0)
+\StandardNet
+    \smallNode{A}{0.0}{0}
+    \smallNode{B}{0.2}{0}
+    \smallNode{C}{0.4}{0}
+\end{graph}}
+\newcommand{\LEFTDOTS}{%
+\StandardSize
+\begin{graph}(0,0)(0.4,0)
+\StandardNet
+    \smallNode{A}{0.0}{0}
+    \smallNode{B}{0.2}{0}
+    \smallNode{C}{0.4}{0}
+\end{graph}}
+\newcommand{\DOWNDOTS}{%
+\StandardSize
+\begin{graph}(0,0)
+\StandardNet
+    \smallNode{A}{0}{ 0.0}
+    \smallNode{B}{0}{-0.2}
+    \smallNode{C}{0}{-0.4}
+\end{graph}}
+\newcommand{\DEDGE}[3]     {\diredge{#1}{#2}\edgetext{#1}{#2}{#3}}
+\newcommand{\DBOW} [4]     {\dirbow{#1}{#2}{#3}\bowtext{#1}{#2}{#3}{#4}}
+\newcommand{\DBOWDASH} [4]     {\dirbow{#1}{#2}{#3}[\graphlinedash{3 1}]\bowtext{#1}{#2}{#3}{#4}}
+\newcommand{\diredgeDASH}[2] {\diredge{#1}{#2}[\graphlinedash{3 1}]}
+\newcommand{\edgeDASH}   [2] {\edge   {#1}{#2}[\graphlinedash{3 1}]}
+\newcommand{\dirbowDASH} [3] {\dirbow{#1}{#2}{#3}[\graphlinedash{3 1}]}
+\newcommand{\bowDASH}    [3] {\edge   {#1}{#2}{#3}[\graphlinedash{3 1}]}

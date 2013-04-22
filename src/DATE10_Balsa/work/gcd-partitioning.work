@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workcraft version="2.dev">
+  <model class="org.workcraft.plugins.balsa.BalsaCircuit">
+    <MathModel title="">
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="65" label=""/>
+        <Handshake name="write" owner="31"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="64" label=""/>
+        <Handshake name="read0" owner="31"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="63" label=""/>
+        <Handshake name="write" owner="24"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="62" label=""/>
+        <Handshake name="read0" owner="24"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="61" label=""/>
+        <Handshake name="inpA" owner="20"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="60" label=""/>
+        <Handshake name="inpB" owner="20"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="59" label=""/>
+        <Handshake name="out" owner="20"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="58" label=""/>
+        <Handshake name="inpA" owner="16"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="57" label=""/>
+        <Handshake name="inpB" owner="16"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="56" label=""/>
+        <Handshake name="out" owner="16"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="55" label=""/>
+        <Handshake name="inpA" owner="12"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="54" label=""/>
+        <Handshake name="inpB" owner="12"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="53" label=""/>
+        <Handshake name="out" owner="12"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="52" label=""/>
+        <Handshake name="inpA" owner="8"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="51" label=""/>
+        <Handshake name="inpB" owner="8"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="50" label=""/>
+        <Handshake name="out" owner="8"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="49" label=""/>
+        <Handshake name="read3" owner="31"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="48" label=""/>
+        <Handshake name="read2" owner="31"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="47" label=""/>
+        <Handshake name="read1" owner="31"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="46" label=""/>
+        <Handshake name="read4" owner="24"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="45" label=""/>
+        <Handshake name="read3" owner="24"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="44" label=""/>
+        <Handshake name="read2" owner="24"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="43" label=""/>
+        <Handshake name="read1" owner="24"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="42" label=""/>
+        <Handshake name="activate" owner="4"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="41" label=""/>
+        <Handshake name="guard" owner="4"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="40" label=""/>
+        <Handshake name="activateOut" owner="4"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="39" label=""/>
+        <Handshake name="activate" owner="0"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="38" label=""/>
+        <Handshake name="inp" owner="0"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="37" label=""/>
+        <Handshake name="out" owner="0"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="31" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.Variable"&gt; 
+  &lt;void property="readPortCount"&gt; 
+   &lt;int&gt;4&lt;/int&gt; 
+  &lt;/void&gt; 
+ &lt;/object&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="24" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.Variable"&gt; 
+  &lt;void property="readPortCount"&gt; 
+   &lt;int&gt;5&lt;/int&gt; 
+  &lt;/void&gt; 
+ &lt;/object&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="20" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.BinaryFunc"/&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="16" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.BinaryFunc"/&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="12" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.BinaryFunc"&gt; 
+  &lt;void property="outputWidth"&gt; 
+   &lt;int&gt;1&lt;/int&gt; 
+  &lt;/void&gt; 
+ &lt;/object&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="8" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.BinaryFunc"/&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="4" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.While"/&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="0" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.Fetch"/&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="68" label=""/>
+        <Connection first="43" second="55"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="67" label=""/>
+        <Connection first="62" second="52"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="66" label=""/>
+        <Connection first="56" second="38"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="76" label=""/>
+        <Connection first="53" second="41"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="75" label=""/>
+        <Connection first="40" second="39"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="74" label=""/>
+        <Connection first="49" second="60"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="73" label=""/>
+        <Connection first="48" second="57"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="72" label=""/>
+        <Connection first="47" second="54"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="71" label=""/>
+        <Connection first="64" second="51"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="70" label=""/>
+        <Connection first="45" second="61"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="69" label=""/>
+        <Connection first="44" second="58"/>
+      </connection>
+    </MathModel>
+  </model>
+  <visual-model class="org.workcraft.plugins.balsa.VisualBalsaCircuit">
+    <VisualModel>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="31"/>
+        <VisualTransformableNode X="-5.5" Y="-1.0"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="24"/>
+        <VisualTransformableNode X="-6.0" Y="-6.0"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="20"/>
+        <VisualTransformableNode X="2.5" Y="2.5"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="16"/>
+        <VisualTransformableNode X="2.5" Y="-0.5"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="12"/>
+        <VisualTransformableNode X="2.5" Y="-4.0"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="8"/>
+        <VisualTransformableNode X="2.0" Y="-7.0"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="4"/>
+        <VisualTransformableNode X="9.25" Y="-5.5"/>
+      </group>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="0"/>
+        <VisualTransformableNode X="9.0" Y="-0.75"/>
+      </group>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="67" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="68" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="69" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="70" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="71" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="72" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="73" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="74" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="66" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="75" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="76" type="POLYLINE"/>
+      </connection>
+    </VisualModel>
+  </visual-model>
+</workcraft>

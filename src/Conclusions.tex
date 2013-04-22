@@ -1,0 +1,106 @@
+\chapter{Conclusions}
+
+\section{Parallel Composition}\label{sec_conclusion}
+
+We have presented an improved algorithm for computing the
+parallel composition of STGs or labelled Petri nets. Under the
+FCI assumptions, it allows to produce nets with fewer implicit
+places, which aids the subsequent structural algorithms like
+dummy contraction. It uses only simple structural checks and
+thus is very efficient even for large compositions, so the
+improvement comes at negligible cost.
+
+The algorithm was implemented in the \pcomp tool and evaluated
+on a set of scalable benchmarks. The experiments proved its
+efficiency, which increases even more when the components are
+pre-processed to remove dummies and ensure injective labelling
+(this is usually cheap, as the components are small; moreover,
+if the components come from a standard library of component
+types, this step can be completely eliminated).
+
+Another important advantage is that the improved algorithm
+places almost no additional effort on the user: the only
+requirement is to pass an additional command-line option to
+\pcomp so that it can assume the FCI property and apply the
+proposed optimisation.
+
+
+\section{PG Algebra}
+
+We introduced a new formalism called Parameterised Graphs and the
+corresponding algebra. The formalism allows to manage a large number
+of system configurations and execution modes, exploit similarities
+between them to simplify the specification, and to work with groups
+of configurations and modes rather than with individual ones. The
+modes and groups of modes can be managed in a compositional way, and
+the specifications can be manipulated (transformed and/or optimised)
+algebraically in a fully formal and natural way.
+
+We develop two variants of the algebra of parameterised graphs, corresponding
+to the two natural graph equivalences: graph isomorphism and isomorphism
+of transitive closures. Both cases are specified axiomatically, and
+the soundness, minimality and completeness of the resulting sets of
+axioms are formally proved. Moreover, the canonical forms of algebraic
+terms are developed in each case.
+
+The usefulness of the developed formalism has been demonstrated on
+two case studies, a phase encoding controller and a processor microcontroller.
+Both have a large number of execution scenarios, and the developed
+formalism allows to capture them algebraically, by composing individual
+scenarios and groups of scenarios. The possibility of algebraical
+manipulation was essential to obtain the optimised final specification
+in each case.
+
+The developed formalism is also convenient for implementation in a
+tool, as manipulating algebraic terms is much easier than general
+graph manipulation; in particular, the theory of term rewriting can
+be naturally applied to derive the canonical forms.
+
+In future work we plan to automate the algebraic manipulation of PGs,
+and implement automatic synthesis of PGs into digital circuits. For
+the latter, much of the code developed for the precursor formalism
+of Conditional Partial Order Graphs (CPOGs) can be re-used. One of
+the important problems that needs to be automated is that of simplification
+of (T)PG expressions, in the sense of deriving an equivalent expression
+with the minimum possible number of operators. Our preliminary research
+suggests that this problem is strongly related to modular decomposition
+of graphs~\cite{2005_McConnell_modular}.\\
+
+\section{PG Encoding}
+
+The paper presented the CPOG model based methodology for microarchitecture
+design and studied its application for specification and synthesis
+of the central processor microcontroller. The key contribution is
+the method for synthesis of optimal instruction opcodes; the corresponding
+optimisation problem is formulated in terms of CPOGs and reduced to
+the well-known Boolean satisfiability problem. The method is implemented
+in a software tool and can be used within the conventional microarchitecture
+design flow.
+
+The studied processor example is purely academic, however, it captures
+many important features of real processors. It has been demonstrated
+that the CPOG model is capable of modelling concurrency between different
+subsystems and handling multiple choice during instruction execution.
+Future work focuses on specification and synthesis of a real processor
+and optimisation of the encoding algorithms.
+
+
+\section{PG Algebra Formalisation}
+We have formalised the definitions of algebra of parametrised graph in Agda, and developed the machine-checked proofs of several properties of that algebra.
+
+The formula representation data structure was designed together with the custom structural equivalence relation on formula representations for convenient formula manipulations. The equivalence relation has been proven equivalent to the one defined using formula semantics, thus showing its adequacy.
+
+The normal form representation data structure for PG formulae was designed with its semantics defined as translation to the corresponding general formula representations.
+
+The algorithm of finding the normal form of general formulae was developed and was proven to be correct.
+
+The immediate future work includes formalizing the proof of CPOG being a model of PG Algebra and modification of algorithm to compute the canonical form (where each graph node is mentioned no more than once) instead of just a normal form. Canonical form is much more useful because its size is at most quadratic while the size of a normal form is exponential in general.
+
+The code used in this paper can be obtained by contacting the authors.
+
+\section{Future work}
+
+\subsubsection*{Acknowledgements}
+
+This work was supported by EPSRC grant EP/G037809/1
+(\textsc{Verdad}).

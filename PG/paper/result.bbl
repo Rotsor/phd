@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{agdalib}
+Nils~Anders Danielsson.
+\newblock Agda standard library.
+\newblock
+  \url{http://wiki.portal.chalmers.se/agda/agda.php?n=Libraries.StandardLibrar%
+y}, 2011.
+
+\bibitem{2009_mokhov_phd}
+Andrey Mokhov.
+\newblock {\em Conditional Partial Order Graphs}.
+\newblock PhD thesis, Newcastle University, 2009.
+
+\bibitem{2011_mokhov_pg}
+Andrey Mokhov, Victor Khomenko, Arseniy Alekseyev, and Alex Yakovlev.
+\newblock Algebra of parametrised graphs.
+\newblock Technical report, Newcastle University, 2011 (pending).
+
+\bibitem{2010_mokhov_ieee}
+Andrey Mokhov and Alex Yakovlev.
+\newblock {Conditional Partial Order Graphs: Model, Synthesis and Application}.
+\newblock {\em IEEE Transactions on Computers}, 59(11):1480--1493, 2010.
+
+\bibitem{norell:thesis}
+Ulf Norell.
+\newblock {\em Towards a practical programming language based on dependent type
+  theory}.
+\newblock PhD thesis, Department of Computer Science and Engineering, Chalmers
+  University of Technology, SE-412 96 G\"{o}teborg, Sweden, September 2007.
+
+\end{thebibliography}

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="47.373749"
+   height="7.0866141"
+   id="svg2471"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docbase="C:\Users\chEEtah\Documents\Thesis\04-cpogm\fig"
+   sodipodi:docname="graph_false_arc.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs2473">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 3.5433071 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="47.373749 : 3.5433071 : 1"
+       inkscape:persp3d-origin="23.686874 : 2.3622047 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="11.588792"
+     inkscape:cy="-10.15983"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="765"
+     inkscape:window-height="667"
+     inkscape:window-x="159"
+     inkscape:window-y="39"
+     showgrid="false" />
+  <metadata
+     id="metadata2476">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-284.03232,-653.51287)">
+    <line
+       id="line10"
+       x1="284.24655"
+       y1="657.05615"
+       x2="323.10431"
+       y2="657.05615"
+       style="font-size:0.05644444000000000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:none;stroke:#000000;stroke-width:0.4284623;font-family:Arial;stroke-miterlimit:4;stroke-dasharray:5.14154756,5.14154756;stroke-dashoffset:0" />
+    <g
+       transform="matrix(885.82678,0,0,-885.82678,331.40607,657.05618)"
+       id="g16"
+       style="font-size:0.02257778px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Arial">
+      <path
+         d="M 0,0 L -0.015,0.004 L -0.015,-0.004 L 0,0 z "
+         id="path18"
+         style="font-size:0.02257778px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:Arial" />
+    </g>
+  </g>
+</svg>

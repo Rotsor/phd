@@ -1,0 +1,34 @@
+\section{Formal Logic}
+
+
+\subsection{Abstract}
+The paper shows a machine-assisted approach to formal modelling by considering a graph-based model used to describe parametrised systems of causally related events, such as microcontrol circuits. The paper gives a formal description of the model encoded with the type system of Agda programming language, defining it as an arbitrary set with specific operations on its members, forming an algebra. The data structure for formulae of this algebra is then introduced to be used as a representation type for the model. An example of an algorithm manipulating the formulae is shown. The algorithm correctness and termination are proven with each proof being checked by the compiler. The result is both a machine-verifiable formal proof of the theorems and a runnable tool for formula manipulation.
+
+\subsection{Introduction}
+
+Describing complex systems in a natural and compositional way is an important challenge with wide area of application, in particular in hardware design.
+To address this challenge, the Conditional Partial Order Graph (CPOG) formalism has been previously proposed ~\cite{2009_mokhov_phd} ~\cite{2010_mokhov_ieee}, where the systems with
+complex behaviour are described as sets of partial orders of events with each partial order corresponding to an individual system operation mode.
+The partial orders are further annotated with mutually exclusive conditions,
+serving to select the current mode of operation of the system. CPOGs are then proposed as a condensed description of such systems.
+Events in the system are associated with the graph vertices and ordering relationships between events are associated with the graph edges.
+To describe multiple partial orders both vertices and edges can be annotated with conditions determining the set of modes 
+where the graph node should be present. This allows to exploit the similarities between modes of system operation.
+However, this approach lacks in compositionality and the ability to transform the system specifications while preserving the important properties.
+
+The new Parametrised Graphs formalism ~\cite{2011_mokhov_pg} builds upon the CPOG formalism by introducing the following features:
+\begin{itemize}
+\item{it lifts the assumption of graph acyclicity, allowing general graphs instead of partial orders;}
+\item{it adds algebraic operations for combining existing specifications, thus achieving compositionality;}
+\item{it axiomatically defines the equivalence relation on specifications, allowing for equivalence preserving transformations.}
+\end{itemize}
+
+While developing mathematical theories and proofs it is important to maintain logical soundness.
+Even if the proof correctness may be obvious to its author, the peer researchers are often unable (because the proof is not detailed enough) or not willing (because the proof is too involved) to verify it rigorously.
+To avoid such problems we have decided to encode the theory in a formal system so that only definitions would require careful inspection, with proofs being checked automatically.
+
+This paper uses Agda ~\cite{norell:thesis} -- a programming language and proof assistant based on the Martin-Löf type theory -- for formalization of
+Parametrised Graphs theory. The paper additionally describes the algorithm 
+for conversion of PG formulae to normal form and shows that the correctness of the algorithm has been verified.
+
+The paper extensively uses the syntax of Agda and references several definitions from the Agda standard library ~\cite{agdalib}.

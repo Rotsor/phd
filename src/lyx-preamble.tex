@@ -1,0 +1,21 @@
+\newcommand{\noun}[1]{\textsc{#1}}
+\providecommand{\tabularnewline}{\\}
+\newenvironment{lyxlist}[1]
+{\begin{list}{}
+{\settowidth{\labelwidth}{#1}
+ \setlength{\leftmargin}{\labelwidth}
+ \addtolength{\leftmargin}{\labelsep}
+ \renewcommand{\makelabel}[1]{##1\hfil}}}
+{\end{list}}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+\theoremstyle{plain}
+\newtheorem{prop}[thm]{\protect\propositionname}
+\pagestyle{plain}
+
+\addto\captionsbritish{\renewcommand{\propositionname}{Proposition}}
+\addto\captionsbritish{\renewcommand{\theoremname}{Theorem}}
+\addto\captionsenglish{\renewcommand{\propositionname}{Proposition}}
+\addto\captionsenglish{\renewcommand{\theoremname}{Theorem}}
+\providecommand{\propositionname}{Proposition}
+\providecommand{\theoremname}{Theorem}

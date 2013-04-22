@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:ns="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="141.7323"
+   height="297.20001"
+   id="svg2726"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   version="1.0"
+   sodipodi:docname="dag_neg.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:docbase="C:\Users\chEEtah\Documents\Papers\2009-09-09 encoding date\fig">
+  <defs
+     id="defs2728">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective2734" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="59.582156"
+     inkscape:cy="154.35035"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1217"
+     inkscape:window-height="757"
+     inkscape:window-x="63"
+     inkscape:window-y="43"
+     height="297.2px"
+     width="141.7323px" />
+  <metadata
+     id="metadata2731">
+    <rdf:RDF>
+      <ns:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </ns:Work>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-198.4128,-172.83969)">
+    <path
+       d="M 322.42857,212.12171 C 260.42068,212.12171 216.12934,256.41305 216.12934,318.42093"
+       style="font-size:30px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:none;stroke:#000000;stroke-width:0.70866156;font-family:Century Schoolbook"
+       id="path10" />
+    <g
+       transform="matrix(-146.51672,873.62585,873.62585,146.51672,217.37729,300.74833)"
+       id="g16"
+       style="font-size:0.03386666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Century Schoolbook">
+      <path
+         d="M 0,0 L -0.015,0.004 L -0.015,-0.004 L 0,0 z "
+         style="font-size:0.03386666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:Century Schoolbook"
+         id="path18" />
+    </g>
+    <line
+       style="font-size:30px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:none;stroke:#000000;stroke-width:0.70866156;font-family:Century Schoolbook"
+       x1="216.12935"
+       x2="322.42856"
+       y1="318.42093"
+       y2="318.42093"
+       id="line80" />
+    <g
+       transform="matrix(885.82687,0,0,-885.82687,304.71202,318.42093)"
+       id="g86"
+       style="font-size:0.03386666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;font-family:Century Schoolbook">
+      <path
+         d="M 0,0 L -0.015,0.004 L -0.015,-0.004 L 0,0 z "
+         style="font-size:0.03386666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:Century Schoolbook"
+         id="path88" />
+    </g>
+    <circle
+       transform="matrix(354.33075,0,0,-354.33075,216.12934,318.42093)"
+       sodipodi:ry="0.050000001"
+       sodipodi:rx="0.050000001"
+       sodipodi:cy="0"
+       sodipodi:cx="0"
+       id="circle92"
+       style="font-size:0.08466666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:Century Schoolbook"
+       r="0.050000001"
+       cy="0"
+       cx="0" />
+    <circle
+       transform="matrix(354.33075,0,0,-354.33075,216.12934,318.42093)"
+       sodipodi:ry="0.039999999"
+       sodipodi:rx="0.039999999"
+       sodipodi:cy="0"
+       sodipodi:cx="0"
+       id="circle94"
+       style="font-size:0.08466666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;stroke:none;font-family:Century Schoolbook"
+       r="0.039999999"
+       cy="0"
+       cx="0" />
+    <text
+       id="text98"
+       y="285.99069"
+       x="206.7421"
+       style="font-size:30px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;font-family:Century Schoolbook"
+       font-size="0.05"
+       sodipodi:linespacing="125%">c</text>
+    <circle
+       transform="matrix(354.33075,0,0,-354.33075,322.42856,318.42093)"
+       sodipodi:ry="0.050000001"
+       sodipodi:rx="0.050000001"
+       sodipodi:cy="0"
+       sodipodi:cx="0"
+       id="circle122"
+       style="font-size:0.08466666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:Century Schoolbook"
+       r="0.050000001"
+       cy="0"
+       cx="0" />
+    <circle
+       transform="matrix(354.33075,0,0,-354.33075,322.42856,318.42093)"
+       sodipodi:ry="0.039999999"
+       sodipodi:rx="0.039999999"
+       sodipodi:cy="0"
+       sodipodi:cx="0"
+       id="circle124"
+       style="font-size:0.08466666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;stroke:none;font-family:Century Schoolbook"
+       r="0.039999999"
+       cy="0"
+       cx="0" />
+    <text
+       id="text128"
+       y="291.84613"
+       x="322.2601"
+       style="font-size:30px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;font-family:Century Schoolbook"
+       font-size="0.05"
+       sodipodi:linespacing="125%">e</text>
+    <circle
+       transform="matrix(354.33075,0,0,-354.33075,322.42856,212.1217)"
+       sodipodi:ry="0.050000001"
+       sodipodi:rx="0.050000001"
+       sodipodi:cy="0"
+       sodipodi:cx="0"
+       id="circle132"
+       style="font-size:0.08466666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;font-family:Century Schoolbook"
+       r="0.050000001"
+       cy="0"
+       cx="0" />
+    <circle
+       transform="matrix(354.33075,0,0,-354.33075,322.42856,212.1217)"
+       sodipodi:ry="0.039999999"
+       sodipodi:rx="0.039999999"
+       sodipodi:cy="0"
+       sodipodi:cx="0"
+       id="circle134"
+       style="font-size:0.08466666px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;stroke:none;font-family:Century Schoolbook"
+       r="0.039999999"
+       cy="0"
+       cx="0" />
+    <text
+       id="text138"
+       y="186.97543"
+       x="322.09164"
+       style="font-size:30px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;font-family:Century Schoolbook"
+       font-size="0.05"
+       sodipodi:linespacing="125%">a</text>
+  </g>
+</svg>

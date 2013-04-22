@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workcraft version="2.dev">
+  <model class="org.workcraft.plugins.stg.STG">
+    <MathModel title="">
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="46" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="45" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="activate_rq" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="40" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="36" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="33" label=""/>
+        <Place tokens="1"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="32" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="guard_ac" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="76" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="29" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="73" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="22" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="guard_rq" type="OUTPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="68" label=""/>
+        <Place tokens="1"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="21" label="p75"/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="67" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="out_ac" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="18" label="p54"/>
+        <Place tokens="1"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="64" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="63" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="out_rq" type="OUTPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="15" label="p53"/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="61" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="out_ac" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="13" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="guard_ac" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="58" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="11" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="dp" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="9" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="dp" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="55" label=""/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="8" label="p50"/>
+        <Place tokens="1"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="6" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="out_rq" type="OUTPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="51" label=""/>
+        <Place tokens="1"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="4" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="activate_ac" type="OUTPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="50" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="activate_rq" type="INPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="3" label="p49"/>
+        <Place tokens="0"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="49" label=""/>
+        <SignalTransition direction="MINUS" instance="0" signalName="activate_ac" type="OUTPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.stg.SignalTransition">
+        <MathNode ID="1" label=""/>
+        <SignalTransition direction="PLUS" instance="0" signalName="guard_rq" type="OUTPUT"/>
+      </component>
+      <component class="org.workcraft.plugins.petri.Place">
+        <MathNode ID="0" label="p48"/>
+        <Place tokens="0"/>
+      </component>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="78" label=""/>
+        <Connection first="76" second="67"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="77" label=""/>
+        <Connection first="63" second="76"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="75" label=""/>
+        <Connection first="73" second="61"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="74" label=""/>
+        <Connection first="6" second="73"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="72" label=""/>
+        <Connection first="6" second="21"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="71" label=""/>
+        <Connection first="6" second="15"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="70" label=""/>
+        <Connection first="68" second="6"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="69" label=""/>
+        <Connection first="67" second="68"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="66" label=""/>
+        <Connection first="64" second="63"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="65" label=""/>
+        <Connection first="61" second="64"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="62" label=""/>
+        <Connection first="61" second="0"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="60" label=""/>
+        <Connection first="58" second="49"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="59" label=""/>
+        <Connection first="45" second="58"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="57" label=""/>
+        <Connection first="55" second="4"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="56" label=""/>
+        <Connection first="50" second="55"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="54" label=""/>
+        <Connection first="50" second="0"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="53" label=""/>
+        <Connection first="51" second="50"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="52" label=""/>
+        <Connection first="49" second="51"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="48" label=""/>
+        <Connection first="46" second="45"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="47" label=""/>
+        <Connection first="4" second="46"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="44" label=""/>
+        <Connection first="4" second="21"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="43" label=""/>
+        <Connection first="4" second="18"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="42" label=""/>
+        <Connection first="40" second="32"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="41" label=""/>
+        <Connection first="22" second="40"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="39" label=""/>
+        <Connection first="22" second="8"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="38" label=""/>
+        <Connection first="36" second="13"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="37" label=""/>
+        <Connection first="1" second="36"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="35" label=""/>
+        <Connection first="33" second="1"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="34" label=""/>
+        <Connection first="32" second="33"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="31" label=""/>
+        <Connection first="29" second="22"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="30" label=""/>
+        <Connection first="13" second="29"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="28" label=""/>
+        <Connection first="13" second="3"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="27" label=""/>
+        <Connection first="11" second="18"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="26" label=""/>
+        <Connection first="11" second="8"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="25" label=""/>
+        <Connection first="9" second="15"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="24" label=""/>
+        <Connection first="9" second="8"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="23" label=""/>
+        <Connection first="21" second="22"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="20" label=""/>
+        <Connection first="18" second="4"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="19" label=""/>
+        <Connection first="18" second="9"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="17" label=""/>
+        <Connection first="15" second="6"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="16" label=""/>
+        <Connection first="15" second="11"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="14" label=""/>
+        <Connection first="8" second="13"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="12" label=""/>
+        <Connection first="8" second="11"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="10" label=""/>
+        <Connection first="8" second="9"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="7" label=""/>
+        <Connection first="3" second="6"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="5" label=""/>
+        <Connection first="3" second="4"/>
+      </connection>
+      <connection class="org.workcraft.dom.Connection">
+        <MathNode ID="2" label=""/>
+        <Connection first="0" second="1"/>
+      </connection>
+    </MathModel>
+  </model>
+  <visual-model class="org.workcraft.plugins.stg.VisualSTG">
+    <VisualModel>
+      <component ref="49">
+        <VisualTransformableNode X="5.0" Y="-11.0"/>
+      </component>
+      <component ref="18">
+        <VisualTransformableNode X="1.0" Y="0.0"/>
+      </component>
+      <component ref="11">
+        <VisualTransformableNode X="1.0" Y="2.0"/>
+      </component>
+      <component ref="63">
+        <VisualTransformableNode X="14.0" Y="0.0"/>
+      </component>
+      <component ref="32">
+        <VisualTransformableNode X="-9.0" Y="-6.0"/>
+      </component>
+      <component ref="13">
+        <VisualTransformableNode X="-3.0" Y="-3.0"/>
+      </component>
+      <component ref="22">
+        <VisualTransformableNode X="-9.0" Y="-3.0"/>
+      </component>
+      <component ref="0">
+        <VisualTransformableNode X="1.0" Y="-8.0"/>
+      </component>
+      <component ref="8">
+        <VisualTransformableNode X="-6.0" Y="-1.0"/>
+      </component>
+      <component ref="15">
+        <VisualTransformableNode X="-1.0" Y="5.0"/>
+      </component>
+      <component ref="21">
+        <VisualTransformableNode X="5.0" Y="-6.0"/>
+      </component>
+      <component ref="9">
+        <VisualTransformableNode X="-1.0" Y="3.0"/>
+      </component>
+      <component ref="61">
+        <VisualTransformableNode X="10.0" Y="0.0"/>
+      </component>
+      <component ref="6">
+        <VisualTransformableNode X="10.0" Y="-3.0"/>
+      </component>
+      <component ref="3">
+        <VisualTransformableNode X="2.0" Y="-3.0"/>
+      </component>
+      <component ref="45">
+        <VisualTransformableNode X="11.0" Y="-11.0"/>
+      </component>
+      <component ref="4">
+        <VisualTransformableNode X="11.0" Y="-8.0"/>
+      </component>
+      <component ref="1">
+        <VisualTransformableNode X="-3.0" Y="-6.0"/>
+      </component>
+      <component ref="67">
+        <VisualTransformableNode X="14.0" Y="-3.0"/>
+      </component>
+      <component ref="50">
+        <VisualTransformableNode X="5.0" Y="-8.0"/>
+      </component>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="28" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="71" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="43" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="44" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="5" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="19" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="72" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="27" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="23" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="7" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="16" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="62" type="BEZIER">
+          <anchorPoints>
+            <VisualConnectionAnchorPoint X="36.0" Y="7.0"/>
+            <VisualConnectionAnchorPoint X="1.0" Y="-31.0"/>
+          </anchorPoints>
+        </VisualConnection>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="20" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="25" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="2" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="39" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="10" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="54" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="26" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="24" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="17" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="12" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.dom.visual.VisualConnection">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" refID="14" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="58" refCon1="59" refCon2="60" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="64" refCon1="65" refCon2="66" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="46" refCon1="47" refCon2="48" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="36" refCon1="37" refCon2="38" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="51" refCon1="52" refCon2="53" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="33" refCon1="34" refCon2="35" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="73" refCon1="74" refCon2="75" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="76" refCon1="77" refCon2="78" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="55" refCon1="56" refCon2="57" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="29" refCon1="30" refCon2="31" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="68" refCon1="69" refCon2="70" type="POLYLINE"/>
+      </connection>
+      <connection class="org.workcraft.plugins.stg.ImplicitPlaceArc">
+        <VisualConnection arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" type="POLYLINE"/>
+        <ImplicitPlaceArc arrowLength="0.4" arrowWidth="0.15" lineWidth="0.02" placeRef="40" refCon1="41" refCon2="42" type="POLYLINE"/>
+      </connection>
+    </VisualModel>
+  </visual-model>
+</workcraft>

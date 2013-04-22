@@ -1,0 +1,253 @@
+\documentclass[conference]{IEEEtran}
+\hyphenation{}
+%% ODER: format ==         = "\mathrel{==}"
+%% ODER: format /=         = "\neq "
+%
+%
+\makeatletter
+\@ifundefined{lhs2tex.lhs2tex.sty.read}%
+  {\@namedef{lhs2tex.lhs2tex.sty.read}{}%
+   \newcommand\SkipToFmtEnd{}%
+   \newcommand\EndFmtInput{}%
+   \long\def\SkipToFmtEnd#1\EndFmtInput{}%
+  }\SkipToFmtEnd
+
+\newcommand\ReadOnlyOnce[1]{\@ifundefined{#1}{\@namedef{#1}{}}\SkipToFmtEnd}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\DeclareFontFamily{OT1}{cmtex}{}
+\DeclareFontShape{OT1}{cmtex}{m}{n}
+  {<5><6><7><8>cmtex8
+   <9>cmtex9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmtex10}{}
+\DeclareFontShape{OT1}{cmtex}{m}{it}
+  {<-> ssub * cmtt/m/it}{}
+\newcommand{\texfamily}{\fontfamily{cmtex}\selectfont}
+\DeclareFontShape{OT1}{cmtt}{bx}{n}
+  {<5><6><7><8>cmtt8
+   <9>cmbtt9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmbtt10}{}
+\DeclareFontShape{OT1}{cmtex}{bx}{n}
+  {<-> ssub * cmtt/bx/n}{}
+\newcommand{\tex}[1]{\text{\texfamily#1}}	% NEU
+
+\newcommand{\Sp}{\hskip.33334em\relax}
+
+
+\newcommand{\Conid}[1]{\mathit{#1}}
+\newcommand{\Varid}[1]{\mathit{#1}}
+\newcommand{\anonymous}{\kern0.06em \vbox{\hrule\@width.5em}}
+\newcommand{\plus}{\mathbin{+\!\!\!+}}
+\newcommand{\bind}{\mathbin{>\!\!\!>\mkern-6.7mu=}}
+\newcommand{\rbind}{\mathbin{=\mkern-6.7mu<\!\!\!<}}% suggested by Neil Mitchell
+\newcommand{\sequ}{\mathbin{>\!\!\!>}}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\usepackage{polytable}
+
+%mathindent has to be defined
+\@ifundefined{mathindent}%
+  {\newdimen\mathindent\mathindent\leftmargini}%
+  {}%
+
+\def\resethooks{%
+  \global\let\SaveRestoreHook\empty
+  \global\let\ColumnHook\empty}
+\newcommand*{\savecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\savecolumns[#1]}}
+\newcommand*{\restorecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\restorecolumns[#1]}}
+\newcommand*{\aligncolumn}[2]%
+  {\g@addto@macro\ColumnHook{\column{#1}{#2}}}
+
+\resethooks
+
+\newcommand{\onelinecommentchars}{\quad-{}- }
+\newcommand{\commentbeginchars}{\enskip\{-}
+\newcommand{\commentendchars}{-\}\enskip}
+
+\newcommand{\visiblecomments}{%
+  \let\onelinecomment=\onelinecommentchars
+  \let\commentbegin=\commentbeginchars
+  \let\commentend=\commentendchars}
+
+\newcommand{\invisiblecomments}{%
+  \let\onelinecomment=\empty
+  \let\commentbegin=\empty
+  \let\commentend=\empty}
+
+\visiblecomments
+
+\newlength{\blanklineskip}
+\setlength{\blanklineskip}{0.66084ex}
+
+\newcommand{\hsindent}[1]{\quad}% default is fixed indentation
+\let\hspre\empty
+\let\hspost\empty
+\newcommand{\NB}{\textbf{NB}}
+\newcommand{\Todo}[1]{$\langle$\textbf{To do:}~#1$\rangle$}
+
+\EndFmtInput
+\makeatother
+%
+\begin{document}
+\title{Machine-assisted Formalisation of Parametrised Graph Algebra}
+\author{\IEEEauthorblockA{Arseniy Alekseyev}\IEEEauthorblockN{EECE, Newcastle University}}
+
+\section{Introduction}
+
+While developing mathematical theories and proofs it is important to maintain logical soundness. 
+Even if the proof correctness may be obvious to its author, the peer researchers are often unable (because the proof is not detailed enough) or not willing (because the proof is too involved) to verify it rigorously.
+This way, the errors in formal proofs are sometimes found long after the publication. [?]
+
+This paper uses the \textbf{Agda} programming language and proof environment [?] for formalization of
+ earlier developed Parametrised Graphs (PG) theory [?]. The paper additionally implements the algorithm 
+for conversion of PG formulae to canonical form and verifies its correctness.
+
+\section{Graph Algebra}
+
+\subsection{Definition}
+
+We define a graph algebra as an algebraic structure over a set $G$ supporting the following operations:
+\begin{itemize}
+\item{An empty graph, denoting no actions.
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\varepsilon\mathbin{:}\Conid{G}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+\item{Graph overlay, denoting the parallel composition of actions from both graphs.
+$\_+\_ : G \rightarrow G \rightarrow G$}
+
+\item{Graph sequencing, denoting the causal dependency between actions in the first graph and in the second graph.
+$\_\Rightarrow\_ : G \rightarrow G \rightarrow G$}
+
+\end{itemize}
+
+Additionally, the operations must conform to the following rules:
+
+\begin{itemize}
+\item{Overlay is commutative and associative.
+1. a + b = b + a
+2. (a + b) + c = a + (b + c)
+}
+
+\item{Empty graph is a no-op in relation to sequencing.
+3. 1 * a = a
+4. a * 1 = a}
+
+\item{Sequencing is associative.
+5. (a * b) * c = a * (b * c)}
+
+\item{Sequencing distributes over addition.
+6. a * (b + c) = a * b + a * c
+7. (a + b) * c = a * c + b * c}
+
+\item{Decomposition.
+8. a * b * c = a * b + a * c + b * c
+
+This axiom allows one to decompose any causality graph into smaller components.}
+
+\end{itemize}
+
+** Derived theorems
+
+
+* Parametrised Graphs
+
+The graph algebra introduced in the previous section can only describe static action dependencies.
+To describe complex systems one has to consider the conditional behaviour as well.
+To do this, we've extended the graph algebra by annotating the graphs with conditions.
+Given a set $G$ of the parametrised graphs and a set $B$ of all the possible boolean conditions, together with the following operations:
+
+$\_\wedge\_ : B \rightarrow B \rightarrow B$
+
+$\_\vee\_ : B \rightarrow B \rightarrow B$
+
+$\top : B$
+
+we introduce a new operation called \emph{condition}:
+
+$[\_]\_ : B \rightarrow G \rightarrow G$
+
+The condition operation must have the following properties:
+
+$[ ⊤ ] x = x$
+
+$[ b ∧ c ] x = [ b ] [ c ] x$
+
+$[ b ] x + [ c ] x = [ b ∨ c ] x$
+
+$[ b ] (x + y) = [ b ] x + [ b ] y$
+
+$[ b ] (x * y) = [ b ] x * [ b ] y$
+
+We say that there is a *parametrised graph algebra* on a set $G$ with a condition set $B$ 
+if there is a graph algebra on $G$, a boolean algebra on $B$ and a condition operator satisfying the requirements above.
+
+** Theorems
+
+* Parametrised Graph Formulae
+
+To do automated manipulations with PG algebra formulae, we describe the formulae as a data structure in the following way.
+
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{zogo}{}\<[E]%
+\\
+\>[B]{}\Varid{bogo}{}\<[E]%
+\\
+\>[B]{}\Varid{kojo}\;\Varid{bojo}\mathbin{:}\Varid{mojo}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{zo}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{mo}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{do}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+
+$data PGFormula : Set where$
+
+$  \_+\_ : (x\ y : PGFormula) \rightarrow PGFormula$
+
+$  \_\Rightarrow\_ : (x\ y : PGFormula) \rightarrow PGFormula$
+
+$  \varepsilon : PGFormula$
+
+$  var : (v : V) \rightarrow PGFormula$
+
+$  cond : (cond : B) \rightarrow PGFormula \rightarrow PGFormula$
+
+Here $A$ is a set of graph variables and $B$ is a set of condition variables.
+Next, we have a constructor for each of the algebra operations with an additional constructor to reference the variables.
+This way we can construct the formulae in a straightforward way (var "x" + var "y" ⇾ var "z").
+Formula evaluation then is catamorphism of PGFormula, replacing constructor applications with the corresponding algebra operations and `var` constructors with the actual variable values.
+
+$pg-eval : \{A B G : Set\} \rightarrow (\_+ˢ\_ \_\Rightarrowˢ\_ : G \rightarrow G \rightarrow G) \rightarrow (\varepsilonˢ : G) \rightarrow (varˢ : A \rightarrow G) \rightarrow (condˢ : B \rightarrow G \rightarrow G) \rightarrow PGFormula A B \rightarrow G$
+
+* Formula equivalence
+
+One can notice that it is possible to write the same mathematical function in many different ways, creating a formulae may be equivalent
+
+* Canonical Form
+
+
+
+* Conclusion
+
+As a first step, we construct a model of a single system configuration as a partially ordered. We model the graph mo
+\end{document}

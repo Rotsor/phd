@@ -1,0 +1,858 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language british
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Dear editors and reviewers!
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thank you for your comments and suggestions.
+ We did our best to address all of them in this revision.
+ The main changes compared to the previous version of the paper are as follows.
+\end_layout
+
+\begin_layout Standard
+We hope you will find the corrections appropriate and sufficient.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With best regards,
+\end_layout
+
+\begin_layout Standard
+Andrey Mokhov
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Reviewer 1.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+1.
+ There are some different approaches for solution of this problem.
+ For example, there is a book by Samary Baranov “Logic and system design
+ of digital systems” (Tallinn: TUT Press, 2008).
+ In his approach this task is reduced to encoding graph-schemes of algorithms
+ representing each instruction.
+ It would be interesting to compare these approaches.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The two approaches may indeed seem similar, however, there is an important
+ distincion which makes the comparison problematic.
+ The underlying formalisms are conceptually different: partial orders and
+ control automata (state machines).
+ Baranov's control automata cannot model true concurrency; they use 
+\begin_inset Quotes els
+\end_inset
+
+bursts
+\begin_inset Quotes ers
+\end_inset
+
+ of events instead, i.e.
+ sets of independent events that can be executed in the same step/clock
+ cycle.
+ Also they require explicit memory to track the current state of the system
+ (a 
+\begin_inset Quotes els
+\end_inset
+
+token
+\begin_inset Quotes ers
+\end_inset
+
+), while our approach does not require any tokens (the penalty is that we
+ cannot explicitly model cyclic behaviour).
+ Therefore, it is impossible to convert our examples into control automata
+ and vice versa.
+ The only indirect comparison which we can make is that we solve the encoding
+ problem exactly, while encoding of different 
+\begin_inset Quotes els
+\end_inset
+
+algorithms
+\begin_inset Quotes ers
+\end_inset
+
+ into a single control automata is based on heuristics.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We decided to add the following paragraph to the end of Section 2 mentioning
+ this alternative approach for specification of instruction sets (page 5):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"Note that partial orders is not the only formalism for formal specification
+ of instructions.
+ In particular, there is an alternative approach [4] based on automata,
+ which treats every instruction as a burst-mode state machine and defines
+ an operation of composition on them.
+ While benefiting from a direct correspondence between flowcharts of algorithms
+ and automata, the approach cannot model true concurrency: a set of causally
+ independent events can only be executed as a 
+\begin_inset Quotes els
+\end_inset
+
+burst
+\begin_inset Quotes ers
+\end_inset
+
+ in the same step/clock cycle.
+ Also, it requires explicit memory to track the current state of the automaton.
+ We believe that partial orders are better suited for modelling instruction
+ sets of processing units built on heterogeneous platforms, i.e.
+ exhibiting both asynchronous and synchronous interactions [14]."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+2.
+ It would be interesting to show the influence of instruction codes on the
+ complexity of a control unit.
+ These tasks are rather combined.
+ To organize a pipelining, it is necessary to provide easy decoding of opcodes
+ to recognize the particular instruction.
+ Is it taken into account in the proposed approached?
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This issue was also raised by Reviewer 2.
+ We do not want to shift the focus of this paper by describing controller
+ synthesis, so we added a reference to the relevant publication and mentioned
+ the linear dependency between C(H) and size of the corresponding controller
+ (page 7):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"Given a CPOG 
+\begin_inset Formula $H$
+\end_inset
+
+, there is a linear dependency between its complexity 
+\begin_inset Formula $C(H)$
+\end_inset
+
+, defined below, and the size of the synthesised controller [15]."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+3.
+ The choice of CPU architecture (Fig.
+ 7) is not justified.
+ The same is true for the choice of the instruction set in proposed example.
+ It would be interesting to show the influence of the CPU structure on the
+ result of instruction encoding.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+4.
+ It would be more interesting to show design results for some standard VLSI
+ ships such as FPGA rather than for abstract NAND gates.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+5.
+ The authors have a good theory, but they did not show how it is used in
+ the discussed example.
+ It would be interesting to show some steps of their procedure’s application
+ for this example.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+6.
+ There is a very important problem of the power dissipation in ASIC and
+ FPGA design.
+ Is some correlation between the choice of instruction codes and power dissipati
+on? The same is true for the clock rate.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All these issues are valid and it is interesting to investigate them.
+ We prepared a separate technical report
+\begin_inset space ~
+\end_inset
+
+[14] which studies CPOG representation of processor instruction sets in
+ a more general context, not particularly focused on encoding of instructions
+ (it can be downloaded at this address: 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://async.org.uk/tr.html"
+
+\end_inset
+
+).
+ Also, we decided to change the title of the paper from "Efficient representatio
+n and encoding of processor instruction sets" to "Encoding of processor
+ instruction sets with explicit concurrency control" to reflect the focus
+ of the paper more accurately.
+ We hope that this will eliminate any possible confusion.
+ Also, we added the following paragraph into introduction (page 3):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"There are many criteria which determine the choice of a particular processor
+ architecture and influence design of an instruction set: functionality,
+ operation modes, resources, etc.
+ In Section 5 we study an example of an instruction set (a subset of MSP430
+ processor [1]) implemented on a minimalistic hardware platform.
+ However, the main focus of this paper is optimal encoding of processor
+ instruction sets in the general architecture-independent context.
+ See [14] for investigation of the architecture-level reasoning using the
+ CPOG model."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Reviewer 2.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+I think you have to say that a structure is only a (well-defined) CPOG if
+ all projections allowed by rho give acyclic graphs.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have added a paragraph to the background section to address this comment
+ (page 4):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"A CPOG is well-defined if all its projections allowed by 
+\begin_inset Formula $\rho$
+\end_inset
+
+ are acyclic.
+ We consider only well-defined CPOGs in this paper, because a cyclic projection
+ has no natural execution semantics, in particular it is not clear which
+ event can be executed first unless some form of a ‘token’ is introduced
+ as in the Petri Net model [8]."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p.5ff You should clarify how the input POs are given; your examples indicate
+ that they are given by their Hasse diagrams.
+ In any case, these have to be computed: For your constructions, you have
+ to describe all components.
+ V is always the set of events appearing in the POs, E is the set of arcs
+ appearing in the Hasse diagrams of the POs; rho is essentially the disjunction
+ of respective opcodes.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following has been added to clarify use of Hasse diagrams and CPOG construct
+ion (pages 5 and 6):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"(we use Hasse diagrams [5] to represent partial orders concisely, viz.
+ without transitive dependencies)"
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"Note that 
+\begin_inset Formula $V$
+\end_inset
+
+ and 
+\begin_inset Formula $E$
+\end_inset
+
+ can be defined as unions of vertices and arcs of the given partial orders,
+ 
+\begin_inset Formula $\rho$
+\end_inset
+
+ as a disjunction of generated opcodes, and 
+\begin_inset Formula $\phi(z),\ z\in V\cup E$
+\end_inset
+
+ as a disjunction of opcodes corresponding to the partial orders containing
+ 
+\begin_inset Formula $z$
+\end_inset
+
+."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+This makes clear that other arcs are not essential; so why do they appear
+ in Table 1??
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Indeed, there is no need to show all possible arcs 
+\begin_inset Formula $V\times V$
+\end_inset
+
+ in the table.
+ We removed them, leaving only arcs belonging to 
+\begin_inset Formula $E$
+\end_inset
+
+, i.e.
+ appearing in at least one of the given partial orders.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p6/7 Say clearly how the numbers of literals and variables are related to
+ size and speed of the controller.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We do not want to shift the focus of this paper by describing controller
+ synthesis, so we added a reference to the relevant publication and mentioned
+ the linear dependency between 
+\begin_inset Formula $C(H)$
+\end_inset
+
+ and size of the corresponding controller (page 7):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"Given a CPOG 
+\begin_inset Formula $H$
+\end_inset
+
+, there is a linear dependency between its complexity 
+\begin_inset Formula $C(H)$
+\end_inset
+
+, defined below, and the size of the synthesised controller [15]."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p.7 A Boolean fct does not have literals, only a formula has.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We changed "function" to "formula" where appropriate to avoid the clash
+ of notions.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p10/12 NP-complete: do you have proofs for these claims?? On p12, the formulatio
+n only makes sense, if you write just NP!
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+NP-completeness is proved in the provided reference [13] by reduction of
+ general graph coloring problem to the optimal encoding problem.
+ We have changed "NP-complete" to "NP" in page 12.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Sec 4 Usually, SAT refers to formulae in CNF; explain what formulae you
+ use.
+ Does your SAT-solver directly support these comparisons?
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We've added a clarification (page 12):
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"MiniSAT operates on CNF (conjunctive normal form) representations of Boolean
+ formulae.
+ Since our SAT-instances are not necessarily given in CNF, we implemented
+ their automated conversion to CNF formulae.
+ This conversion introduces intermediate variables but the overall size
+ of the obtained formula is linear with respect to the size of the given
+ SAT-instance."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Also, a footnote has been added to explain how we compare binary numbers
+ (page 13):
+\end_layout
+
+\begin_layout Standard
+"Formula 
+\begin_inset Formula $(a<b)$
+\end_inset
+
+ for binary numbers comparison is 
+\begin_inset Formula $(a<b)=\overline{a_{0}}\cdot b_{0}+(a_{0}=b_{0})\cdot(a'<b')$
+\end_inset
+
+ where 
+\begin_inset Formula $a'$
+\end_inset
+
+ and 
+\begin_inset Formula $b'$
+\end_inset
+
+ are obtained from 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ by removal of their most significant digits (
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $b_{0}$
+\end_inset
+
+); the formula is linear with respect to the lengths of 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+."
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+What do you count when you speak of the overall complexity of ENCODE? Does
+ a conjunct of some COL have four literals in your view?
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above clarification states that the conversion to CNF keeps the size
+ of the obtained formula linear with respect to the original.
+ Therefore, it is correct to count literals in the non-CNF to estimate complexit
+y of the SAT-instances (the estimations are up to a constant factor).
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Why do you write H(V,E,...)? This is not a function applied to some arguments.
+ Just write H=(V,E,...) once, and then only H -- just as for e.g.
+ Petri nets.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p.4 CPOG composition is a bit dubious; there is not one composition operation
+ that results in a CPOG.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p.
+ 7 complexity of the resultant CPOG C(H) -- this looks like C(H) is a CPOG.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p.9 Explain your notation for arcs; what you write a<b is usually written
+ ab, possibly with a left-to-right arrow on top -- from this, notation a>b
+ would be more intuitive.
+\emph default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We unified arc notations in the paper into 
+\begin_inset Formula $a\rightarrow b$
+\end_inset
+
+ form.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p10 (up to don't cares) -- not really clear to me; looks like you simply
+ could/should omit this.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Agreed.
+ We removed this.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p11 1st para It is quite confusing that you order the variables differently
+ from Table 1.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Table 1 does not impose any order on variables.
+ It merely associates some variables to encoding constraints.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p12 verify??? you mean validate?
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+a number c_k which -> an integer variable c_k whose values
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p14 appending a gate -> appending the output of a gate perhaps??
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fixed.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+p20 What are variables a and v?
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We added a clarification:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"Figures 9(c, d) show the optimal CPOGs encoded with 3 and 5 (
+\begin_inset Formula $X=\{x,\ y,\ z,\ u,\ v\}$
+\end_inset
+
+) variables, respectively; derived variables (denoted by names starting
+ from a) are shown in boxes."
+\end_layout
+
+\end_body
+\end_document

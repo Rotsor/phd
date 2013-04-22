@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workcraft version="2.dev">
+  <model class="org.workcraft.plugins.balsa.BalsaCircuit">
+    <MathModel title="">
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="3" label=""/>
+        <Handshake name="out" owner="0"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="2" label=""/>
+        <Handshake name="inpB" owner="0"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.HandshakeComponent">
+        <MathNode ID="1" label=""/>
+        <Handshake name="inpA" owner="0"/>
+      </component>
+      <component class="org.workcraft.plugins.balsa.BreezeComponent">
+        <MathNode ID="0" label=""/>
+        <breeze>&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;java version="1.6.0_13" class="java.beans.XMLDecoder"&gt; 
+ &lt;object class="org.workcraft.plugins.balsa.components.BinaryFunc"/&gt; 
+&lt;/java&gt; 
+</breeze>
+      </component>
+    </MathModel>
+  </model>
+  <visual-model class="org.workcraft.plugins.balsa.VisualBalsaCircuit">
+    <VisualModel>
+      <group class="org.workcraft.plugins.balsa.VisualBreezeComponent">
+        <VisualBreezeComponent ref="0"/>
+        <VisualTransformableNode X="-5.0" Y="-2.0"/>
+      </group>
+    </VisualModel>
+  </visual-model>
+</workcraft>

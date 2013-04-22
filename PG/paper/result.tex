@@ -1,0 +1,1001 @@
+
+%% ODER: format ==         = "\mathrel{==}"
+%% ODER: format /=         = "\neq "
+%
+%
+\makeatletter
+\@ifundefined{lhs2tex.lhs2tex.sty.read}%
+  {\@namedef{lhs2tex.lhs2tex.sty.read}{}%
+   \newcommand\SkipToFmtEnd{}%
+   \newcommand\EndFmtInput{}%
+   \long\def\SkipToFmtEnd#1\EndFmtInput{}%
+  }\SkipToFmtEnd
+
+\newcommand\ReadOnlyOnce[1]{\@ifundefined{#1}{\@namedef{#1}{}}\SkipToFmtEnd}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\DeclareFontFamily{OT1}{cmtex}{}
+\DeclareFontShape{OT1}{cmtex}{m}{n}
+  {<5><6><7><8>cmtex8
+   <9>cmtex9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmtex10}{}
+\DeclareFontShape{OT1}{cmtex}{m}{it}
+  {<-> ssub * cmtt/m/it}{}
+\newcommand{\texfamily}{\fontfamily{cmtex}\selectfont}
+\DeclareFontShape{OT1}{cmtt}{bx}{n}
+  {<5><6><7><8>cmtt8
+   <9>cmbtt9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmbtt10}{}
+\DeclareFontShape{OT1}{cmtex}{bx}{n}
+  {<-> ssub * cmtt/bx/n}{}
+\newcommand{\tex}[1]{\text{\texfamily#1}}	% NEU
+
+\newcommand{\Sp}{\hskip.33334em\relax}
+
+
+\newcommand{\Conid}[1]{\mathit{#1}}
+\newcommand{\Varid}[1]{\mathit{#1}}
+\newcommand{\anonymous}{\kern0.06em \vbox{\hrule\@width.5em}}
+\newcommand{\plus}{\mathbin{+\!\!\!+}}
+\newcommand{\bind}{\mathbin{>\!\!\!>\mkern-6.7mu=}}
+\newcommand{\rbind}{\mathbin{=\mkern-6.7mu<\!\!\!<}}% suggested by Neil Mitchell
+\newcommand{\sequ}{\mathbin{>\!\!\!>}}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\usepackage{polytable}
+
+%mathindent has to be defined
+\@ifundefined{mathindent}%
+  {\newdimen\mathindent\mathindent\leftmargini}%
+  {}%
+
+\def\resethooks{%
+  \global\let\SaveRestoreHook\empty
+  \global\let\ColumnHook\empty}
+\newcommand*{\savecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\savecolumns[#1]}}
+\newcommand*{\restorecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\restorecolumns[#1]}}
+\newcommand*{\aligncolumn}[2]%
+  {\g@addto@macro\ColumnHook{\column{#1}{#2}}}
+
+\resethooks
+
+\newcommand{\onelinecommentchars}{\quad-{}- }
+\newcommand{\commentbeginchars}{\enskip\{-}
+\newcommand{\commentendchars}{-\}\enskip}
+
+\newcommand{\visiblecomments}{%
+  \let\onelinecomment=\onelinecommentchars
+  \let\commentbegin=\commentbeginchars
+  \let\commentend=\commentendchars}
+
+\newcommand{\invisiblecomments}{%
+  \let\onelinecomment=\empty
+  \let\commentbegin=\empty
+  \let\commentend=\empty}
+
+\visiblecomments
+
+\newlength{\blanklineskip}
+\setlength{\blanklineskip}{0.66084ex}
+
+\newcommand{\hsindent}[1]{\quad}% default is fixed indentation
+\let\hspre\empty
+\let\hspost\empty
+\newcommand{\NB}{\textbf{NB}}
+\newcommand{\Todo}[1]{$\langle$\textbf{To do:}~#1$\rangle$}
+
+\EndFmtInput
+\makeatother
+%
+%
+%
+%
+%
+%
+% This package provides two environments suitable to take the place
+% of hscode, called "plainhscode" and "arrayhscode". 
+%
+% The plain environment surrounds each code block by vertical space,
+% and it uses \abovedisplayskip and \belowdisplayskip to get spacing
+% similar to formulas. Note that if these dimensions are changed,
+% the spacing around displayed math formulas changes as well.
+% All code is indented using \leftskip.
+%
+% Changed 19.08.2004 to reflect changes in colorcode. Should work with
+% CodeGroup.sty.
+%
+\ReadOnlyOnce{polycode.fmt}%
+\makeatletter
+
+\newcommand{\hsnewpar}[1]%
+  {{\parskip=0pt\parindent=0pt\par\vskip #1\noindent}}
+
+% can be used, for instance, to redefine the code size, by setting the
+% command to \small or something alike
+\newcommand{\hscodestyle}{}
+
+% The command \sethscode can be used to switch the code formatting
+% behaviour by mapping the hscode environment in the subst directive
+% to a new LaTeX environment.
+
+\newcommand{\sethscode}[1]%
+  {\expandafter\let\expandafter\hscode\csname #1\endcsname
+   \expandafter\let\expandafter\endhscode\csname end#1\endcsname}
+
+% "compatibility" mode restores the non-polycode.fmt layout.
+
+\newenvironment{compathscode}%
+  {\par\noindent
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \let\hspre\(\let\hspost\)%
+   \pboxed}%
+  {\endpboxed\)%
+   \par\noindent
+   \ignorespacesafterend}
+
+\newcommand{\compaths}{\sethscode{compathscode}}
+
+% "plain" mode is the proposed default.
+% It should now work with \centering.
+% This required some changes. The old version
+% is still available for reference as oldplainhscode.
+
+\newenvironment{plainhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\hspre\(\let\hspost\)%
+   \pboxed}%
+  {\endpboxed%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+\newenvironment{oldplainhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \(\pboxed}%
+  {\endpboxed\)%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+% Here, we make plainhscode the default environment.
+
+\newcommand{\plainhs}{\sethscode{plainhscode}}
+\newcommand{\oldplainhs}{\sethscode{oldplainhscode}}
+\plainhs
+
+% The arrayhscode is like plain, but makes use of polytable's
+% parray environment which disallows page breaks in code blocks.
+
+\newenvironment{arrayhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \(\parray}%
+  {\endparray\)%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+\newcommand{\arrayhs}{\sethscode{arrayhscode}}
+
+% The mathhscode environment also makes use of polytable's parray 
+% environment. It is supposed to be used only inside math mode 
+% (I used it to typeset the type rules in my thesis).
+
+\newenvironment{mathhscode}%
+  {\parray}{\endparray}
+
+\newcommand{\mathhs}{\sethscode{mathhscode}}
+
+% texths is similar to mathhs, but works in text mode.
+
+\newenvironment{texthscode}%
+  {\(\parray}{\endparray\)}
+
+\newcommand{\texths}{\sethscode{texthscode}}
+
+% The framed environment places code in a framed box.
+
+\def\codeframewidth{\arrayrulewidth}
+\RequirePackage{calc}
+
+\newenvironment{framedhscode}%
+  {\parskip=\abovedisplayskip\par\noindent
+   \hscodestyle
+   \arrayrulewidth=\codeframewidth
+   \tabular{@{}|p{\linewidth-2\arraycolsep-2\arrayrulewidth-2pt}|@{}}%
+   \hline\framedhslinecorrect\\{-1.5ex}%
+   \let\endoflinesave=\\
+   \let\\=\@normalcr
+   \(\pboxed}%
+  {\endpboxed\)%
+   \framedhslinecorrect\endoflinesave{.5ex}\hline
+   \endtabular
+   \parskip=\belowdisplayskip\par\noindent
+   \ignorespacesafterend}
+
+\newcommand{\framedhslinecorrect}[2]%
+  {#1[#2]}
+
+\newcommand{\framedhs}{\sethscode{framedhscode}}
+
+% The inlinehscode environment is an experimental environment
+% that can be used to typeset displayed code inline.
+
+\newenvironment{inlinehscode}%
+  {\(\def\column##1##2{}%
+   \let\>\undefined\let\<\undefined\let\\\undefined
+   \newcommand\>[1][]{}\newcommand\<[1][]{}\newcommand\\[1][]{}%
+   \def\fromto##1##2##3{##3}%
+   \def\nextline{}}{\) }%
+
+\newcommand{\inlinehs}{\sethscode{inlinehscode}}
+
+% The joincode environment is a separate environment that
+% can be used to surround and thereby connect multiple code
+% blocks.
+
+\newenvironment{joincode}%
+  {\let\orighscode=\hscode
+   \let\origendhscode=\endhscode
+   \def\endhscode{\def\hscode{\endgroup\def\@currenvir{hscode}\\}\begingroup}
+   %\let\SaveRestoreHook=\empty
+   %\let\ColumnHook=\empty
+   %\let\resethooks=\empty
+   \orighscode\def\hscode{\endgroup\def\@currenvir{hscode}}}%
+  {\origendhscode
+   \global\let\hscode=\orighscode
+   \global\let\endhscode=\origendhscode}%
+
+\makeatother
+\EndFmtInput
+%
+
+
+\chapter{Machine-assisted Formalisation of Parametrised Graph Algebra}
+
+\section{Abstract}
+The paper shows a machine-assisted approach to formal modelling by considering a graph-based model used to describe parametrised systems of causally related events, such as microcontrol circuits. The paper gives a formal description of the model encoded with the type system of Agda programming language, defining it as an arbitrary set with specific operations on its members, forming an algebra. The data structure for formulae of this algebra is then introduced to be used as a representation type for the model. An example of an algorithm manipulating the formulae is shown. The algorithm correctness and termination are proven with each proof being checked by the compiler. The result is both a machine-verifiable formal proof of the theorems and a runnable tool for formula manipulation.
+
+\DeclareUnicodeCharacter{949}{\varepsilon} % ε
+\DeclareUnicodeCharacter{8702}{QQQQQQQQQQQQQQQQQQ} % QQQ
+\DeclareUnicodeCharacter{737}{^{l}} % ˡ
+\DeclareUnicodeCharacter{8759}{\colon\colon} % ∷
+
+\newcommand{\seq}{\gg}
+\newcommand{\hyp}{\text{-}}
+
+
+
+
+
+\section{Introduction}
+
+Describing complex systems in a natural and compositional way is an important challenge with wide area of application, in particular in hardware design.
+To address this challenge, the Conditional Partial Order Graph (CPOG) formalism has been previously proposed ~\cite{2009_mokhov_phd} ~\cite{2010_mokhov_ieee}, where the systems with
+complex behaviour are described as sets of partial orders of events with each partial order corresponding to an individual system operation mode.
+The partial orders are further annotated with mutually exclusive conditions,
+serving to select the current mode of operation of the system. CPOGs are then proposed as a condensed description of such systems.
+Events in the system are associated with the graph vertices and ordering relationships between events are associated with the graph edges.
+To describe multiple partial orders both vertices and edges can be annotated with conditions determining the set of modes 
+where the graph node should be present. This allows to exploit the similarities between modes of system operation.
+However, this approach lacks in compositionality and the ability to transform the system specifications while preserving the important properties.
+
+The new Parametrised Graphs formalism ~\cite{2011_mokhov_pg} builds upon the CPOG formalism by introducing the following features:
+\begin{itemize}
+\item{it lifts the assumption of graph acyclicity, allowing general graphs instead of partial orders;}
+\item{it adds algebraic operations for combining existing specifications, thus achieving compositionality;}
+\item{it axiomatically defines the equivalence relation on specifications, allowing for equivalence preserving transformations.}
+\end{itemize}
+
+While developing mathematical theories and proofs it is important to maintain logical soundness.
+Even if the proof correctness may be obvious to its author, the peer researchers are often unable (because the proof is not detailed enough) or not willing (because the proof is too involved) to verify it rigorously.
+To avoid such problems we have decided to encode the theory in a formal system so that only definitions would require careful inspection, with proofs being checked automatically.
+
+This paper uses Agda ~\cite{norell:thesis} -- a programming language and proof assistant based on the Martin-Löf type theory -- for formalization of
+Parametrised Graphs theory. The paper additionally describes the algorithm 
+for conversion of PG formulae to normal form and shows that the correctness of the algorithm has been verified.
+
+The paper extensively uses the syntax of Agda and references several definitions from the Agda standard library ~\cite{agdalib}.
+
+\section{Graph Algebra}
+We start with defining an algebra of non-parametrised graphs, to extend them with conditions later.
+
+We define graph algebra as an algebraic structure over a set \ensuremath{\D{G}} with an equivalence relation \ensuremath{\D{≈}} supporting the following operations:
+\begin{itemize}
+\item{An empty graph, denoting no actions.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{\varepsilon}\;\mathbin{:}\;\D{G}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Graph overlay, denoting the parallel composition of actions from both graphs.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\_\D{+}\_\;\mathbin{:}\;\D{G}\;\Varid{→}\;\D{G}\;\Varid{→}\;\D{G}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Graph sequencing, denoting the causal dependency between actions in the first graph and in the second graph.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\_\D{\seq}\_\;\mathbin{:}\;\D{G}\;\Varid{→}\;\D{G}\;\Varid{→}\;\D{G}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\end{itemize}
+
+Additionally, the operations must satisfy the following properties:
+
+\begin{itemize}
+\item{Overlay is commutative and associative.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{+assoc}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;(\Varid{p}\;\D{+}\;\Varid{q})\;\D{+}\;\Varid{r}\;\D{≈}\;\Varid{p}\;\D{+}\;(\Varid{q}\;\D{+}\;\Varid{r}){}\<[E]%
+\\
+\>[3]{}\D{+comm}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{→}\;\Varid{p}\;\D{+}\;\Varid{q}\;\D{≈}\;\Varid{q}\;\D{+}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Sequencing is associative.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{\seq{}assoc}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{p}\;\D{\seq}\;\Varid{q})\;\D{\seq}\;\Varid{r}\;\D{≈}\;\Varid{p}\;\D{\seq}\;(\Varid{q}\;\D{\seq}\;\Varid{r}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Empty graph is a no-op in relation to sequencing.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{\seq{}identity^l}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{→}\;\D{\varepsilon}\;\D{\seq}\;\Varid{p}\;\D{≈}\;\Varid{p}{}\<[E]%
+\\
+\>[3]{}\D{\seq{}identity^r}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{→}\;\Varid{p}\;\D{\seq}\;\D{\varepsilon}\;\D{≈}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Sequencing distributes over overlay.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{distrib^l}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{p}\;\D{\seq}\;(\Varid{q}\;\D{+}\;\Varid{r})\;\D{≈}\;\Varid{p}\;\D{\seq}\;\Varid{q}\;\D{+}\;\Varid{p}\;\D{\seq}\;\Varid{r}{}\<[E]%
+\\
+\>[3]{}\D{distrib^r}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{p}\;\D{+}\;\Varid{q})\;\D{\seq}\;\Varid{r}\;\D{≈}\;\Varid{p}\;\D{\seq}\;\Varid{r}\;\D{+}\;\Varid{q}\;\D{\seq}\;\Varid{r}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Sequence of more than two actions may be decomposed into shorter sequences, 
+forming the original sequence with overlay.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{decomposition}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{16}{}\<[19]%
+\>[19]{}\Varid{p}\;\D{\seq}\;\Varid{q}\;\D{\seq}\;\Varid{r}\;\D{≈}\;\Varid{p}\;\D{\seq}\;\Varid{q}\;\D{+}\;\Varid{p}\;\D{\seq}\;\Varid{r}\;\D{+}\;\Varid{q}\;\D{\seq}\;\Varid{r}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\end{itemize}
+
+\subsection{Derived theorems}
+
+
+The following theorems has been derived from the axioms:
+
+\begin{itemize}
+\item{Empty graph is a no-op in relation to overlay.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{+identity}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{→}\;\Varid{p}\;\D{+}\;\D{\varepsilon}\;\D{≈}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Overlay is idempotent.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{+idempotence}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{→}\;\Varid{p}\;\D{+}\;\Varid{p}\;\D{≈}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Absorption.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{absorption^l}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{→}\;\Varid{p}\;\D{\seq}\;\Varid{q}\;\D{+}\;\Varid{p}\;\D{≈}\;\Varid{p}\;\D{\seq}\;\Varid{q}{}\<[E]%
+\\
+\>[3]{}\D{absorption^r}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{→}\;\Varid{p}\;\D{\seq}\;\Varid{q}\;\D{+}\;\Varid{q}\;\D{≈}\;\Varid{p}\;\D{\seq}\;\Varid{q}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\end{itemize}
+
+\section{Parametrised Graphs}
+
+
+The graph algebra introduced in the previous section can only describe static event dependencies.
+To describe complex dynamic systems one has to consider the conditional behaviour as well.
+To do this, we have extended the graph algebra by annotating the graphs with conditions.
+Given a set \ensuremath{\D{G}} of the parametrised graphs and a set \ensuremath{\D{B}} of all the possible boolean conditions, together with the following operations:
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\_\D{∨}\_\;\mathbin{:}\;\D{B}\;\Varid{→}\;\D{B}\;\Varid{→}\;\D{B}{}\<[E]%
+\\
+\>[3]{}\_\D{∧}\_\;\mathbin{:}\;\D{B}\;\Varid{→}\;\D{B}\;\Varid{→}\;\D{B}{}\<[E]%
+\\
+\>[3]{}\D{¬}\;\mathbin{:}\;\D{B}\;\Varid{→}\;\D{B}{}\<[E]%
+\\
+\>[3]{}\D{⊤}\;\mathbin{:}\;\D{B}{}\<[E]%
+\\
+\>[3]{}\D{⊥}\;\mathbin{:}\;\D{B}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+we require a new operation called \emph{condition}:
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{[}\_\D{]}\_\;\mathbin{:}\;\D{B}\;\Varid{→}\;\D{G}\;\Varid{→}\;\D{G}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+The condition operation must have the following properties:
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{56}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{59}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{true\hyp{}condition}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{→}\;\D{[}\D{⊤}\D{]}\;\Varid{x}\;\D{≈}\;\Varid{x}{}\<[E]%
+\\
+\>[3]{}\D{false\hyp{}condition}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{→}\;\D{[}\D{⊥}\D{]}\;\Varid{x}\;\D{≈}\;\D{\varepsilon}{}\<[E]%
+\\
+\>[3]{}\D{and\hyp{}condition}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{g}\;\Varid{x}\;\Varid{→}\;\D{[}\Varid{f}\;\D{∧}\;\Varid{g}\D{]}\;\Varid{x}\;\D{≈}\;\D{[}\Varid{f}\D{]}\;\D{[}\Varid{g}\D{]}\;{}\<[56]%
+\>[56]{}\Varid{x}{}\<[E]%
+\\
+\>[3]{}\D{or\hyp{}condition}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{g}\;\Varid{x}\;\Varid{→}\;\D{[}\Varid{f}\;\D{∨}\;\Varid{g}\D{]}\;\Varid{x}\;\D{≈}\;\D{[}\Varid{f}\D{]}\;\Varid{x}\;\D{+}\;\D{[}\Varid{g}\D{]}\;{}\<[59]%
+\>[59]{}\Varid{x}{}\<[E]%
+\\
+\>[3]{}\D{conditional+}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;\D{[}\Varid{f}\D{]}\;(\Varid{x}\;\D{+}\;\Varid{y})\;\D{≈}\;\D{[}\Varid{f}\D{]}\;\Varid{x}\;\D{+}\;\D{[}\Varid{f}\D{]}\;\Varid{y}{}\<[E]%
+\\
+\>[3]{}\D{conditional\!\seq}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;\D{[}\Varid{f}\D{]}\;(\Varid{x}\;\D{\seq}\;\Varid{y})\;\D{≈}\;\D{[}\Varid{f}\D{]}\;\Varid{x}\;\D{\seq}\;\D{[}\Varid{f}\D{]}\;\Varid{y}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+We say that there is a \emph{parametrised graph algebra} on a set \ensuremath{\D{G}} with a condition set \ensuremath{\D{B}}
+if there is a graph algebra on \ensuremath{\D{G}}, a boolean algebra on \ensuremath{\D{B}} and a condition operator satisfying the requirements above.
+
+\subsection{Derived Theorems}
+
+The following theorems has been derived for the Parameterised Graph algebra.
+
+
+Choice propagation. If we have a choice between similar subgraphs, we can factor out the similarity and propagate choice onto the differing parts.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{choice\hyp{}propagation_1}\;\mathbin{:}\;\Varid{∀}\;\Varid{b}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\D{[}\Varid{b}\D{]}\;(\Varid{p}\;\D{\seq}\;\Varid{q})\;\D{+}\;\D{[}\D{¬}\;\Varid{b}\D{]}\;(\Varid{p}\;\D{\seq}\;\Varid{r})\;\D{≈}\;\Varid{p}\;\D{\seq}\;(\D{[}\Varid{b}\D{]}\;\Varid{q}\;\D{+}\;\D{[}\D{¬}\;\Varid{b}\D{]}\;\Varid{r}){}\<[E]%
+\\
+\>[B]{}\D{choice\hyp{}propagation_2}\;\mathbin{:}\;\Varid{∀}\;\Varid{b}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\D{[}\Varid{b}\D{]}\;(\Varid{p}\;\D{\seq}\;\Varid{r})\;\D{+}\;\D{[}\D{¬}\;\Varid{b}\D{]}\;(\Varid{q}\;\D{\seq}\;\Varid{r})\;\D{≈}\;(\D{[}\Varid{b}\D{]}\;\Varid{p}\;\D{+}\;\D{[}\D{¬}\;\Varid{b}\D{]}\;\Varid{q})\;\D{\seq}\;\Varid{r}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+Condition regularisation. A sequence of conditional events can be rewritten as an overlay of simpler terms.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{condition\hyp{}regularisation}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{g}\;\Varid{p}\;\Varid{q}\;\Varid{→}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\D{[}\Varid{f}\D{]}\;\Varid{p}\;\D{\seq}\;\D{[}\Varid{g}\D{]}\;\Varid{q}\;\D{≈}\;\D{[}\Varid{f}\D{]}\;\Varid{p}\;\D{+}\;\D{[}\Varid{g}\D{]}\;\Varid{q}\;\D{+}\;\D{[}\Varid{f}\;\D{∧}\;\Varid{g}\D{]}\;(\Varid{p}\;\D{\seq}\;\Varid{q}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Strengthened condition regularisation. This generalizes the regularisation theorem by allowing any \ensuremath{\Varid{z}} containing all the edges between \ensuremath{\Varid{p}} and \ensuremath{\Varid{q}} to be used instead of \ensuremath{\Varid{p}\;\D{\seq}\;\Varid{q}}.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{condition\hyp{}regularisation_s}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{g}\;\Varid{p}\;\Varid{q}\;\Varid{z}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{28}{}\<[31]%
+\>[31]{}\Varid{→}\;\Varid{p}\;\D{\seq}\;\Varid{q}\;\D{≈}\;\Varid{p}\;\D{+}\;\Varid{q}\;\D{+}\;\Varid{z}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{28}{}\<[31]%
+\>[31]{}\Varid{→}\;\D{[}\Varid{f}\D{]}\;\Varid{p}\;\D{\seq}\;\D{[}\Varid{g}\D{]}\;\Varid{q}\;\D{≈}\;\D{[}\Varid{f}\D{]}\;\Varid{p}\;\D{+}\;\D{[}\Varid{g}\D{]}\;\Varid{q}\;\D{+}\;\D{[}\Varid{f}\;\D{∧}\;\Varid{g}\D{]}\;\Varid{z}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\section{Parametrised Graph Formulae}
+
+To perform automated manipulations of PG algebra formulae, we describe the formulae as an algebraic data type in the following way.
+
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{data}\;\D{PGFormula}\;\mathbin{:}\;\I{Set}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\_\C{+}\_\;\mathbin{:}\;(\Varid{x}\;\Varid{y}\;\mathbin{:}\;\D{PGFormula})\;\Varid{→}\;\D{PGFormula}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\_\C{\seq}\_\;\mathbin{:}\;(\Varid{x}\;\Varid{y}\;\mathbin{:}\;\D{PGFormula})\;\Varid{→}\;\D{PGFormula}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\C{ε}\;\mathbin{:}\;\D{PGFormula}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\C{var}\;\mathbin{:}\;(\Varid{a}\;\mathbin{:}\;\D{A})\;\Varid{→}\;\D{PGFormula}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\C{[}\_\C{]}\_\;\mathbin{:}\;(\Varid{c}\;\mathbin{:}\;\D{B})\;\Varid{→}\;\D{PGFormula}\;\Varid{→}\;\D{PGFormula}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+Here \ensuremath{\D{A}} is a set of graph variables and \ensuremath{\D{B}} is a set of condition variables.
+We also have a constructor of \ensuremath{\D{PGFormula}} corresponding to each of the algebra operations and an additional constructor to reference the free variables.
+This way we can construct the formulae in a straightforward way: 
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\C{var}\;\text{\tt \char34 x\char34}\;\C{+}\;\C{var}\;\text{\tt \char34 y\char34}\;\C{\seq}\;\C{var}\;\text{\tt \char34 z\char34}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+Formula evaluation then is catamorphism of PGFormula, replacing constructor applications with the corresponding algebra operations and \ensuremath{\C{var}} constructors with the actual variable values.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{pg\hyp{}eval}\;\mathbin{:}\;\{\mskip1.5mu \D{A}\;\D{B}\;\D{G}\;\mathbin{:}\;\I{Set}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{→}\;(\_\D{+_s}\_\;\_\D{\seq_s}\_\;\mathbin{:}\;\D{G}\;\Varid{→}\;\D{G}\;\Varid{→}\;\D{G})\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{→}\;(\D{ε_s}\;\mathbin{:}\;\D{G})\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{→}\;(\D{[}\_\D{]_s}\_\;\mathbin{:}\;\D{B}\;\Varid{→}\;\D{G}\;\Varid{→}\;\D{G})\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{→}\;(\D{var_s}\;\mathbin{:}\;\D{A}\;\Varid{→}\;\D{G})\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{→}\;\D{PGFormula}\;\D{A}\;\D{B}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{→}\;\D{G}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+
+We use the same technique to define the \ensuremath{\D{BoolFormula}} data structure, with constructors \ensuremath{\_\C{∧}\_}, \ensuremath{\_\C{∨}\_}, \ensuremath{\C{¬}\_}, \ensuremath{\C{⊤}}, \ensuremath{\C{⊥}} and \ensuremath{\C{var}}.
+
+\section{Formula equivalence}
+
+Naturally, it is possible to write the same mathematical function in many structurally different, but logically equivalent ways.
+Here we define a notion of PG formula equivalence. We say that two formula are equivalent iff they 
+can be structurally transformed one into the other by the set of rules corresponding to the equality rules of PG algebra.
+We express this with an indexed inductive data family by explicitly enumerating all the important constructors.
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{data}\;\_\D{≈}\_\;\mathbin{:}\;\D{PGFormula}\;(\D{BoolFormula}\;\D{B})\;\D{V}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{10}{}\<[10]%
+\>[10]{}\Varid{→}\;\D{PGFormula}\;(\D{BoolFormula}\;\D{B})\;\D{V}\;\Varid{→}\;\I{Set}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\C{+assoc}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;(\Varid{p}\;\C{+}\;\Varid{q})\;\C{+}\;\Varid{r}\;\D{≈}\;\Varid{p}\;\C{+}\;(\Varid{q}\;\C{+}\;\Varid{r}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\C{+comm}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{→}\;\Varid{p}\;\C{+}\;\Varid{q}\;\D{≈}\;\Varid{q}\;\C{+}\;\Varid{p}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\C{\seq{}assoc}\;\mathbin{:}\;\Varid{∀}\;\Varid{p}\;\Varid{q}\;\Varid{r}\;\Varid{→}\;(\Varid{p}\;\C{\seq}\;\Varid{q})\;\C{\seq}\;\Varid{r}\;\D{≈}\;\Varid{p}\;\C{\seq}\;(\Varid{q}\;\C{\seq}\;\Varid{r}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{...}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+This definition allows for convenient formula manipulation, without mentioning its semantics.
+However, the meaning of this definition is dubious because it was constructed manually without any mention of PG Algebra.
+To connect the formulae equivalence with an algebra object equivalence, we have defined the proper equivalence relation on formulae, 
+in terms of their semantics. We say that equivalent formulae must give equivalent results for any algebra they are evaluated in.
+
+%%format let = "\K{let}"
+%%format in = "\K{in}"
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{f1}\;\D{≈^s}\;\Varid{f2}\;\mathrel{=}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{∀}\;\D{G}\;\Varid{→}\;(\Varid{algebra}\;\mathbin{:}\;\D{PGAlgebra}\;\D{G})\;\Varid{→}\;(\Varid{f}\;\mathbin{:}\;\D{V}\;\Varid{→}\;\D{G})\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\D{eval}\;\Varid{algebra}\;\Varid{f}\;\Varid{f1}\;\D{≈}\;\D{eval}\;\Varid{algebra}\;\Varid{f}\;\Varid{f2}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Here we assume that \ensuremath{\D{eval}\;\Varid{algebra}} applies \ensuremath{\D{pg\hyp{}eval}} to all of the \ensuremath{\Varid{algebra}} operations.
+Now we can show that our easier to use equivalence relation is equivalent to the semantics-based definition:
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{≈→≈^s}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{g}\;\Varid{→}\;\Varid{f}\;\D{≈}\;\Varid{g}\;\Varid{→}\;\Varid{f}\;\D{≈^s}\;\Varid{g}{}\<[E]%
+\\
+\>[B]{}\D{≈^s→≈}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{g}\;\Varid{→}\;\Varid{f}\;\D{≈^s}\;\Varid{g}\;\Varid{→}\;\Varid{f}\;\D{≈}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\section{Normal Form}
+
+
+We say that a normal form (\ensuremath{\D{NF}}) of PG formula (\ensuremath{\D{PG}}) is an overlay of literals (\ensuremath{\D{Lit}}) where each literal is a \ensuremath{\D{Node}} annotated with a condition and each node is either a variable (\ensuremath{\D{V}}) or two variables connected with a sequence operator. We encode these definitions assuming boolean formulae (\ensuremath{\D{BF}}) as conditions.
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{Node}\;\mathrel{=}\;\D{V}\;\I{⊎}\;\D{V}\;\I{×}\;\D{V}{}\<[E]%
+\\
+\>[B]{}\D{Lit}\;\mathrel{=}\;\D{Node}\;\I{×}\;\D{BF}{}\<[E]%
+\\
+\>[B]{}\D{NF}\;\mathrel{=}\;\I{List}\;\D{Lit}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+So far we have defined the structure of those types without formally saying anything about their semantics. We define the semantics for them by providing a corresponding Parametrised Graph Formulae (\ensuremath{\D{PG}}).
+
+
+A \ensuremath{\D{Node}}, depending on its constructor, corresponds to either a single variable or two variables connected via the sequence operator.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[4]{}\D{fromNode}\;\mathbin{:}\;\D{Node}\;\Varid{→}\;\D{PG}{}\<[E]%
+\\
+\>[4]{}\D{fromNode}\;(\C{inj_1}\;\Varid{x})\;\mathrel{=}\;\C{var}\;\Varid{x}{}\<[E]%
+\\
+\>[4]{}\D{fromNode}\;(\C{inj_2}\;(\Varid{x}\C{,}\Varid{y}))\;\mathrel{=}\;\C{var}\;\Varid{x}\;\C{\seq}\;\C{var}\;\Varid{y}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+A \ensuremath{\D{Lit}} of the form \ensuremath{(\Varid{node}\C{,}\Varid{condition})} corresponds to the formula \ensuremath{\C{[}\Varid{condition}\C{]}\;\Varid{node}}.
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[4]{}\D{fromLit}\;\mathbin{:}\;\D{Lit}\;\Varid{→}\;\D{PG}{}\<[E]%
+\\
+\>[4]{}\D{fromLit}\;(\Varid{node}\C{,}\Varid{cond})\;\mathrel{=}\;\C{[}\Varid{cond}\C{]}\;\D{fromNode}\;\Varid{node}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\ensuremath{\D{NF}} corresponds to the overlay of all of its literals.
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[4]{}\D{fromNF}\;\mathbin{:}\;\D{NF}\;\Varid{→}\;\D{PG}{}\<[E]%
+\\
+\>[4]{}\D{fromNF}\;\mathrel{=}\;\I{foldr}\;\_\C{+}\_\;\C{ε}\;\I{∘}\;\I{map}\;\D{fromLit}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+\section{Normalisation algorithm}
+
+To automate the translation of formulae to normal form we have developed the algorithm presented in this section.
+
+
+The top-level normalisation function traverses the PG formula recursively, normalising all of the subformulae and combining them with the appropriate functions (\ensuremath{\_\D{+_{NF}}\_} for \ensuremath{\C{+}}, \ensuremath{\_\D{\seq_{NF}}\_} for \ensuremath{\C{\seq}}, etc.).
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{normalise}\;\mathbin{:}\;\D{PG}\;\Varid{→}\;\D{NF}{}\<[E]%
+\\
+\>[3]{}\D{normalise}\;\mathrel{=}\;\D{pg\hyp{}eval}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}\_\D{+_{NF}}\_\;{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}\_\D{\seq_{NF}}\_\;{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}\C{[}\C{]}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}\D{addCondition}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}\D{fromVar}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+The individual functions manipulating normal forms are implemented in the following way.
+
+\begin{itemize}
+
+\item{The normal form of \ensuremath{\C{ε}} is empty list.}
+\item{The normal form of a variable literal \ensuremath{\Varid{x}} is a singleton list containing \ensuremath{\C{[}\C{⊤}\C{]}\;\Varid{x}}.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{fromVar}\;\mathbin{:}\;\D{V}\;\Varid{→}\;\D{NF}{}\<[E]%
+\\
+\>[3]{}\D{fromVar}\;\Varid{x}\;\mathrel{=}\;(\C{inj_1}\;\Varid{x}\C{,}\C{⊤})\;\C{::}\;\C{[}\C{]}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Overlay of two normal forms is concatenation of their literals.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\_\D{+_{NF}}\_\;\mathbin{:}\;\D{NF}\;\Varid{→}\;\D{NF}\;\Varid{→}\;\D{NF}{}\<[E]%
+\\
+\>[3]{}\Varid{a}\;\D{+_{NF}}\;\Varid{b}\;\mathrel{=}\;\Varid{a}\;\plus \;\Varid{b}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Sequence of two normal forms can be defined by applying the distributivity rules as a sum of pairwise sequencing of their literals.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\_\D{\seq{}_r}\_\;\mathbin{:}\;\D{Lit}\;\Varid{→}\;\D{NF}\;\Varid{→}\;\D{NF}{}\<[E]%
+\\
+\>[3]{}\Varid{lit}\;\D{\seq{}_r}\;\C{[}\C{]}\;\mathrel{=}\;\Varid{lit}\;\C{::}\;\C{[}\C{]}{}\<[E]%
+\\
+\>[3]{}\Varid{lit}\;\D{\seq{}_r}\;(\Varid{x}\;\C{::}\;\Varid{xs})\;\mathrel{=}\;(\Varid{lit}\;\D{\seq{}_1}\;\Varid{x})\;\C{+}\;(\Varid{lit}\;\D{\seq{}_r}\;\Varid{xs}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\_\D{\seq_{NF}}\_\;\mathbin{:}\;\D{NF}\;\Varid{→}\;\D{NF}\;\Varid{→}\;\D{NF}{}\<[E]%
+\\
+\>[3]{}\C{[}\C{]}\;\D{\seq_{NF}}\;\Varid{b}\;\mathrel{=}\;\Varid{b}{}\<[E]%
+\\
+\>[3]{}(\Varid{h}\;\C{::}\;\Varid{t})\;\D{\seq_{NF}}\;\Varid{b}\;\mathrel{=}\;(\Varid{h}\;\D{\seq{}_r}\;\Varid{b})\;\C{+}\;(\Varid{t}\;\D{\seq_{NF}}\;\Varid{b}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+}
+\item{Sequence of two literals \ensuremath{\C{[}\Varid{f}\C{]}\;\Varid{p}\;\C{\seq}\;\C{[}\Varid{g}\C{]}\;\Varid{q}} then can be defined as \ensuremath{\C{[}\Varid{f}\C{]}\;\Varid{p}\;\C{+}\;\C{[}\Varid{g}\C{]}\;\Varid{q}\;\C{+}\;\C{[}\Varid{f}\;\C{∧}\;\Varid{g}\C{]}\;\Varid{r}} where \ensuremath{\Varid{r}\;\mathrel{=}\;\D{newArrows}\;\Varid{p}\;\Varid{q}} is the set of new arc nodes formed by sequencing the nodes \ensuremath{\Varid{p}} and \ensuremath{\Varid{q}}.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{vertices}\;\mathbin{:}\;\D{Node}\;\Varid{→}\;\I{List}\;\D{V}{}\<[E]%
+\\
+\>[3]{}\D{vertices}\;(\C{inj_1}\;\Varid{x})\;\mathrel{=}\;\Varid{x}\;\C{::}\;\C{[}\C{]}{}\<[E]%
+\\
+\>[3]{}\D{vertices}\;(\C{inj_2}\;(\Varid{x}\C{,}\Varid{y}))\;\mathrel{=}\;\Varid{x}\;\C{::}\;\Varid{y}\;\C{::}\;\C{[}\C{]}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\D{newArrows}\;\mathbin{:}\;\D{Node}\;\Varid{→}\;\D{Node}\;\Varid{→}\;\I{List}\;\D{Node}{}\<[E]%
+\\
+\>[3]{}\D{newArrows}\;\Varid{p}\;\Varid{q}\;\mathrel{=}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\I{map}\;\C{inj_2}\;(\D{vertices}\;\Varid{p}\;\I{⊗}\;\D{vertices}\;\Varid{q}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\_\D{\seq{}_1}\_\;\mathbin{:}\;\D{Lit}\;\Varid{→}\;\D{Lit}\;\Varid{→}\;\I{List}\;\D{Lit}{}\<[E]%
+\\
+\>[3]{}(\Varid{p}\C{,}\Varid{f})\;\D{\seq{}_1}\;(\Varid{q}\C{,}\Varid{g})\;\mathrel{=}\;(\Varid{p}\C{,}\Varid{f})\;\C{::}\;(\Varid{q}\C{,}\Varid{g})\;{}\<[E]%
+\\
+\>[3]{}\hsindent{4}{}\<[7]%
+\>[7]{}\C{::}\;(\I{map}\;(\I{flip}\;\_\C{,}\_\;(\Varid{f}\;\C{∧}\;\Varid{g}))\;(\D{newArrows}\;\Varid{p}\;\Varid{q})){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+Here \ensuremath{\D{vertices}\;\Varid{n}} is the list of graph vertices contained in node \ensuremath{\Varid{n}} -- one vertex when \ensuremath{\Varid{n}} is a vertex node and two vertices when \ensuremath{\Varid{n}} is an arc node.
+
+\ensuremath{\D{newArrows}\;\Varid{a}\;\Varid{b}} then is a set of arc nodes connecting each of the vertices in \ensuremath{\Varid{a}} to each of the vertices in \ensuremath{\Varid{b}}.
+}
+\end{itemize}
+
+
+\subsection{Algorithm Correctness}
+We define the correctness of normalisation by saying that the semantics of the resulting normal form must be equivalent to the original formula.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{normalise\hyp{}correct}\;\mathbin{:}\;\Varid{∀}\;\Varid{f}\;\Varid{→}\;\Varid{f}\;\D{≈}\;\D{fromNF}\;(\D{normalise}\;\Varid{f}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+To prove this theorem we had to prove several simpler statements.
+
+Normal form overlay is correct.
+That is, the semantics of concatenated normal forms is the overlay of their individual semantics.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{+correct}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\D{fromNF}\;\Varid{x}\;\C{+}\;\D{fromNF}\;\Varid{y}\;\D{≈}\;\D{fromNF}\;(\Varid{x}\;\D{+_{NF}}\;\Varid{y}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+This follows from the monoid structure of overlay.
+
+The normal form sequencing functions are correct.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{\seq{}correct}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\D{fromNF}\;\Varid{x}\;\C{\seq}\;\D{fromNF}\;\Varid{y}\;\D{≈}\;\D{fromNF}\;(\Varid{x}\;\D{\seq_{NF}}\;\Varid{y}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+This relies on the right distributivity and the correctness of \ensuremath{\D{\seq{}_r}}.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{\seq_rcorrect}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\D{fromLit}\;\Varid{x}\;\C{\seq}\;\D{fromNF}\;\Varid{y}\;\D{≈}\;\D{fromNF}\;(\Varid{x}\;\D{\seq{}_r}\;\Varid{y}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+This relies on the left distributivity and the correctness of \ensuremath{\D{\seq{}_1}}.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\D{\seq_1correct}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\D{fromLit}\;\Varid{x}\;\C{\seq}\;\D{fromLit}\;\Varid{y}\;\D{≈}\;\D{fromNF}\;(\Varid{x}\;\D{\seq{}_1}\;\Varid{y}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+The correctness of \ensuremath{\D{\seq{}_1}} is proven by the following chain of reasoning.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{8}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[5]{}\D{fromLit}\;(\Varid{x}\C{,}\Varid{f})\;\C{\seq}\;\D{fromLit}\;(\Varid{y}\C{,}\Varid{g})\;{}\<[E]%
+\\
+\>[5]{}\hsindent{1}{}\<[6]%
+\>[6]{}\Varid{≈⟨}\;\D{condition\hyp{}regularisation_s};\D{newArrows\hyp{}correct}\;\Varid{⟩}{}\<[E]%
+\\
+\>[5]{}\D{fromLit}\;(\Varid{x}\C{,}\Varid{f})\;\C{+}\;\D{fromLit}\;(\Varid{y}\C{,}\Varid{g})\;{}\<[E]%
+\\
+\>[5]{}\hsindent{4}{}\<[9]%
+\>[9]{}\C{+}\;\C{[}\Varid{f}\;\C{∧}\;\Varid{g}\C{]}\;\D{sumNodes}\;(\D{newArrows}\;\Varid{x}\;\Varid{y})\;{}\<[E]%
+\\
+\>[5]{}\hsindent{1}{}\<[6]%
+\>[6]{}\Varid{≈⟨}\;\Varid{propagating}\;\Varid{the}\;\Varid{condition}\;\Varid{to}\;\Varid{the}\;\Varid{literals}\;\Varid{⟩}{}\<[E]%
+\\
+\>[5]{}\D{fromLit}\;(\Varid{x}\C{,}\Varid{f})\;\C{+}\;\D{fromLit}\;(\Varid{y}\C{,}\Varid{g})\;{}\<[E]%
+\\
+\>[5]{}\hsindent{3}{}\<[8]%
+\>[8]{}\C{+}\;\D{fromNF}\;(\I{map}\;(\I{flip}\;\_\C{,}\_\;(\Varid{f}\;\C{∧}\;\Varid{g}))\;(\D{newArrows}\;\Varid{x}\;\Varid{y}))\;{}\<[E]%
+\\
+\>[5]{}\hsindent{1}{}\<[6]%
+\>[6]{}\Varid{≈⟨}\;\Varid{by}\;\C{+assoc}\;\Varid{and}\;\Varid{definitions}\;\Varid{⟩}{}\<[E]%
+\\
+\>[5]{}\D{fromNF}\;((\Varid{x}\C{,}\Varid{f})\;\D{\seq{}_1}\;(\Varid{y}\C{,}\Varid{g})){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+The desired properties of the \ensuremath{\D{newArrows}} function are not as obvious as the properties of the other functions. We have formulated them as follows.
+% \newpage
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\D{newArrows\hyp{}correct}\;\mathbin{:}\;\Varid{∀}\;\Varid{x}\;\Varid{y}\;\Varid{→}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{3}{}\<[6]%
+\>[6]{}\D{fromNode}\;\Varid{x}\;\C{\seq}\;\D{fromNode}\;\Varid{y}\;\D{≈}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{3}{}\<[6]%
+\>[6]{}\D{fromNode}\;\Varid{x}\;\C{+}\;\D{fromNode}\;\Varid{y}\;{}\<[E]%
+\\
+\>[6]{}\hsindent{18}{}\<[24]%
+\>[24]{}\C{+}\;\D{sumNodes}\;(\D{newArrows}\;\Varid{x}\;\Varid{y}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+where \ensuremath{\D{sumNodes}\;\mathrel{=}\;\I{foldr}\;\_\C{+}\_\;\C{ε}\;\I{∘}\;\I{map}\;\D{fromNode}}. Our proof of this property is less than elegant. We manually enumerate all four cases (vertex and vertex, vertex and arc, arc and vertex, arc and arc) and prove four theorems individually, using the decomposition, commutativity and associativity axioms. It's likely possible to simplify the proof by treating the nodes as lists of sequenced vertices and prove by induction on those lists, instead of enumerating all the possible cases.
+
+\section{Conclusion}
+We have formalised the definitions of algebra of parametrised graph in Agda, and developed the machine-checked proofs of several properties of that algebra.
+
+The formula representation data structure was designed together with the custom structural equivalence relation on formula representations for convenient formula manipulations. The equivalence relation has been proven equivalent to the one defined using formula semantics, thus showing its adequacy.
+
+The normal form representation data structure for PG formulae was designed with its semantics defined as translation to the corresponding general formula representations.
+
+The algorithm of finding the normal form of general formulae was developed and was proven to be correct.
+
+The immediate future work includes formalizing the proof of CPOG being a model of PG Algebra and modification of algorithm to compute the canonical form (where each graph node is mentioned no more than once) instead of just a normal form. Canonical form is much more useful because its size is at most quadratic while the size of a normal form is exponential in general.
+
+The code used in this paper can be obtained by contacting the authors.
