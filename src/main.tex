@@ -1,4 +1,4 @@
-\documentclass[english,british]{report}
+\documentclass[12pt,english,british]{report}
 
 \usepackage{amsthm}
 \usepackage{amsmath}
@@ -18,13 +18,18 @@
 \usepackage{enumerate}
 \usepackage{graphs}
 
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage[top=20mm, left=40mm, bottom=20mm, right=20mm]{geometry}
+
 \include{lyx-preamble}
 \include{agda-preamble}
 \include{parcomp-preamble}
 
 \begin{document}
 
-\title{Compositional Approach to Design of Digital Circuits}
+\title{Compositionalq Approach to Design of Digital Circuits}
 
 \date{June 01, 2013}
 
@@ -34,7 +39,15 @@
 
 \maketitle
 
+\setcounter{page}{1}
+\pagenumbering{roman}
+
 \tableofcontents
+\newpage
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
 
 \include{Contents}
 
