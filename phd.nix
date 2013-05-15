@@ -3,13 +3,13 @@ let pkgs = import <nixpkgs> {}; in
   name = "phd";
   src = ./src;
   breaker_hs = ./breaker.hs;
-  buildInputs = with pkgs; [texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [haskellPlatform lhs2tex]))];
+  buildInputs = with pkgs; [inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [haskellPlatform lhs2tex self.shake]))];
   phases = [ "unpackPhase" "buildPhase" ];
   buildPhase = ''
 	set -e
+#	runhaskell ${./inkscaper.hs}
 	export BuildDir=`pwd`
 	lhs2TeX --agda agda.tex > agda-processed.tex
-# 	find -name '*.svg' 
 	runhaskell $breaker_hs -o1 agda-preamble.tex -o2 agda-processed-body.tex < agda-processed.tex
 	export TEXINPUTS=$BuildDir/styles:$BuildDir/DATE10_Balsa:$BuildDir/par_comp:
 	export BIBINPUTS=$BuildDir/par_comp:

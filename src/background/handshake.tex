@@ -40,7 +40,11 @@ The behaviour of the component is as follows: upon receiving an activation it en
 
 \item
 Concur is a component with a similar external interface: it has a passive port $activate$ and two active ports $activate_1$ and $activate_2$.
-The behaviour during the activation on $activate$ is to activate $activate_1$ and $activate_2$ in parallel.
+The behaviour during the activation on $activate$ is to activate $activate_1$ and $activate_2$ concurrently.
+
+\item
+Sync is a component with three control ports: two passive ports s_1 and s_2 and an active port t. 
+This component ensures that $t$ is enclosed 
 \end{itemize}
 
 
