@@ -4,9 +4,10 @@
 We explore the available formalisms for design of asynchronous digital
 circuits and compare them with the principle of compositionality in
 mind. We propose improvements to the existing techniques and
-propose a new formalism, Parametrised Graph (PG) Algebra, which is a
+propose a new formalism, Parametrised Graph (PG) theory, which is a
 generalisation of the existing CPOG formalism. The We furhter study 
 the theory of PG Algebra and present mechanised formal proofs of certain properties.
+
 
 \section{Motivation}
 
@@ -23,15 +24,45 @@ The key property facilitating component reuse is compositionality.
 Compositionality is a property of a given language where the meaning of a language construct is determined by the meanings of its parts.
 
 
-% \subsection{Why compositionality}
 
-% \subsection{Kinds of composition}
 
-% \subsubsection{Structural}
+\section{Contributions}
 
-% \subsubsection{Behavioural}
+The main contributions of the thesis are as follows:
 
-% \section{Prior work}
+\begin{itemize}
+\item
+\textbf{Improved parallel composition:} a novel method for composition of models specified with labelled Petri Nets.
+
+\item
+\textbf{Balsa circuit synthesis:} application of labelled Petri nets and parallel composition to synthesis of Balsa handshake circuits.
+
+\item
+\textbf{CPOG Synthesis:} a technique for synthesis of processor instruction decoder using instruction sets specified with Conditional Partial Order Graphs.
+
+\item
+\textbf{PG theory:} formal specification of theory of parameterised graphs with CPOGs as an example of its algebra.
+
+\item
+\textbf{CAD tool support:} automation for design of CPOGs and Balsa circuits using Workcraft framework.
+
+\end{itemize}
+
+\section{Structure}
+
+The rest of the thesis is organised as follows:
+
+Chapter~\ref{chap:Background} covers the basics of handshake circuits, signal transition graphs and conditional partial order graphs.
+
+Chapter~\ref{chap:Approach} overviews the existing composition methods and outlines the drawbacks using an intuitive GCD benchmark as an example.
+
+Chapter~\ref{chap:ParComp} describes the proposed improved parallel composition algorithm.
+
+Chapter~\ref{chap:PGAlgebra} introduces Parametrised Graph (PG) theory, defining and studying an algebraic structure that generalises Conditional Partial Order Graph formalism.
+
+Chapter~\ref{chap:PGEncoding} describes a technique for optimal encoding of processor instruction sets defined using CPOG formalism.
+
+Chapter~\ref{chap:Conclusion} summarises the achieved results and proposes ideas for future research.
 
 \input{introduction/par_comp}
 \input{introduction/pg_algebra}

@@ -3,7 +3,7 @@ let pkgs = import <nixpkgs> {}; in
   name = "phd";
   src = ./src;
   breaker_hs = ./breaker.hs;
-  buildInputs = with pkgs; [inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [haskellPlatform lhs2tex self.shake]))];
+  buildInputs = with pkgs; [inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [haskellPlatform lhs2tex shake]))];
   phases = [ "unpackPhase" "buildPhase" ];
   buildPhase = ''
 	set -e

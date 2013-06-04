@@ -1,69 +1,5 @@
 \section{Improved Parallel Composition}\label{sec_intro}
 
-\subsection{Abstract of Balsa Resynthesis}
-
-The paper proposes a modification of the standard design workflow
-that is used in Balsa design automation system. The controllers obtained
-by syntax-directed mapping used in Balsa usually suffer from performance,
-area and power overheads because the predesigned set of components
-is required to implement the declared protocols fully and correctly
-in order to be reusable in all possible circuit configurations, which
-results in redundancy. This redundancy can be eliminated by replacing
-the manually designed gate-level implementations of the high level
-components with the corresponding STG specifications. The STGs of
-individual components that form the system are then composed together
-to produce the final system STG that is used to synthesise an optimal
-implementation of the control circuit. The process is automated as
-a plug-in for Workcraft framework.
-
-\subsection{Introduction of Balsa Resynthesis\label{sec:Balsa-Introduction}}
-
-The main obstacle for the wider spread of asynchronous systems remains
-to be the inherent complexity of their design. Several solutions are
-accepted by the industry that ease the design process through abstraction
-of predesigned asynchronous circuit parts as standardised high level
-components. A designer is able to use these components as ``building
-blocks'', and then obtain the final gate-level design through an
-automated mapping process. Furthermore, some of the well-known asynchronous
-design automation packages, such as Tangram~\cite{951597}, and Balsa~\cite{balsa},
-define a high-level programming-like language that is used to describe
-systems. The language constructs are then directly translated into
-a network of \emph{handshake components }-- blocks with predefined
-functionality that use \emph{handshakes} to interface with other components,
-which are in turn mapped into a gate netlist. 
-
-Although this method greatly enhances the designer's productivity,
-it has several important drawbacks, of which the control-path overhead
-is the most decisive. The controllers obtained by syntax-directed
-mapping are usually far from optimal, because the predesigned components
-are required to implement their declared protocols fully and correctly
-in order to be reusable in all possible circuit configurations. However,
-it is often the case that a significant part of their functionality
-becomes redundant due to the peculiarities of the specific configuration,
-e.g. in many cases full handshaking between the components can be
-avoided.
-
-This redundancy can be eliminated by replacing the manually designed
-gate-level implementation of the high level components with an equivalent
-STG~(signal transition graph)~\cite{Yakovlev_1998_cs} specification.
-The individual component STGs are then composed together to form a
-complete system STG~\cite{785214}, which is optimised using \noun{petrify~}\cite{cortadella_petrify}\noun{.}
-An optimal gate-level implementation can then be automatically produced
-from the STG using tools such as \noun{petrify}~\noun{\cite{cortadella_petrify},
-SIS}~\cite{Sentovich:M92/41}\noun{ }and\noun{ MPSat}~\cite{Khomenko_2004_MPSAT}\noun{.}
-Automatic synthesis becomes problematic when the size of the STG becomes
-large: modern synthesis tools can handle STGs of no more than 100
-signals. The impact of this problem can be lessened by including STG
-decomposition tools~\cite{DesiJ} into the workflow, that would break
-the large optimised STG down into several smaller STGs that are synthesisable
-in reasonable time. Alternatively, the decomposition step can be carried
-out on the level of the handshake circuits, dividing the circuit into
-smaller blocks of components.
-
-This paper proposes an automated method to include the aforementioned
-modification of the standard design workflow that is used in Balsa
-design automation system~\cite{balsa} using \noun{Workcraft~\cite{DBLP:conf/apn/PoliakovKY09}
-}framework.
 
 \subsection{Abstract}
 Parallel composition of labelled Petri nets is a fundamental operation in modular design. It is often used to combine models of subsystems into a model of the whole system.
@@ -152,6 +88,6 @@ One operation where implicit places matter is \emph{transition contraction,}~\ci
 The main contribution of this paper is a new me\-thod for computing the parallel composition of labelled Petri nets, that generates fewer implicit places. It uses the \emph{freeness from computation interference (FCI)} assumption, stating that the situation when one component wants to produce an output, but is prevented from doing so by another component which is not ready to receive it, is impossible. Violation of FCI means that the behaviour of the composition does not correspond to that of the physical system. For example, an output of a circuit component cannot be physically disabled by another component that is not ready to receive this signal, and so producing this output will lead to malfunction; however, the composition will be oblivious to it, and behave as if such an output could not be produced.
 Hence FCI is a basic correctness requirement --- if it is violated, there is no point in computing parallel composition, as its behaviour will not describe that of the physical system. In practice, FCI is often guaranteed by construction, \eg it is always guaranteed for the control path of a \balsa~\cite{EB-02} or \haste/\tangram~\cite{berkel91,haste-manual} specification of an asynchronous circuit. The idea of using the FCI condition is reminiscent of the method of input/output exposure in the synthesis by direct mapping described in~\cite{SBY-07}, and of the correct by construction composition of Petri nets for circuit components and the environment used in the \ditopn tool~\cite{JF-00}.
 
-The main idea of the method propose here is illustrated by the example in Fig.~\ref{fi-motivating-example2}. Before doing the parallel composition, one can remove some of the places in the components as shown in parts (a--c) of the figure and then compose the modified STGs. The precise conditions that allow to remove a particular place will be stated in Sect.~\ref{se-main}; at this point it is only important that they are structural and thus can be efficiently checked. This guarantees that the number of places in the resulting Petri net is smaller (as the number of places in the composition is the total number of places in all the components), and, under the FCI assumption, the resulting behaviour will be the same (in the sense of isomorphism of the reachability graphs). In particular, in our example, composing the modified components yields the STG in Fig.~\ref{fi-motivating-example2}(d), which in this case contains no implicit places. Observe that the modified components on their own can have rather bad behaviour and in particular can be non-implementable; however, it does not matter, as they are never used on their own, but only in composition with other components, and the resulting behaviour of the composition is guaranteed to correspond to that of the standard composition.
+The main idea of the method we propose here is illustrated by the example in Fig.~\ref{fi-motivating-example2}. Before doing the parallel composition, one can remove some of the places in the components as shown in parts (a--c) of the figure and then compose the modified STGs. The precise conditions that allow to remove a particular place will be stated in Sect.~\ref{se-main}; at this point it is only important that they are structural and thus can be efficiently checked. This guarantees that the number of places in the resulting Petri net is smaller (as the number of places in the composition is the total number of places in all the components), and, under the FCI assumption, the resulting behaviour will be the same (in the sense of isomorphism of the reachability graphs). In particular, in our example, composing the modified components yields the STG in Fig.~\ref{fi-motivating-example2}(d), which in this case contains no implicit places. Observe that the modified components on their own can have rather bad behaviour and in particular can be non-implementable; however, it does not matter, as they are never used on their own, but only in composition with other components, and the resulting behaviour of the composition is guaranteed to correspond to that of the standard composition.
 
 Re-synthesis of asynchronous circuits is the intended application of the proposed method. However, we envisage that it has a much wider applicability, as composition of labelled Petri nets is a fundamental operation, and the FCI assumption often holds in practice.

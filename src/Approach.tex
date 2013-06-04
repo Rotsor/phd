@@ -1,0 +1,66 @@
+\chapter{Approach}
+
+\subsection{Abstract of Balsa Resynthesis}
+
+The paper proposes a modification of the standard design workflow
+that is used in Balsa design automation system. The controllers obtained
+by syntax-directed mapping used in Balsa usually suffer from performance,
+area and power overheads because the predesigned set of components
+is required to implement the declared protocols fully and correctly
+in order to be reusable in all possible circuit configurations, which
+results in redundancy. This redundancy can be eliminated by replacing
+the manually designed gate-level implementations of the high level
+components with the corresponding STG specifications. The STGs of
+individual components that form the system are then composed together
+to produce the final system STG that is used to synthesise an optimal
+implementation of the control circuit. The process is automated as
+a plug-in for Workcraft framework.
+
+\subsection{Introduction of Balsa Resynthesis\label{sec:Balsa-Introduction}}
+
+The main obstacle for the wider spread of asynchronous systems remains
+to be the inherent complexity of their design. Several solutions are
+accepted by the industry that ease the design process through abstraction
+of predesigned asynchronous circuit parts as standardised high level
+components. A designer is able to use these components as ``building
+blocks'', and then obtain the final gate-level design through an
+automated mapping process. Furthermore, some of the well-known asynchronous
+design automation packages, such as Tangram~\cite{951597}, and Balsa~\cite{balsa},
+define a high-level programming-like language that is used to describe
+systems. The language constructs are then directly translated into
+a network of \emph{handshake components }-- blocks with predefined
+functionality that use \emph{handshakes} to interface with other components,
+which are in turn mapped into a gate netlist. 
+
+Although this method greatly enhances the designer's productivity,
+it has several important drawbacks, of which the control-path overhead
+is the most decisive. The controllers obtained by syntax-directed
+mapping are usually far from optimal, because the predesigned components
+are required to implement their declared protocols fully and correctly
+in order to be reusable in all possible circuit configurations. However,
+it is often the case that a significant part of their functionality
+becomes redundant due to the peculiarities of the specific configuration,
+e.g. in many cases full handshaking between the components can be
+avoided.
+
+This redundancy can be eliminated by replacing the manually designed
+gate-level implementation of the high level components with an equivalent
+STG~(signal transition graph)~\cite{Yakovlev_1998_cs} specification.
+The individual component STGs are then composed together to form a
+complete system STG~\cite{785214}, which is optimised using \noun{petrify~}\cite{cortadella_petrify}\noun{.}
+An optimal gate-level implementation can then be automatically produced
+from the STG using tools such as \noun{petrify}~\noun{\cite{cortadella_petrify},
+SIS}~\cite{Sentovich:M92/41}\noun{ }and\noun{ MPSat}~\cite{Khomenko_2004_MPSAT}\noun{.}
+Automatic synthesis becomes problematic when the size of the STG becomes
+large: modern synthesis tools can handle STGs of no more than 100
+signals. The impact of this problem can be lessened by including STG
+decomposition tools~\cite{DesiJ} into the workflow, that would break
+the large optimised STG down into several smaller STGs that are synthesisable
+in reasonable time. Alternatively, the decomposition step can be carried
+out on the level of the handshake circuits, dividing the circuit into
+smaller blocks of components.
+
+This paper proposes an automated method to include the aforementioned
+modification of the standard design workflow that is used in Balsa
+design automation system~\cite{balsa} using \noun{Workcraft~\cite{DBLP:conf/apn/PoliakovKY09}
+}framework.

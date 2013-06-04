@@ -53,9 +53,13 @@
 \newcommand{\F}[1]{\green{\mathsf{#1}}}
 \newcommand{\V}[1]{\purple{\mathit{#1}}}
 
+\newcommand{\dfeq}{\overset{\mathrm{df}}{=}}
+
 %%%%%%% BREAK HERE %%%%%%%
 
 \chapter{Algebra of Parameterised Graphs}
+
+\label{chap:PGAlgebra}
 
 \section{Parameterised Graphs\label{sec:Parametrised-Graphs}}
 
@@ -63,25 +67,25 @@ A \emph{Parameterised Graph} (PG) is a model which has evolved from
 Conditional Partial Order Graphs (CPOG)~\cite{2010_mokhov_ieee}.
 We consider directed graphs $G=(V,E)$ whose vertices are picked from
 the fixed alphabet of \emph{actions} $\mathcal{A}=\{a,b,...\}$. Hence
-the vertices of $G$ would usually model actions\emph{ }(or \emph{events}\/)
+the vertices of $G$ would usually model actions (or \emph{events})
 of the system being designed, while the arcs would usually model the
 \emph{precedence} or \emph{causality} relation: if there is an arc
 going from~$a$ to~$b$ then action~$a$ precedes action~$b$.
 We will denote the \emph{empty graph} $(\emptyset,\emptyset)$ by
 $\varepsilon$ and the \emph{singleton graphs} $(\{a\},\emptyset)$
-simply by $a$, for any $a\in\mathcal{A}$\emph{.}
+simply by $a$, for any $a\in\mathcal{A}$.
 
 Let $G_{1}=(V_{1},E_{1})$ and $G_{2}=(V_{2},E_{2})$ be two graphs,
 where $V_{1}$ and $V_{2}$ as well as $E_{1}$ and $E_{2}$ are not
 necessarily disjoint. We define the following operations on graphs
 (in the order of increasing precedence):
 \begin{lyxlist}{00.00.0000}
-\item [{\hspace{6mm}Overlay:}] $G_{1}+G_{2}\overset{\mathrm{df}}{=}(V_{1}\cup V_{2},E_{1}\cup E_{2})$.
-\item [{\hspace{6mm}Sequence:}] $G_{1}\rightarrow G_{2}\overset{\mathrm{df}}{=}(V_{1}\cup V_{2},E_{1}\cup E_{2}\cup V_{1}\times V_{2})$.
-\item [{\hspace{6mm}Condition:}] $[1]G\overset{\mathrm{df}}{=}G$ and
-$[0]G\overset{\mathrm{df}}{=}\varepsilon$.
+\item [{\hspace{6mm}Overlay:}] $G_{1}+G_{2}\dfeq(V_{1}\cup V_{2},E_{1}\cup E_{2})$.
+\item [{\hspace{6mm}Sequence:}] $G_{1}\rightarrow G_{2}\dfeq(V_{1}\cup V_{2},E_{1}\cup E_{2}\cup V_{1}\times V_{2})$.
+\item [{\hspace{6mm}Condition:}] $[1]G\dfeq G$ and
+$[0]G\dfeq\varepsilon$.
 \end{lyxlist}
-In other words, the \emph{overlay~}$+$ and \emph{sequence}~$\rightarrow$
+In other words, the \emph{overlay}~$+$ and \emph{sequence}~$\rightarrow$
 are binary operations on graphs with the following semantics: $G_{1}+G_{2}$
 is a graph obtained by \emph{overlaying} graphs~$G_{1}$ and~$G_{2}$,
 i.e. it contains the union of their vertices and arcs, while graph
@@ -109,10 +113,10 @@ is shown in Fig.~\ref{fig:Overlay-and-sequence}. Since the graphs
 have common vertices, their compositions are more complicated, in
 particular, their sequence contains the self-dependencies $(b,b)$
 and $(d,d)$ which lead to a \emph{deadlock} in the resulting system:
-action $a$ can occur, but all the remaining actions are locked.
+action~$a$ can occur, but all the remaining actions are locked.
 
 Given a graph~$G$, the unary \emph{condition} operations can either
-preserve it (\/\emph{true condition} $[1]G$) or nullify it (\/\emph{false
+preserve it (\emph{true condition} $[1]G$) or nullify it (\emph{false
 condition} $[0]G$). They should be considered as a family $\{[b]\}_{b\in\mathbb{B}}$
 of operations parameterised by a Boolean value~$b$.
 
@@ -154,7 +158,6 @@ G_{1}\rightarrow(G_{2}+G_{3})=G_{1}\rightarrow G_{2}+G_{1}\rightarrow G_{3}\\
 \end{array}
 \]
 \vspace{-1em}
-
 
 
 \hspace{2mm}Decomposition: \vspace{-0.3em}
@@ -1072,7 +1075,18 @@ TPG specification of the corresponding microcontroller is shown in
 the right part of this figure (the TPG-algebra expression is not shown
 because of its size).
 
-\chapter{Machine-assisted Formalisation of Parametrised Graph Algebra}
+\section{Machine-assisted Formalisation of Parametrised Graph Algebra}
+
+While developing mathematical theories and proofs it is important to maintain logical soundness.
+Even if the proof correctness may be obvious to its author, the peer researchers are often unable (because the proof is not detailed enough) or not willing (because the proof is too involved) to verify it rigorously.
+To avoid such problems we have decided to encode the theory in a formal system so that only definitions would require careful inspection, with proofs being checked automatically.
+
+This section uses Agda ~\cite{norell:thesis} -- a programming language and proof assistant based on the Martin-Löf type theory -- for formalization of
+Parametrised Graphs theory. The section additionally describes the algorithm 
+for conversion of PG formulae to normal form and shows that the correctness of the algorithm has been verified.
+
+The section extensively uses the syntax of Agda and references several definitions from the Agda standard library ~\cite{agdalib}.
+
 
 \DeclareUnicodeCharacter{949}{\varepsilon} % ε
 \DeclareUnicodeCharacter{8702}{QQQQQQQQQQQQQQQQQQ} % QQQ
@@ -1115,7 +1129,7 @@ because of its size).
 %format ≈ = "\D{≈}"
 %format _≈_ = "\_" ≈ "\_"
 
-\section{Graph Algebra}
+\subsection{Graph Algebra}
 We start with defining an algebra of non-parametrised graphs, to extend them with conditions later.
 
 We define graph algebra as an algebraic structure over a set |G| with an equivalence relation |≈| supporting the following operations:
@@ -1168,7 +1182,7 @@ forming the original sequence with overlay.
 \end{code}}
 \end{itemize}
 
-\subsection{Derived theorems}
+\subsubsection{Derived theorems}
 
 %format +-identity = "\D{+identity}"
 %format +-idempotence = "\D{+idempotence}"
@@ -1193,7 +1207,7 @@ The following theorems has been derived from the axioms:
 \end{code}}
 \end{itemize}
 
-\section{Parametrised Graphs}
+\subsection{Parametrised Graphs}
 
 %format ∧ = "\D{∧}"
 %format _∧_ = "\_" ∧ "\_"
@@ -1204,7 +1218,7 @@ The following theorems has been derived from the axioms:
 %format ⊤ = "\D{⊤}"
 %format ⊥ = "\D{⊥}"
 
-The graph algebra introduced in the previous section can only describe static event dependencies.
+The graph algebra introduced in the previous subsection can only describe static event dependencies.
 To describe complex dynamic systems one has to consider the conditional behaviour as well.
 To do this, we have extended the graph algebra by annotating the graphs with conditions.
 Given a set |G| of the parametrised graphs and a set |B| of all the possible boolean conditions, together with the following operations:
@@ -1248,7 +1262,7 @@ The condition operation must have the following properties:
 We say that there is a \emph{parametrised graph algebra} on a set |G| with a condition set |B|
 if there is a graph algebra on |G|, a boolean algebra on |B| and a condition operator satisfying the requirements above.
 
-\subsection{Derived Theorems}
+\subsubsection{Derived Theorems}
 
 The following theorems has been derived for the Parameterised Graph algebra.
 
@@ -1280,7 +1294,7 @@ Strengthened condition regularisation. This generalizes the regularisation theor
                               → [ f ] p ⇾ [ g ] q ≈ [ f ] p + [ g ] q + [ f ∧ g ] z
 \end{code}
 
-\section{Parametrised Graph Formulae}
+\subsection{Parametrised Graph Formulae}
 
 To perform automated manipulations of PG algebra formulae, we describe the formulae as an algebraic data type in the following way.
 
@@ -1346,7 +1360,7 @@ pg-eval : {A B G : Set}
 
 We use the same technique to define the |BoolFormula| data structure, with constructors |_∧_|, |_∨_|, |¬_|, |⊤|, |⊥| and |var|.
 
-\section{Formula equivalence}
+\subsection{Formula equivalence}
 
 Naturally, it is possible to write the same mathematical function in many structurally different, but logically equivalent ways.
 Here we define a notion of PG formula equivalence. We say that two formula are equivalent iff they 
@@ -1395,7 +1409,7 @@ Now we can show that our easier to use equivalence relation is equivalent to the
 ≈ˢ→≈ : ∀ f g → f ≈ˢ g → f ≈ g
 \end{code}
 
-\section{Normal Form}
+\subsection{Normal Form}
 
 %format BF = "\D{BF}"
 %format PG = "\D{PG}"
@@ -1445,9 +1459,9 @@ A |Lit| of the form |(node , condition)| corresponds to the formula |[ condition
 \end{code}
 
 
-\section{Normalisation algorithm}
+\subsection{Normalisation algorithm}
 
-To automate the translation of formulae to normal form we have developed the algorithm presented in this section.
+To automate the translation of formulae to normal form we have developed the algorithm presented in this subsection.
 
 %format +-nf = "\D{+_{NF}}"
 %format ⇾-nf = "\D{\seq_{NF}}"
@@ -1524,7 +1538,7 @@ Here |vertices n| is the list of graph vertices contained in node |n| -- one ver
 %format normalise-correct = "\D{normalise\hyp{}correct}"
 %format newArrows-correct = "\D{newArrows\hyp{}correct}"
 
-\subsection{Algorithm Correctness}
+\subsubsection{Algorithm Correctness}
 We define the correctness of normalisation by saying that the semantics of the resulting normal form must be equivalent to the original formula.
 \begin{code}
   normalise-correct : ∀ f → f ≈ fromNF (normalise f)

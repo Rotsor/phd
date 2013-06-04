@@ -23,12 +23,3 @@ The new Parametrised Graphs formalism ~\cite{2011_mokhov_pg} builds upon the CPO
 \item{it axiomatically defines the equivalence relation on specifications, allowing for equivalence preserving transformations.}
 \end{itemize}
 
-While developing mathematical theories and proofs it is important to maintain logical soundness.
-Even if the proof correctness may be obvious to its author, the peer researchers are often unable (because the proof is not detailed enough) or not willing (because the proof is too involved) to verify it rigorously.
-To avoid such problems we have decided to encode the theory in a formal system so that only definitions would require careful inspection, with proofs being checked automatically.
-
-This paper uses Agda ~\cite{norell:thesis} -- a programming language and proof assistant based on the Martin-Löf type theory -- for formalization of
-Parametrised Graphs theory. The paper additionally describes the algorithm 
-for conversion of PG formulae to normal form and shows that the correctness of the algorithm has been verified.
-
-The paper extensively uses the syntax of Agda and references several definitions from the Agda standard library ~\cite{agdalib}.
