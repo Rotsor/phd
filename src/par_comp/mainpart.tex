@@ -58,60 +58,57 @@ STG obtained from $C_{i}$ by deleting all places $p$ such that:
 \item\label{no-dummies-in-preset} $\pre{p}$ does not
     contain dummy transitions.
 \end{enumerate}
-Then $C'\DEF\parallel_{i\in I}C_i'$ and $C$ have isomorphic
-reachability graphs.
+Then $C'\DEF\parallel_{i\in I}C_i'$ and $C$ are bisimilar.
 \end{proposition}
 \begin{proof}
-First of all, observe that $C'$ can be obtained from $C$ by
-deleting some places. Hence, $\RG(C)$ is a subgraph of
-$\RG(C')$, with the same initial state. Therefore it only
-remains to show that there are no additional states or arcs in
-the latter. For this, it is enough to show that for every state
-$x$ of $\RG(C)$, the outgoing arcs of $x$ are the same in both
-graphs. For the sake of contradiction, suppose there is a state
-$x$ of $\RG(C)$ that has an outgoing arc $a$ that is in
-$\RG(C')$ but not in $\RG(C)$.
 
-The absence of $a$ in $\RG(C)$ means that some of the deleted
-places $p$ was in $\pre{t}$ for some transition~$t$
-corresponding to the arc $a$ in some of the component STGs
-$C_i$, and the number of tokens in this place at state $x$ is
-smaller than the weight of the arc $(p,t)$ in $C_i$ (*). Since
-by condition~\ref{only-inputs-in-postset} $\post{p}$ can
+We begin with defining the witness $R$ for simulation of $C$ by $C'$.
+We say that $(M,M') \in R$ iff $M$ is reachable in $C$ and 
+for all places $p \in P'$, $M(p)=M'(p)$.
+Note that since $C'$ can be obtained from $C$ by removing places, $P' \subset P$ so $M(p)$ is always defined.
+Also note that for any given reachable marking $M$ there is exactly one $M'$ such that $(M,M') \in R$, obtained by 
+restricting the domain of $M$, so $R$ is a function and we employ the notation $M' = R(M)$ to use it as such.
+
+Now we need to prove that the introduced relation $R$ is indeed bisimulation. 
+We'll start by proving that $C'$ simulates $C$ with $R$.
+To prove that we first need to show $M'_N = R(M_N)$. That follows from both parallel composition and place removal preserving initial markings of individual places.
+Now given a reachable marking $M^1$ with an enabled transition $M^1 \ifrs {l} M^2$ we must show that $R(M^1) \ifrs {l} R(M^2)$. To prove that we note that any transition enabled in $M^1$ must also be enabled in $R(M^1)$ because the enabledness condition gets weakened with removal of places. Using that fact we show that whichever transition $t$ labelled $l$ was enabled to allow $M^1 \tfrs t M^2$ it is also enabled in $R(M^1)$. The marking after firing must coincide with $R(M^2)$ because the arcs to existing places and their weights are preserved by place removal. This shows $R(M^1) \ifrs {l} R(M^2)$ and concludes the proof that $C'$ simulates $C$.
+
+2. In the second part of the proof we show that $C$ simulates $C'$. Here, given $R(M^1) \ifrs {l} M'^2$ we need to show that there exists a $M^2$ such that $M^1 \ifrs {l} M^2$ and $M'^2 = R(M^2)$. Again, we note that there must be a transition $t'$ labelled $l$ such that $R(M^1) \tfrs t' M'^2$. If the corresponding transition $t$ is enabled $M^1 \tfrs t M^2$ then the proof is complete since we already showed that $M'^2$ must be equal to $R(M^2)$. For the sake of contradiction suppose $t$ is not enabled in marking $M^1$. Then there is necessarily one of the deleted places $p$ in $\pre{t}$ in some of the component STGs $C_i$, and the number of tokens in this place at marking $M^1$ is
+smaller than the weight of the arc $(p,t)$ in $C_i$ (*)
+Since by condition~\ref{only-inputs-in-postset} $\post{p}$ can
 contain only input transitions, $t$ must be labelled by
 $s^\pm$, where $s$ is an input signal of $C_i$; \wlogg, we
 assume that the label is $s^+$. By
 condition~\ref{exists-matching-output} there is also a
 component STG $C_j$ where $s$ is an output signal.
 
-Let $\sigma$ be an execution of $C$ terminating at state $x$,
+Let $\sigma$ be an execution of $C$ terminating at marking $M^1$,
 and $\nu$ be the trace corresponding to $\sigma$ (note that
-such a $\sigma$ always exists as the reachability graphs
-contain only reachable states). We proceed by showing that (i)
+such a $\sigma$ always exists as we restrict $R$ to only include reachable markings).
+We proceed by showing that (i)
 $\nu|_{C_j}s^+$ is a trace of $C_j$ and (ii) $\nu\, s^+$ is not
 a trace of $C$; these would mean that there is a violation of
 FCI in the original composition, leading to a contradiction.
 
-(i) Since the arc $a$ is present in $\RG(C')$, the marking of
-$C_j'$ corresponding to the global state $x$ enables some
-$s^+$-labelled transition $t_j$ in it. Since $s$ is an output
-in $C_j$, no places were removed from $\pre{t_j}$ when building
+(i) Since $s^+$-labelled transition $t'$ is enabled in marking $R(M^1)$ of $C'$, 
+its component $t_j$ must be also be enabled in $C_j'$ and labelled by the same signal $s^+$.
+Since $s$ is an output in $C_j$, no places were removed from $\pre{t_j}$ when building
 $C_j'$ due to condition~\ref{only-inputs-in-postset}, which
-means that $t_j$ is also enabled by the marking of $C_j$
-corresponding to the global state $x$, and so $\nu|_{C_j}s^+$
+means that $t_j$ is also enabled by the marking $M^1_j$, and so $\nu|_{C_j}s^+$
 is a trace of $C_j$.
 
 (ii) For the sake of contradiction, suppose $\nu\,s^+$ is a
 trace of $C$. Due to the output-determinacy of $C$, the set of
 outputs by which $\nu$ can be extended is uniquely determined,
-and so $s^+$ must be enabled by $x$ (perhaps, after firing
+and so $s^+$ must be enabled by $M^1$ (perhaps, after firing
 several dummy transitions). By
 condition~\ref{injective-labelling} there is only one
 $s^+$-labelled transition in $C_i$ (\viz $t$), and so each
 $s^+$-labelled transition in $C$ has $p$ in its preset with the
 arc from $p$ to this transition having the same weight as the
 arc $(p,t)$ in $C_i$. Consequently, each $s^+$-transition in
-$C$ is blocked at state $x$ because by (*) the number of tokens
+$C$ is blocked at marking $M^1$ because by (*) the number of tokens
 in $p$ is smaller than the weight of the corresponding arc.
 Moreover, firing only dummy transitions cannot increase the
 number of tokens in $p$ and thus enable an $s^+$-labelled
@@ -122,6 +119,8 @@ $\nu\,s^+$ is not a trace of $C$.
 As explained above, (i) and (ii) imply a violation of FCI and
 so lead to a contradiction, which means that $\RG(C)$ and
 $\RG(C')$ must be isomorphic.
+
+
 \end{proof}
 
 We now discuss the conditions of Prop.~\ref{pr-main} in more

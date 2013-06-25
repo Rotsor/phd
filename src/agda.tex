@@ -57,7 +57,15 @@
 
 %%%%%%% BREAK HERE %%%%%%%
 
-\chapter{Algebra of Parameterised Graphs}
+\chapter{Theory of Parameterised Graphs}
+
+This chapter is based on the results previously published in~\cite{pg_algebra}. 
+It introduces a new formalism called Parameterised Graphs (PG), 
+based on CPOG formalism introduced in~\cite{2010_mokhov_ieee} and tries to capture its 
+most important characteristics in an algebraic structure we call PG-algebra.
+We introduce some of the theorems in the theory of PG-algebra and provide their proofs.
+Many of the proofs are written in Agda~\cite{norell:thesis}, a formal proof language,
+so they can be machine-checked instead of being manually inspected.
 
 \label{chap:PGAlgebra}
 
@@ -424,15 +432,15 @@ H=[x]ADD+[\overline{x}]XCHG=\\
 \end{equation}
 Such specifications can often be simplified using the properties of
 graph operations. The next section describes the equivalence relation
-between the PGs with a set of axioms, thus obtaining an algebra.
+between the PGs with a set of axioms, thus obtaining an algebraic structure.
 
 
-\section{Algebra of parameterised graphs\label{sec:Algebra-of-parametrised}}
+\section{Algebraic structure of parameterised graphs\label{sec:Algebra-of-parametrised}}
 
-In this section we define the \emph{algebra of parameterised graphs}
+In this section we define the \emph{algebraic structure of parameterised graphs}
 (PG-algebra).
 
-PG-algebra is a tuple~$\left\langle \mathcal{G},+,\rightarrow,[0],[1]\right\rangle $,
+A PG-algebra is a tuple~$\left\langle \mathcal{G},+,\rightarrow,[0],[1]\right\rangle $,
 where~$\mathcal{G}$ is a set of graphs whose vertices are picked
 from the alphabet~$\mathcal{A}$ and the operations parallel those
 defined for graphs above. The equivalence relation is given by the
@@ -489,7 +497,7 @@ q+p\rightarrow q=p\rightarrow q
 \end{itemize}
 Note that as $\varepsilon$ is a left and right identity of $\rightarrow$
 and $+$, there can be no other identities for these operations. Interestingly,
-unlike many other algebras, the two main operations in the PG-algebra
+unlike with many other algebraic structures, the two main operations in the PG-algebra
 have the same identity.
 
 It is easy to see that PGs are a model of PG-algebra, as all the axioms
@@ -560,7 +568,7 @@ we augment the PG-algebra with the \emph{Closure} axiom:
 \]
 One can see that by repeated application of this axiom one can obtain
 the transitive closure of any graph, including those with cycles.
-The resulting algebra is called Transitive Parameterised Graphs Algebra
+The resulting algebraic structure is called Transitive Parameterised Graphs Algebra
 (TPG-algebra).
 
 Note that the condition $q\ne\varepsilon$ in the Closure axiom is
@@ -682,7 +690,7 @@ only.
 
 \begin{figure}
 \begin{centering}
-\includegraphics[width=1\columnwidth]{fig/cpog_projection_2_trans}
+\includegraphics[width=1\columnwidth]{fig/cpog_projections_2_trans}
 \par\end{centering}
 \caption{The PG from Fig.~\ref{fig:Specialisations} simplified using the
 Closure axiom, together with its specialisations\label{fig:The-simplified-CG-from}}
@@ -837,7 +845,7 @@ The processor has four registers: two general purpose registers $A$
 and $B$, \emph{Program counter} (PC) storing the address of the current
 instruction in the program memory, and the \emph{Instruction register}
 (IR) storing the \emph{opcode} (operation code) of the current instruction.
-For the purpose of this paper, the actual width of the registers (the
+For the purpose of this chapter, the actual width of the registers (the
 number of bits they can store) is not important. ALU has access to
 all the registers via the register bus; MAU has access to general
 purpose registers only; IFU, given the address of the next instruction
@@ -1066,8 +1074,8 @@ and TPGs allow for a formal statement of this optimisation problem
 and aid in its solving; in particular, the sizes of the TPG-algebra
 expression or TPG are useful measures of microcontroller complexity
 (there is a compositional translation from a TPG-algebra expression
-into a linear-size circuit). In this paper we do not go into details
-how to select the optimal encoding, but see~\cite{2011_mokhov_iet}.
+into a linear-size circuit). The details on the method to select the optimal encoding
+are presented in Chapter~\ref{chap:PGEncoding}.
 We just note that it is natural to use three bits for opcodes as there
 are eight classes of instructions, and give an example of optimal
 3-bit encoding in the table in Fig.~\ref{fig:opcodes-and-CG}; the
@@ -1130,7 +1138,7 @@ The section extensively uses the syntax of Agda and references several definitio
 %format _≈_ = "\_" ≈ "\_"
 
 \subsection{Graph Algebra}
-We start with defining an algebra of non-parametrised graphs, to extend them with conditions later.
+We start with defining an algebraic structure of non-parametrised graphs, to extend them with conditions later.
 
 We define graph algebra as an algebraic structure over a set |G| with an equivalence relation |≈| supporting the following operations:
 \begin{itemize}

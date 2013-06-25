@@ -38,7 +38,7 @@ write $M\tfrs \sigma$, $M\tfrs \sigma M'$ resp.; $\sigma$ is called \emph{execut
 $M$ is called \emph{reachable} if a transition sequence $\sigma$ with
 $M_N\tfrs \sigma M$ exists.
 
-$N$ is called \emph{bounded} if, for every reachable marking $M$ and every place $p$, $M(p)\leq k$ for some constant $k\in \nat$; if $k=1$, $N$ is called \emph{safe}. $N$ is bounded if and only if the set $\tfrs {M_N}$ of reachable markings is finite. In this paper, we are mostly concerned with bounded Petri nets.
+$N$ is called \emph{bounded} if, for every reachable marking $M$ and every place $p$, $M(p)\leq k$ for some constant $k\in \nat$; if $k=1$, $N$ is called \emph{safe}. $N$ is bounded if and only if the set $\tfrs {M_N}$ of reachable markings is finite. In this thesis, we are mostly concerned with bounded Petri nets.
 
 A place $p$ is \emph{implicit} if it can be deleted from the net
 without changing the set of executions, and so an implicit place can be removed from the net without affecting its behaviour.\footnote{Note that an implicit place can cease to be implicit if another implicit place is removed first.}
@@ -116,6 +116,12 @@ and there are no \emph{dynamic auto-conflicts,} \ie for each reachable marking $
 there is at most one $M'$ with $M \ifrs {s\upd} M'$. (Note that a deterministic STG
 can have choices between different outputs, \eg an STG modelling
 the standard arbiter is deterministic).
+
+An STG with a set of all markings $S_2$ is said to \emph{simulate} another STG with 
+a set of all markings $S_1$ iff there exist an 
+$R \subset S_1 \times S_2$ such that $(M_{N 1},M_{N 2}) \in R$ and for any pair of markings 
+$(M_1, M_2) \in R$, a label $l$ and a marking $M_1'$, $M_1\ifrs {l}  M_1'$ implies 
+$M_2 \ifrs {l} M_2'$ for some $M_2'$. We call $R$ the witness of simulation. Now we can say that STGs $N_1$ and $N_2$ are \emph{bisimilar} iff $N_2$ simulates $N_1$ with witness $R$ and $N_2$ simulates $N_1$ with witness $R^{-1}$.
 
 For deterministic STGs, language equivalence and bisimulation coincide, and the language can be taken as the semantics of such a specification. Unfortunately, the class of deterministic STGs is too restrictive in practice~\cite{KSV-08}, \eg:
 \begin{itemize}
@@ -241,4 +247,4 @@ in a safe Petri net, and so we can assume that the initial and
 all the intermediate STGs contain no such arcs.) Also,~\cite{KSVW-09} developed a sufficient structural
 condition for a contraction to be safe\-ness-pre\-ser\-ving.
 
-From the point of view of this paper, it is important to remark that implicit places can adversely affect the (secure) contractibility of a transition, \ie it is possible to have a situation when a transition is not contractible (or not securely contractible), but becomes securely contractible after some implicit place is removed from the STG. As detecting implicit places is expensive, it is very desirable to reduce their number by some other means, in particular the approach proposed in this paper reduces the number of such places in STGs obtained by parallel composition. This has a direct effect on re-synthesis: if the composed STG has fewer implicit places, more dummy transitions in it can be contracted, and so it will be easier to synthesise the result.
+From the point of view of this thesis, it is important to remark that implicit places can adversely affect the (secure) contractibility of a transition, \ie it is possible to have a situation when a transition is not contractible (or not securely contractible), but becomes securely contractible after some implicit place is removed from the STG. As detecting implicit places is expensive, it is very desirable to reduce their number by some other means, in particular the approach proposed in this thesis reduces the number of such places in STGs obtained by parallel composition. This has a direct effect on re-synthesis: if the composed STG has fewer implicit places, more dummy transitions in it can be contracted, and so it will be easier to synthesise the result.

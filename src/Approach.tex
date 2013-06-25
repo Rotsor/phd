@@ -1,9 +1,53 @@
 \chapter{Approach}
 
+
+
+Handshake circuits are widely applied in the design and synthesis of real-life hardware.
+One prominent problem is obtaining an efficient implementation from a \emph{structural} compositional specification.
+Syntax-based synthesis tools such as Balsa~\cite{balsa} are unable to take into account the compositional
+behaviour of STGs corresponding to handshake circuit components. To address this issue we propose 
+a technique that selectively composes STGs of related components to obtain a smaller and more performant
+circuit without suffering state space explosion commonly associated with Petri net based techniques~\cite{Valmari}.
+This transformation, which we refer to as \emph{resynthesis}~\cite{ukaf_balsa_resynthesis}, is done in three stages. First, we apply a heuristic to identify the most promising candidates for STG-level composition. Second, we perform a parallel composition of the selected component STGs and as a result obtain a new handshake circuit with custom components. Finally, a gate-level implementation is obtained from the new handshake circuit via a component-wise synthesis of STGs.
+
+Unfortunately, the standard definition of parallel composition almost always yields a `messy' Petri net, with many implicit places, causing performance deterioration in techniques that are based on structural methods such as the resynthesis approach. To counter this, we propose an improved algorithm for computing the parallel composition. The algorithm generally produces nets with fewer implicit places that are better suited for subsequent application of structural methods~\cite{improved_par_comp}.
+
+In addition to purely structural composition of STGs, it is also beneficial to consider a mixture of 
+structural and behavioural composition. CPOG~\cite{2009_mokhov_phd} is a graph-based notation supporting compact
+representation and efficient manipulation of the two forms of composition. As one example, it is
+often necessary to consider several operational modes of a circuit. 
+For this, one needs methodologies and tools to exploit similarities between
+the individual modes and hence lift the level of discourse to behaviour families.
+This necessitates that behaviours are managed in a compositional
+way: the specification of the system must be composed from specifications
+of its blocks. Furthermore, since the approach is intended to be a part of a safety critical toolchain, it is essential that such a  specification is amenable to mechanised reasoning and transformation.
+
+In Chapter~\ref{chap:agda} we propose an extension of the CPOG formalism, called Parameterised Graph (PG).
+PGs deal with general graphs rather than just partial orders. We introduce an algebra of Parameterised Graphs by specifying the
+equivalence relation by a set of axioms, which is proved to be sound,
+minimal and complete~\cite{pg_algebra}. This allows one to manipulate the specifications
+as algebraic expressions using the rules of this algebra in contrast to the CPOG that does not offer a unifying algebraic structure. We demonstrate
+the usefulness of the developed formalism on two case studies coming
+from the area of microelectronics design.
+
+The CPOG formalism can be applied to merge several distinct behaviours
+into a single compact CPOG~\cite{2009_mokhov_phd}. As one example, this has been previously used to
+synthesise control logic for instruction decoding. In this thesis (Chapter~\ref{chap:pg_encoding}) 
+we improve upon this work by offering a powerful technique to automatically discover an optimal encoding and
+synthesise a matching optimal decoding circuit. From the outset, we consider a larger set of potential solutions
+which enables us to formulate the global optimality criterion. We use an automated satisfiability solving 
+techniques to find an optimal solution~\cite{pg_encoding}.
+
+
+
+
+* Improved parallel composition
+* PG Algebra
+* PG Encoding
+
 \subsection{Abstract of Balsa Resynthesis}
 
-The paper proposes a modification of the standard design workflow
-that is used in Balsa design automation system. The controllers obtained
+The controllers obtained
 by syntax-directed mapping used in Balsa usually suffer from performance,
 area and power overheads because the predesigned set of components
 is required to implement the declared protocols fully and correctly
@@ -60,7 +104,13 @@ in reasonable time. Alternatively, the decomposition step can be carried
 out on the level of the handshake circuits, dividing the circuit into
 smaller blocks of components.
 
-This paper proposes an automated method to include the aforementioned
+This section proposes an automated method to include the aforementioned
 modification of the standard design workflow that is used in Balsa
 design automation system~\cite{balsa} using \noun{Workcraft~\cite{DBLP:conf/apn/PoliakovKY09}
 }framework.
+
+
+\input{introduction/par_comp}
+\input{introduction/pg_algebra}
+\input{introduction/pg_encoding}
+\input{introduction/agda}

@@ -5,7 +5,7 @@ We explore the available formalisms for design of asynchronous digital
 circuits and compare them with the principle of compositionality in
 mind. We propose improvements to the existing techniques and
 propose a new formalism, Parametrised Graph (PG) theory, which is a
-generalisation of the existing CPOG formalism. The We furhter study 
+generalisation of the existing CPOG formalism. We furhter study 
 the theory of PG Algebra and present mechanised formal proofs of certain properties.
 
 
@@ -17,13 +17,15 @@ With the rising complexity of digital circuits, it becomes increasingly importan
 
 The reuse of the components must be facilitated by the design language.
 
+One of the difficulties in designing modern hardware systems is the
+necessity to comprehend and to deal with a very large number of system
+configurations, operational modes, and behavioural scenarios. 
+
 \subsection{Compositionality}
 
 The key property facilitating component reuse is compositionality.
 
 Compositionality is a property of a given language where the meaning of a language construct is determined by the meanings of its parts.
-
-
 
 
 \section{Contributions}
@@ -56,7 +58,7 @@ Chapter~\ref{chap:Background} covers the basics of handshake circuits, signal tr
 
 Chapter~\ref{chap:Approach} overviews the existing composition methods and outlines the drawbacks using an intuitive GCD benchmark as an example.
 
-Chapter~\ref{chap:ParComp} describes the proposed improved parallel composition algorithm.
+Chapter~\ref{chap:ParComp} describes the proposed improved parallel composition algorithm.  .
 
 Chapter~\ref{chap:PGAlgebra} introduces Parametrised Graph (PG) theory, defining and studying an algebraic structure that generalises Conditional Partial Order Graph formalism.
 
@@ -64,7 +66,3 @@ Chapter~\ref{chap:PGEncoding} describes a technique for optimal encoding of proc
 
 Chapter~\ref{chap:Conclusion} summarises the achieved results and proposes ideas for future research.
 
-\input{introduction/par_comp}
-\input{introduction/pg_algebra}
-\input{introduction/pg_encoding}
-\input{introduction/agda}

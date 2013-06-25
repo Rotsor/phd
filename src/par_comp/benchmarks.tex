@@ -25,30 +25,37 @@
 
 \begin{figure*}[p]
 \centering
+
+  \subfloat[All contractions]{
+    \shortstack[l]{
     $\includegraphics[width=0.48\textwidth]{fig/ParArbMix_all}
     \atop
-    \mbox{\rule[1.3em]{0em}{0em}\ParArbCall: all contractions}$%
-    \hfill%
-    $\includegraphics[width=0.48\textwidth]{fig/ParArbMix_safe}
-    \atop
-    \mbox{\rule[1.3em]{0em}{0em}\ParArbCall: safeness-preserving contractions}$%
+    \mbox{\rule[1.3em]{0em}{0em}\ParArbCall}$%
     \\[1em]
     $\includegraphics[width=0.48\textwidth]{fig/SeqMix_all}
     \atop
-    \mbox{\rule[1.3em]{0em}{0em}\SeqCall: all contractions}$%
-    \hfill%
-    $\includegraphics[width=0.48\textwidth]{fig/SeqMix_safe}
-    \atop
-    \mbox{\rule[1.3em]{0em}{0em}\SeqCall: safeness-preserving contractions}$%
+    \mbox{\rule[1.3em]{0em}{0em}\SeqCall}$%
     \\[1em]
     $\includegraphics[width=0.48\textwidth]{fig/SeqMixParSync_all}
     \atop
-    \mbox{\rule[1.3em]{0em}{0em}\SeqCallParSync: all contractions}$%
+    \mbox{\rule[1.3em]{0em}{0em}\SeqCallParSync}$%
+    }
+    }
     \hfill%
+  \subfloat[Safeness-preserving contractions]{
+    \shortstack[l]{
+    $\includegraphics[width=0.48\textwidth]{fig/ParArbMix_safe}
+    \atop
+    \mbox{\rule[1.3em]{0em}{0em}\ParArbCall}$%
+    \\[1em]
+    $\includegraphics[width=0.48\textwidth]{fig/SeqMix_safe}
+    \atop
+    \mbox{\rule[1.3em]{0em}{0em}\SeqCall}$%
+    \\[1em]
     $\includegraphics[width=0.48\textwidth]{fig/SeqMixParSync_safe}
     \atop
-    \mbox{\rule[1.3em]{0em}{0em}\SeqCallParSync: safeness-preserving contractions}$%
-    \\
+    \mbox{\rule[1.3em]{0em}{0em}\SeqCallParSync}$%
+    }}
     \caption{\label{fi-exp}
         Experimental results.
     }

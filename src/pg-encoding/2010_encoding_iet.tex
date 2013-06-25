@@ -2,6 +2,13 @@
 
 \label{chap:PGEncoding}
 
+The chapter is based on the results published in~\cite{cpog_encoding}. It shows how to represent processor instruction sets using CPOG formalism and provides
+a ground for a concise formulation of several encoding problems, which
+are reducible to the well-known Boolean satisfiability (SAT) problem
+and can be efficiently solved by modern SAT solvers. Application of
+all the presented techniques is demonstrated on a processor design
+example.
+
 \section{Optimal encoding of partial orders\label{sec:Optimal-encoding-problem}}
 
 This section shows the effect of different encoding of partial orders
@@ -81,7 +88,7 @@ are used, and the opcodes are $\psi_{1}=(00)$, $\psi_{2}=(01)$,
 $\psi_{3}=(10)$, and $\psi_{4}=(11)$. The synthesised CPOG and one
 of its projections are shown in Figure~\ref{fig:Different-encoding-schemes}(a).
 There are 9 literals in its vertex/arc conditions%
-\footnote{Throughout the paper we use operators `$+$' and `$\cdot$' to
+\footnote{Throughout the chapter we use operators `$+$' and `$\cdot$' to
 denote Boolean disjunction (OR) and conjunction (AND), respectively.%
 }.
 
@@ -711,7 +718,7 @@ Neumann architecture\emph{~}\cite{1946_burks_architecture} and Harvard
 architecture\emph{~}\cite{1946_aiken_calculator} were proposed.
 The example processor is built on the basis of Harvard architecture;
 however, the method for optimal encoding of instructions presented
-in the paper is applicable to both architectures, including their
+here is applicable to both architectures, including their
 numerous derivatives.
 
 \begin{figure}
@@ -862,30 +869,34 @@ variables to be evaluated during execution of one of the scenarios
 (in our case such dynamic variables are $\{le,\ ge\}$).
 
 \begin{table}[h]
-\begin{centering}
+\centering
+
 \begin{tabular}{|c||c|c|c|c|}
 \hline 
-{\small Instructions class} & {\small Trivial encoding} & {\small Optimal encoding} & {\small Optimal encoding $L=3$} & {\small Optimal encoding $L=5$}\tabularnewline
+\multirow{2}{*}{Instructions class} & 
+\multirow{2}{*}{Trivial encoding} & 
+\multicolumn{3}{c|}{ Optimal encoding} \tabularnewline
+\cline{3-5}
+& & $L=8$ & {$L=3$} & {$L=5$} \tabularnewline
 \hline 
 \hline 
-{\small ALU Rn to Rn} & {\small 000} & {\small 00000000} & {\small 000} & {\small 00000}\tabularnewline
+{ ALU Rn to Rn} & { 000} & { 00000000} & { 000} & { 00000}\tabularnewline
 \hline 
-{\small ALU \#123 to Rn} & {\small 001} & {\small 01001010} & {\small 110} & {\small 01001}\tabularnewline
+{ ALU \#123 to Rn} & { 001} & { 01001010} & { 110} & { 01001}\tabularnewline
 \hline 
-{\small ALU Rn to PC} & {\small 010} & {\small 00010001} & {\small 101} & {\small 00010}\tabularnewline
+{ ALU Rn to PC} & { 010} & { 00010001} & { 101} & { 00010}\tabularnewline
 \hline 
-{\small ALU \#123 to PC} & {\small 011} & {\small 01000010} & {\small 010} & {\small 01000}\tabularnewline
+{ ALU \#123 to PC} & { 011} & { 01000010} & { 010} & { 01000}\tabularnewline
 \hline 
-{\small Memory access} & {\small 100} & {\small 01000100} & {\small 100} & {\small 00100}\tabularnewline
+{ Memory access} & { 100} & { 01000100} & { 100} & { 00100}\tabularnewline
 \hline 
-{\small C/ALU Rn to Rn} & {\small 101} & {\small 00100000} & {\small 001} & {\small 10000}\tabularnewline
+{ C/ALU Rn to Rn} & { 101} & { 00100000} & { 001} & { 10000}\tabularnewline
 \hline 
-{\small C/ALU \#123 to Rn} & {\small 110} & {\small 10111010} & {\small 111} & {\small 11001}\tabularnewline
+{ C/ALU \#123 to Rn} & { 110} & { 10111010} & { 111} & { 11001}\tabularnewline
 \hline 
-{\small C/ALU \#123 to PC} & {\small 111} & {\small 10110010} & {\small 011} & {\small 11000}\tabularnewline
+{ C/ALU \#123 to PC} & { 111} & { 10110010} & { 011} & { 11000}\tabularnewline
 \hline 
 \end{tabular}
-\par\end{centering}
 
 \caption{Synthesised instruction codes\label{tab:Synthesised-instruction-codes}}
 \end{table}
