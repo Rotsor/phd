@@ -5,7 +5,7 @@ conventional one by adding a pre-processing step, where some
 places are removed from the components, as they are guaranteed
 to be implicit in the result. To identify these places, one can
 note that a place is required in the final composition only if
-under some reachable marking it can be the only place that
+under some reachable marking it can be the place that
 disables some transition in its postset.
 
 For simplicity, consider the parallel composition
@@ -21,7 +21,7 @@ holds, $M_2$ has to enable $s^+$ in $C_2$, \ie whenever $s^+$
 is enabled in $C_1$, it is also enabled in $C_2$. In other
 words, the firing of $s^+$ in $C$ is fully controlled by $C_1$,
 and so \emph{the constraints on firing of $s$ that are present
-in $C_2$ can be ignored.} This means that the places in the
+in $C_2$ can be ignored}. This means that the places in the
 preset of an $s^+$-labelled transition in $C_2$ will be
 implicit in the composition (subject to some technical
 conditions formulated below), and so can be removed before the
@@ -60,8 +60,18 @@ STG obtained from $C_{i}$ by deleting all places $p$ such that:
 \end{enumerate}
 Then $C'\DEF\parallel_{i\in I}C_i'$ and $C$ are bisimilar.
 \end{proposition}
-\begin{proof}
 
+\begin{figure}[!tb]
+  \begin{centering}
+    \includegraphics[scale=0.3]{fig/parallel_composition}
+  \end{centering}
+  \caption{\label{fi-parcomp-improvement-theorem}
+    Equivalence preserved by place removal in improved parallel composition.
+  }
+\end{figure}
+
+
+\begin{proof}
 We begin with defining the witness $R$ for simulation of $C$ by $C'$.
 We say that $(M,M') \in R$ iff $M$ is reachable in $C$ and 
 for all places $p \in P'$, $M(p)=M'(p)$.
@@ -122,6 +132,13 @@ $\RG(C')$ must be isomorphic.
 
 
 \end{proof}
+
+The proposition can be depicted schematically by a diagram in Fig.~\ref{fi-parcomp-improvement-theorem}.
+Here the boxes named $S_1$ and $S_2$ represent the original STGs, 
+$S_1'$ and $S_2'$ are represent STGs obtained from $S_1$ and $S_2$ by removing places according to
+ the rules detailed above, and $S_1 \parallel S_2$ and $S_1' \parallel S_2'$ represent 
+$S_1$ composed with $S_2$ and $S_1'$ composed with $S_2'$ respectively. 
+We use a dashed line to signify the bisimulation relation between $S_1 \parallel S_2$ and $S_1' \parallel S_2'$.
 
 We now discuss the conditions of Prop.~\ref{pr-main} in more
 detail. The conditions~\ref{only-inputs-in-postset}
