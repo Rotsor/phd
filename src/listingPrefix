@@ -1,0 +1,6 @@
+%include lhs2TeX.fmt
+%include polycode.fmt
+
+%%%%%%% BREAK HERE %%%%%%%
+
+\begin{code}

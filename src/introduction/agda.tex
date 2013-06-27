@@ -1,22 +1,18 @@
-\section{Formal Logic}
+\section{Machine-assisted formalisation of parametrised graphs}
 
 
-\subsection{Abstract}
-The paper shows a machine-assisted approach to formal modelling by considering a graph-based model used to describe parametrised systems of causally related events, such as microcontrol circuits. The paper gives a formal description of the model encoded with the type system of Agda programming language, defining it as an arbitrary set with specific operations on its members, forming an algebra. The data structure for formulae of this algebra is then introduced to be used as a representation type for the model. An example of an algorithm manipulating the formulae is shown. The algorithm correctness and termination are proven with each proof being checked by the compiler. The result is both a machine-verifiable formal proof of the theorems and a runnable tool for formula manipulation.
+Since parametrised graphs are likely to be applied in a safety-critical toolchain, it is imperative to attain a degree of confidence in its properties. Equally important is to convince prospective users that the techniques is sound and lives up to its promises. To fullfil this goal, it was decided to construct in a strict and controlled manner a complete formalisation of the PG formalism. The Agda system \cite{agda} was chosen for its expressive notation language and extensive support for machine-checked formal inference. Agda has enjoyed a notable success as the basis for the formalisation (case studies, success stories)
 
-\subsection{Introduction}
+Says that Agda is LCF, what is LCF. What are the altrenatives: Isaballe/HOL, HOL-Light, ACL2, Coq, PVS, Nqthm. What the have achieved (the colouring problem, pentium div, ...)
 
-Describing complex systems in a natural and compositional way is an important challenge with wide area of application, in particular in hardware design.
-To address this challenge, the Conditional Partial Order Graph (CPOG) formalism has been previously proposed ~\cite{2009_mokhov_phd} ~\cite{2010_mokhov_ieee}, where the systems with
-complex behaviour are described as sets of partial orders of events with each partial order corresponding to an individual system operation mode.
-The partial orders are further annotated with mutually exclusive conditions,
-serving to select the current mode of operation of the system. CPOGs are then proposed as a condensed description of such systems.
-Events in the system are associated with the graph vertices and ordering relationships between events are associated with the graph edges.
-To describe multiple partial orders both vertices and edges can be annotated with conditions determining the set of modes 
-where the graph node should be present. This allows to exploit the similarities between modes of system operation.
-However, this approach lacks in compositionality and the ability to transform the system specifications while preserving the important properties.
+compare to Maude (2 lines)
 
-The new Parametrised Graphs formalism ~\cite{2011_mokhov_pg} builds upon the CPOG formalism by introducing the following features:
+a small agda example: list 
+
+explain why an alegbraic specification is better suited than a model-based (VDM, Z, B) or process based (CSP, CCS).
+
+
+The new Parametrised Graphs  introducing the following features:
 \begin{itemize}
 \item{it lifts the assumption of graph acyclicity, allowing general graphs instead of partial orders;}
 \item{it adds algebraic operations for combining existing specifications, thus achieving compositionality;}

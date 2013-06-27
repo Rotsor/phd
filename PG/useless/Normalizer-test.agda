@@ -1,4 +1,4 @@
-module Normalizer-test where
+module PG.Normalizer-test where
 
 open import Data.Nat using (ℕ)
 open import Data.Nat.Properties

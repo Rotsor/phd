@@ -1,2 +1,0 @@
-module PG.FinSet where
-

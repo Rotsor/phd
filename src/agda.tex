@@ -107,6 +107,23 @@ corresponds to their \emph{sequential composition}. One can observe
 that any non-empty graph can be obtained by successively applying
 the operations $+$ and $\rightarrow$ to the singleton graphs.
 
+
+\begin{figure*}[t]
+\begin{centering}
+\hfill{}\subfloat[Graph $G_{1}$]{\includegraphics[scale=0.5]{fig/graph_3}
+
+}\hfill{}\hfill{}\subfloat[Graph $G_{2}$]{\includegraphics[scale=0.5]{fig/graph_4}
+
+}\hfill{}\hfill{}\subfloat[Graph $G_{1}+G_{2}$]{\includegraphics[scale=0.5]{fig/graph_overlay_3_4}
+
+}\hfill{}\hfill{}\subfloat[Graph $G_{1}\rightarrow G_{2}$]{\includegraphics[scale=0.5]{fig/graph_sequence_3_4}
+
+}\hfill{}
+\par\end{centering}
+
+\caption{Overlay and sequence example (no common vertices)\label{fig:Overlay-and-sequence-no-common}}
+\end{figure*}
+
 Fig.~\ref{fig:Overlay-and-sequence-no-common} shows an example of
 two graphs together with their overlay and sequence. One can see that
 the overlay does not introduce any dependencies between the actions
@@ -122,6 +139,24 @@ have common vertices, their compositions are more complicated, in
 particular, their sequence contains the self-dependencies $(b,b)$
 and $(d,d)$ which lead to a \emph{deadlock} in the resulting system:
 action~$a$ can occur, but all the remaining actions are locked.
+
+
+
+\begin{figure*}[t]
+\begin{centering}
+\hfill{}\subfloat[Graph $G_{1}$]{\includegraphics[scale=0.5]{fig/graph_1}
+
+}\hfill{}\hfill{}\subfloat[Graph $G_{2}$]{\includegraphics[scale=0.5]{fig/graph_2}
+
+}\hfill{}\hfill{}\subfloat[Graph $G_{1}+G_{2}$]{\includegraphics[scale=0.5]{fig/graph_overlay_1_2}
+
+}\hfill{}\hfill{}\subfloat[Graph $G_{1}\rightarrow G_{2}$]{\includegraphics[scale=0.5]{fig/graph_sequence_1_2}
+
+}\hfill{}
+\par\end{centering}
+
+\caption{Overlay and sequence example (common vertices)\label{fig:Overlay-and-sequence}}
+\end{figure*}
 
 Given a graph~$G$, the unary \emph{condition} operations can either
 preserve it (\emph{true condition} $[1]G$) or nullify it (\emph{false
@@ -535,9 +570,10 @@ Hence, the following result holds:
 is sound, minimal and complete w.r.t. PGs.
 \end{thm}
 \begin{figure*}
+
 \begin{eqnarray*}
 [x]((a+b)\rightarrow c+c\rightarrow d)+[\overline{x}]((a+b)\rightarrow(d+e)) & = & (\textrm{closure)}\\
-{}[x]((a+b)\rightarrow c+(a+b)\rightarrow d+c\rightarrow d)+[\overline{x}]((a+b)\rightarrow(d+e)) & = & (\textrm{decomposition)}\\
+{}[x]((a+b)\rightarrow c+(a+b)\rightarrow d+c\rightarrow d)+\\+[\overline{x}]((a+b)\rightarrow(d+e)) & = & (\textrm{decomposition)}\\
 {}[x]((a+b)\rightarrow c\rightarrow d)+[\overline{x}]((a+b)\rightarrow(d+e)) & = & (\textrm{choice propagation)}\\
 (a+b)\rightarrow([x](c\rightarrow d)+[\overline{x}](d+e)) & = & (\textrm{conditional overlay)}\\
 (a+b)\rightarrow([x](c\rightarrow d)+[\overline{x}]d+[\overline{x}]e) & = & (\rightarrow-\textrm{identity)}\\
@@ -1097,8 +1133,9 @@ The section extensively uses the syntax of Agda and references several definitio
 
 
 \DeclareUnicodeCharacter{949}{\varepsilon} % ε
-\DeclareUnicodeCharacter{8702}{QQQQQQQQQQQQQQQQQQ} % QQQ
+\DeclareUnicodeCharacter{8702}{\seq} % ⇾
 \DeclareUnicodeCharacter{737}{^{l}} % ˡ
+\DeclareUnicodeCharacter{738}{^{s}} % ˢ
 \DeclareUnicodeCharacter{8759}{\colon\colon} % ∷
 
 \newcommand{\seq}{\gg}

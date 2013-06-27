@@ -61,21 +61,11 @@ STG obtained from $C_{i}$ by deleting all places $p$ such that:
 Then $C'\DEF\parallel_{i\in I}C_i'$ and $C$ are bisimilar.
 \end{proposition}
 
-\begin{figure}[!tb]
-  \begin{centering}
-    \includegraphics[scale=0.3]{fig/parallel_composition}
-  \end{centering}
-  \caption{\label{fi-parcomp-improvement-theorem}
-    Equivalence preserved by place removal in improved parallel composition.
-  }
-\end{figure}
-
-
 \begin{proof}
 We begin with defining the witness $R$ for simulation of $C$ by $C'$.
 We say that $(M,M') \in R$ iff $M$ is reachable in $C$ and 
 for all places $p \in P'$, $M(p)=M'(p)$.
-Note that since $C'$ can be obtained from $C$ by removing places, $P' \subset P$ so $M(p)$ is always defined.
+Note that since $C'$ can be obtained from $C$ by removing places, $P' \subseteq P$ so $M(p)$ is always defined.
 Also note that for any given reachable marking $M$ there is exactly one $M'$ such that $(M,M') \in R$, obtained by 
 restricting the domain of $M$, so $R$ is a function and we employ the notation $M' = R(M)$ to use it as such.
 
@@ -84,7 +74,7 @@ We'll start by proving that $C'$ simulates $C$ with $R$.
 To prove that we first need to show $M'_N = R(M_N)$. That follows from both parallel composition and place removal preserving initial markings of individual places.
 Now given a reachable marking $M^1$ with an enabled transition $M^1 \ifrs {l} M^2$ we must show that $R(M^1) \ifrs {l} R(M^2)$. To prove that we note that any transition enabled in $M^1$ must also be enabled in $R(M^1)$ because the enabledness condition gets weakened with removal of places. Using that fact we show that whichever transition $t$ labelled $l$ was enabled to allow $M^1 \tfrs t M^2$ it is also enabled in $R(M^1)$. The marking after firing must coincide with $R(M^2)$ because the arcs to existing places and their weights are preserved by place removal. This shows $R(M^1) \ifrs {l} R(M^2)$ and concludes the proof that $C'$ simulates $C$.
 
-2. In the second part of the proof we show that $C$ simulates $C'$. Here, given $R(M^1) \ifrs {l} M'^2$ we need to show that there exists a $M^2$ such that $M^1 \ifrs {l} M^2$ and $M'^2 = R(M^2)$. Again, we note that there must be a transition $t'$ labelled $l$ such that $R(M^1) \tfrs t' M'^2$. If the corresponding transition $t$ is enabled $M^1 \tfrs t M^2$ then the proof is complete since we already showed that $M'^2$ must be equal to $R(M^2)$. For the sake of contradiction suppose $t$ is not enabled in marking $M^1$. Then there is necessarily one of the deleted places $p$ in $\pre{t}$ in some of the component STGs $C_i$, and the number of tokens in this place at marking $M^1$ is
+In the second part of the proof we show that $C$ simulates $C'$. Here, given $R(M^1) \ifrs {l} M'^2$ we need to show that there exists a $M^2$ such that $M^1 \ifrs {l} M^2$ and $M'^2 = R(M^2)$. Again, we note that there must be a transition $t'$ labelled $l$ such that $R(M^1) \tfrs t' M'^2$. If the corresponding transition $t$ is enabled $M^1 \tfrs t M^2$ then the proof is complete since we already showed that $M'^2$ must be equal to $R(M^2)$. For the sake of contradiction suppose $t$ is not enabled in marking $M^1$. Then there is necessarily one of the deleted places $p$ in $\pre{t}$ in some of the component STGs $C_i$, and the number of tokens in this place at marking $M^1$ is
 smaller than the weight of the arc $(p,t)$ in $C_i$ (*)
 Since by condition~\ref{only-inputs-in-postset} $\post{p}$ can
 contain only input transitions, $t$ must be labelled by
@@ -127,11 +117,17 @@ $\pre{p}$ contains no dummy transitions, a contradiction. Hence
 $\nu\,s^+$ is not a trace of $C$.
 
 As explained above, (i) and (ii) imply a violation of FCI and
-so lead to a contradiction, which means that $\RG(C)$ and
-$\RG(C')$ must be isomorphic.
-
-
+so lead to a contradiction, which means that $C$ and
+$C'$ must be bisimilar.
 \end{proof}
+
+\begin{figure}[!tb]
+  \centering
+    \includegraphics[scale=1]{fig/parallel_composition}
+  \caption{\label{fi-parcomp-improvement-theorem}
+    Equivalence preserved by place removal in improved parallel composition.
+  }
+\end{figure}
 
 The proposition can be depicted schematically by a diagram in Fig.~\ref{fi-parcomp-improvement-theorem}.
 Here the boxes named $S_1$ and $S_2$ represent the original STGs, 

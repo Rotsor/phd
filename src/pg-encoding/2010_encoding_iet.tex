@@ -1,5 +1,21 @@
 \chapter{Encoding of processor instruction sets with explicit concurrency control}
 
+Main contributions of this chapter are: firstly, it formulates several
+instruction set encoding problems in terms of the CPOG model; secondly,
+it presents the SAT characterisation of the problems leading to their
+efficient automated solution; thirdly, it demonstrates application
+of the CPOG methodology at different stages of a processor design
+flow --- from architectural-level specification, design and behavioural
+description of an instruction set to its encoding and synthesis of
+the physical implementation of the microcontroller. The paper is organised
+as follows. Section~\ref{sec:CPOG-model-essentials} briefly introduces
+the CPOG model providing a ground for formulating a set of problems
+of optimal instruction set encoding in Section~\ref{sec:Optimal-encoding-problem}.
+A method for automated translation of the problems into SAT instances
+is explained in Section~\ref{sec:SAT-formulation}. It is followed
+by a processor design example in Section~\ref{sec-processor} and
+conclusions.
+
 \label{chap:PGEncoding}
 
 The chapter is based on the results published in~\cite{cpog_encoding}. It shows how to represent processor instruction sets using CPOG formalism and provides
@@ -635,9 +651,9 @@ The SAT problem $\mathcal{ENCODE}$ consists of two constraints:
 \]
  Constraint $\mathcal{NUM}$ restricts all the selectors to their
 domains:
-\[
-\mathcal{NUM}=\prod_{1\le j\le n}(1\le\mathit{oSelector}_{j})\cdot(\mathit{oSelector}_{j}\le L+G)\cdot\prod_{{1\le j\le2\atop 1\le k\le G}}(1\le\mathit{aSelector}_{j,k})\cdot(\mathit{aSelector}_{j,k}<L+k)
-\]
+\begin{multline}
+\mathcal{NUM}=\prod_{1\le j\le n}(1\le\mathit{oSelector}_{j})\cdot(\mathit{oSelector}_{j}\le L+G)\cdot \\ \cdot\prod_{{1\le j\le2\atop 1\le k\le G}}(1\le\mathit{aSelector}_{j,k})\cdot(\mathit{aSelector}_{j,k}<L+k)
+\end{multline}
 Constraint $\mathcal{EVAL}$ checks that the circuit outputs satisfy
 the encoding constraints:
 \[
