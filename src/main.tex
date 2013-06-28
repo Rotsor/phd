@@ -13,8 +13,8 @@
 \usepackage{color}
 \usepackage{ucs}
 \usepackage[utf8x]{inputenc}
-
 \usepackage{xspace}
+\usepackage{fancyhdr}
 \usepackage[noadjust]{cite}
 \usepackage{enumerate}
 \usepackage{graphs}
@@ -22,15 +22,26 @@
 \usepackage{setspace}
 \onehalfspacing
 
-\usepackage[top=20mm, left=40mm, bottom=20mm, right=20mm]{geometry}
+\usepackage[top=30mm, left=40mm, bottom=35mm, right=25mm]{geometry}
 
 \include{lyx-preamble}
 \include{agda-preamble}
 \include{parcomp-preamble}
 
-\begin{document}
+\newenvironment{mytitlepage}
+ {
+  \thispagestyle{empty}
+  \center
+ }
 
-\title{Compositional Approach to Design of Digital Circuits}
+
+\begin{document}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\leftmark}
+
+\title{Compositional Approach to \\ Design of Digital Circuits}
 
 \date{June 01, 2013}
 
@@ -38,14 +49,85 @@
 
 \author{Arseniy Alekseyev\\ \EECE}
 
-\maketitle
+%\maketitle
+
+\begin{mytitlepage}
+{\large University of Newcastle upon Tyne}{\large \par}
+
+{\large School of Electrical and Electronic Engineering}{\large \par}
+
+\vspace{40pt}
+
+\includegraphics[scale=0.25]{Newcastle_Master_Col}
+
+\vfill
+
+\vfill
+
+\textbf{\huge Compositional Approach to }\\
+\textbf{\huge Design of Digital Circuits }{\huge \par}
+
+\vfill
+
+{\Large by Arseniy Alekseyev }{\Large \par}
+
+\vfill
+
+{\large PhD Thesis}{\large \par}
+
+\vfill
+
+\vfill
+
+{\large June 2013}\end{mytitlepage}
+
 
 \setcounter{page}{1}
 \pagenumbering{roman}
 
 \tableofcontents
-\newpage
 
+\listoffigures
+\listoftables
+
+\abstract
+ 
+In this work we explore the available compositional methods for design of digital circuits.
+First we consider the existing method of handshake circuit optimisation via control path 
+resynthesis using Petri nets, an approach using structural composition. 
+In that approach labelled Petri net parallel composition plays an important role
+and we introduce an improvement to the parallel composition algorithm, reducing the number of redundant places in 
+the resulting Petri net representations. The proposed algorithm applies to labelled Petri nets in general
+and can be applied outside of the handshake circuit optimisation use case.
+
+Next we look at the conditional partial order graph (CPOG) formalism, an approach that allows for a convenient representation of systems
+consisting of multiple alternative system behaviours, a phenomenon we call behavioural composition.
+We generalise the notion of CPOG and identify an algebraic structure on a more general notion of parameterised graph.
+This allows us to do equivalence-preserving manipulation of graphs in symbolic form, which simplifies
+specification and reasoning about systems defined in this way, as displayed by two case studies.
+
+As a third contribution we build upon the previous work of CPOG synthesis used 
+to generate binary encoding of microcontroller instruction sets and design the corresponding instruction decoder logic. 
+The proposed CPOG synthesis technique solves the optimisation problem for the
+general case, reducing it to boolean satisfiability problem and uses existing 
+SAT solving tools to obtain the result.
+
+
+\chapter*{Acknowledgements}
+
+I am grateful to everyone who made the completion of this work a reality by sharing their knowledge, assisting directly and supporting me emotionally.
+
+My supervisor, Alex Yakovlev, guided me throughout the research programme and supported me at all times in many ways.
+I am thankful to Andrey Mokhov, Victor Khomenko, Ivan Poliakov and my other colleagues for their contributions
+to the work being presented, their participation in discussions and criticism.
+Special thanks go to Alexei Iliasov and Danil Sokolov for providing immense help in reviewing 
+and restructuring the thesis into its present form. Without them this would not have been possible.
+
+Separate thanks go to the organisations supporting me financially. 
+This work was supported by a studentship from Newcastle University EECE school, EPSRC grant EP/G037809/1
+(\textsc{VERDAD}) and EPSRC grant EP/K001698/1 (\textsc{UNCOVER}).
+
+\newpage
 \setcounter{page}{1}
 \pagenumbering{arabic}
 

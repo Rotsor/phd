@@ -1,24 +1,3 @@
-\abstract
-
-In this work we explore the available compositional methods for design of digital circuits.
-First we consider the existing method of handshake circuit optimisation via control path 
-resynthesis using Petri nets, an approach using structural composition. 
-In that approach labelled Petri net parallel composition plays an important role
-and we introduce an improvement to the parallel composition algorithm, reducing the number of redundant places in 
-the resulting Petri net representations. The proposed algorithm applies to labelled Petri nets in general
-and can be applied outside of the handshake circuit optimisation use case.
-
-Next we look at the conditional partial order graph (CPOG) formalism, an approach that allows for a convenient representation of systems
-consisting of multiple alternative system behaviours, a phenomenon we call behavioural composition.
-We generalise the notion of CPOG and identify an algebraic structure on a more general notion of parameterised graph.
-This allows us to do equivalence-preserving manipulation of graphs in symbolic form, which simplifies
-specification and reasoning about systems defined in this way, as displayed by two case studies.
-
-As a third contribution we build upon the previous work of CPOG synthesis used 
-to generate binary encoding of microcontroller instruction sets and design the corresponding instruction decoder logic. 
-The proposed CPOG synthesis technique solves the optimisation problem for the
-general case, reducing it to boolean satisfiability problem and uses existing 
-SAT solving tools to obtain the result.
 
 \input{Introduction}
 \input{Background}

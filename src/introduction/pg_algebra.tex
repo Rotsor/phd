@@ -26,7 +26,7 @@ of specifications, and is reminiscent of the relationship between digital
 circuits and Boolean algebra.
 \end{itemize}
 
-Since parametrised graphs are likely to be applied in a safety-critical toolchain, it is imperative to attain a degree of confidence in the properties of the PG formalism. Equally important is to convince prospective users that the technique is sound and lives up to its promises. To fulfil this goal, it was decided to construct in a strict and controlled manner a complete formalisation of the PG formalism. The Agda system \cite{agda} was chosen for its expressive notation language and extensive support for machine-checked formal inference. Agda has enjoyed a notable success as the basis for the formalisation of wide range of problems in the domain of programming language research~\cite{2xagda_usages}.
+Since parametrised graphs are likely to be applied in a safety-critical toolchain, it is imperative to attain a degree of confidence in the properties of the PG formalism. Equally important is to convince prospective users that the technique is sound and lives up to its promises. To fulfil this goal, it was decided to construct in a strict and controlled manner a complete formalisation of the PG formalism. The Agda system \cite{norell:thesis} was chosen for its expressive notation language and extensive support for machine-checked formal inference. Agda has enjoyed a notable success as the basis for the formalisation of wide range of problems in the domain of programming language research~\cite{LTL-types-FRP,indexed-containers}.
 
 %Says that Agda is LCF, what is LCF. What are the altrenatives: Isaballe/HOL, HOL-Light, ACL2, Coq, PVS, Nqthm. What the have achieved (the colouring problem, pentium div, ...)
 %
@@ -51,14 +51,15 @@ describing the behaviours of a pair of wires (the latter is impossible
 with the CPOG formalism).
 
 
-The second case study (Section ~\ref{subsect:MicrocontrollerDesign}) is concerned with designing a microcontroller
-for a simple processor. The processor can execute several classes
-of instructions and each class is characterised by a specific execution
-scenario of the operational units of the processor. In turn, the scenarios
-of conditional instructions have to be composed of sub-scenarios corresponding
-to the current value of the appropriate ALU flag. The overall specification
-of the microcontroller is then obtained algebraically by composing
-scenarios of each class of instructions.
+%{\huge TODO}
+%The second case study (Section ~\ref{subsect:MicrocontrollerDesign}) is concerned with designing a microcontroller
+%for a simple processor. The processor can execute several classes
+%of instructions and each class is characterised by a specific execution
+%scenario of the operational units of the processor. In turn, the scenarios
+%of conditional instructions have to be composed of sub-scenarios corresponding
+%to the current value of the appropriate ALU flag. The overall specification
+%of the microcontroller is then obtained algebraically by composing
+%scenarios of each class of instructions.
 
 
 

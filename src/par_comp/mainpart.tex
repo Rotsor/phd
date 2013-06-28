@@ -61,7 +61,74 @@ STG obtained from $C_{i}$ by deleting all places $p$ such that:
 Then $C'\DEF\parallel_{i\in I}C_i'$ and $C$ are bisimilar.
 \end{proposition}
 
-\begin{proof}
+\begin{figure}[!tb]
+  \centering
+    \includegraphics[scale=1]{fig/parallel_composition}
+  \caption[Equivalence preservation by improved parallel composition]{\label{fi-parcomp-improvement-theorem}
+    Equivalence preserved by place removal in improved parallel composition.
+  }
+\end{figure}
+
+The proposition can be depicted schematically by a diagram in Fig.~\ref{fi-parcomp-improvement-theorem}.
+Here the boxes named $S_1$ and $S_2$ represent the original STGs, 
+$S_1'$ and $S_2'$ are represent STGs obtained from $S_1$ and $S_2$ by removing places according to
+ the rules detailed above, and $S_1 \parallel S_2$ and $S_1' \parallel S_2'$ represent 
+$S_1$ composed with $S_2$ and $S_1'$ composed with $S_2'$ respectively. 
+We use a dashed line to signify the bisimulation relation between $S_1 \parallel S_2$ and $S_1' \parallel S_2'$.
+
+ 
+The conditions~\ref{only-inputs-in-postset}
+and~\ref{exists-matching-output} are intrinsic to the proposed
+method, and essentially state that due to the FCI assumption,
+firing of an input signal in a component can be controlled from
+the outside (\viz by the component controlling the
+corresponding output --- whose existence is ensured
+by~\ref{exists-matching-output}), and so the component itself
+can get rid of the places controlling it.
+
+The conditions~\ref{injective-labelling}
+and~\ref{no-dummies-in-preset} are technical restrictions on
+application of our method. If
+condition~\ref{injective-labelling} is violated, there are
+several transitions that have the same label, say $s^+$ (where
+$s$ is an input) in the component. When the corresponding
+output $s^+$ is produced by some other component, only one of
+these transitions should fire to match it --- but to know which
+one, the component needs to control their firing, and so the
+places in their presets cannot be removed.
+
+The necessity of condition~\ref{no-dummies-in-preset} is
+illustrated by Fig.~\ref{fi-dummy-counterexample}. Intuitively,
+the original STG on the left either receives $a^+$ followed by
+$b^+$ without outputting anything, or receives $b^+$ and
+produces $x^+$ in response. However, if the places in front of
+$a^+$ and $b^+$ are removed (which would be possible without
+condition~\ref{no-dummies-in-preset}), as shown on the right,
+then it might produce the unexpected $x^+$ after the trace
+$a^+\,b^+$. Intuitively, in the initial STG firing of $a^+$
+acts as an evidence that the dummy transition in the right
+branch has fired, while in the modified one the postset of this
+dummy transition has been removed, and so it is not possible
+anymore to guarantee that it has fired when $a^+$ fires.
+
+\begin{figure}[!tb]
+    \centering
+    {}%
+    \hfill%
+    \includegraphics[scale=0.3]{EXPERIMENTS/stg/dummy_counterexample}%
+    \hfill%
+    \raisebox{5.9em}[5.9em][0em]{\Large$\Rightarrow$}
+    \hfill%
+    \includegraphics[scale=0.3]{EXPERIMENTS/stg/dummy_counterexample_removed}%
+    \hfill%
+    {}
+    \caption[Example of invalid place removal]{\label{fi-dummy-counterexample}
+        Example of an STG where removal of places in the postset of dummy transitions results in a wrong behaviour.
+    }
+\end{figure}
+
+\section{Proof of Proposition \ref{pr-main}}
+
 We begin with defining the witness $R$ for simulation of $C$ by $C'$.
 We say that $(M,M') \in R$ iff $M$ is reachable in $C$ and 
 for all places $p \in P'$, $M(p)=M'(p)$.
@@ -119,74 +186,8 @@ $\nu\,s^+$ is not a trace of $C$.
 As explained above, (i) and (ii) imply a violation of FCI and
 so lead to a contradiction, which means that $C$ and
 $C'$ must be bisimilar.
-\end{proof}
 
-\begin{figure}[!tb]
-  \centering
-    \includegraphics[scale=1]{fig/parallel_composition}
-  \caption{\label{fi-parcomp-improvement-theorem}
-    Equivalence preserved by place removal in improved parallel composition.
-  }
-\end{figure}
-
-The proposition can be depicted schematically by a diagram in Fig.~\ref{fi-parcomp-improvement-theorem}.
-Here the boxes named $S_1$ and $S_2$ represent the original STGs, 
-$S_1'$ and $S_2'$ are represent STGs obtained from $S_1$ and $S_2$ by removing places according to
- the rules detailed above, and $S_1 \parallel S_2$ and $S_1' \parallel S_2'$ represent 
-$S_1$ composed with $S_2$ and $S_1'$ composed with $S_2'$ respectively. 
-We use a dashed line to signify the bisimulation relation between $S_1 \parallel S_2$ and $S_1' \parallel S_2'$.
-
-We now discuss the conditions of Prop.~\ref{pr-main} in more
-detail. The conditions~\ref{only-inputs-in-postset}
-and~\ref{exists-matching-output} are intrinsic to the proposed
-method, and essentially state that due to the FCI assumption,
-firing of an input signal in a component can be controlled from
-the outside (\viz by the component controlling the
-corresponding output --- whose existence is ensured
-by~\ref{exists-matching-output}), and so the component itself
-can get rid of the places controlling it.
-
-The conditions~\ref{injective-labelling}
-and~\ref{no-dummies-in-preset} are technical restrictions on
-application of our method. If
-condition~\ref{injective-labelling} is violated, there are
-several transitions that have the same label, say $s^+$ (where
-$s$ is an input) in the component. When the corresponding
-output $s^+$ is produced by some other component, only one of
-these transitions should fire to match it --- but to know which
-one, the component needs to control their firing, and so the
-places in their presets cannot be removed.
-
-The necessity of condition~\ref{no-dummies-in-preset} is
-illustrated by Fig.~\ref{fi-dummy-counterexample}. Intuitively,
-the original STG on the left either receives $a^+$ followed by
-$b^+$ without outputting anything, or receives $b^+$ and
-produces $x^+$ in response. However, if the places in front of
-$a^+$ and $b^+$ are removed (which would be possible without
-condition~\ref{no-dummies-in-preset}), as shown on the right,
-then it might produce the unexpected $x^+$ after the trace
-$a^+\,b^+$. Intuitively, in the initial STG firing of $a^+$
-acts as an evidence that the dummy transition in the right
-branch has fired, while in the modified one the postset of this
-dummy transition has been removed, and so it is not possible
-anymore to guarantee that it has fired when $a^+$ fires.
-
-\begin{figure}[!tb]
-    \centering
-    {}%
-    \hfill%
-    \includegraphics[scale=0.3]{EXPERIMENTS/stg/dummy_counterexample}%
-    \hfill%
-    \raisebox{5.9em}[5.9em][0em]{\Large$\Rightarrow$}
-    \hfill%
-    \includegraphics[scale=0.3]{EXPERIMENTS/stg/dummy_counterexample_removed}%
-    \hfill%
-    {}
-    \caption{\label{fi-dummy-counterexample}
-        Example of an STG where removal of places in the postset of dummy transitions results in a wrong behaviour.
-    }
-\end{figure}
-
+\section{Discussion}
 
 In practice, when performing the parallel composition, one
 would like as few implicit places as possible in the result,

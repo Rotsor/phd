@@ -10,7 +10,7 @@ Syntax-based synthesis tools such as Balsa~\cite{balsa} are unable to take into 
 behaviour of STGs corresponding to handshake circuit components. To address this issue we propose 
 a technique that selectively composes STGs of related components to obtain a smaller and more performant
 circuit without suffering state space explosion commonly associated with Petri net based techniques~\cite{Valmari}.
-This transformation, which we refer to as \emph{resynthesis}~\cite{ukaf_balsa_resynthesis}, is accomplished in three stages. First, we apply a heuristic to identify the most promising candidates for STG-level composition. Second, we perform a parallel composition of the selected component STGs and as a result obtain a new handshake circuit with custom components, functionally equivalent to a combination of elementary components. Finally, a gate-level implementation is obtained from the new handshake circuit via a component-wise synthesis of STGs.
+This transformation, which we refer to as \emph{resynthesis}~\cite{ukaf_balsa_resynthesis,CN-02,KVL-96,PC-96}, is accomplished in three stages. First, we apply a heuristic to identify the most promising candidates for STG-level composition. Second, we perform a parallel composition of the selected component STGs and as a result obtain a new handshake circuit with custom components, functionally equivalent to a combination of elementary components. Finally, a gate-level implementation is obtained from the new handshake circuit via a component-wise synthesis of STGs.
 
 Unfortunately, the standard definition of parallel composition almost always yields a `messy' Petri net, with many implicit places, causing performance deterioration in techniques that are based on structural methods such as the resynthesis approach. To counter this, we propose an improved algorithm for computing the parallel composition. The algorithm generally produces nets with fewer implicit places that are better suited for subsequent application of structural methods~\cite{improved_par_comp}.
 
@@ -86,3 +86,5 @@ smaller blocks of components.
 \input{introduction/pg_algebra}
 \input{introduction/pg_encoding}
 \input{introduction/agda}
+
+\section{Summary}

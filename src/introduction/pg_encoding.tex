@@ -53,20 +53,14 @@ We discuss the known CPOG encoding techniques:
 \item \emph{weakly optimal encoding}\footnote{In \cite{2009_mokhov_phd}, this is referred to simply as \emph{optimal}.} finds a solution with the minimal total number of variables among the solutions with fewest literals (ground terms); like the matrix encoding, it yields a CPOG with single variable conditions; however, generally, it uses fewer variables in total.    
 \end{itemize}
 
-We proceed to discuss how we improve upon this work by introducing a new algorithm. The algorithm is able to identify a globally optimal solution for a given fixed set of optimality criteria. The techniques discussed above are only able to identify various forms of local optimums. More precisely, the four existing techniques define just four points in the \emph{solution space} constructed by our algorithm. Only one of these points is located on the Pareto optimality frontier, constructed by our algorithm (see Fig. \ref{fig:pareto}).
+We proceed to discuss how we improve upon this work by introducing a new algorithm. The algorithm is able to identify a globally optimal solution for a given fixed set of optimality criteria. The techniques discussed above are only able to identify various forms of local optimums. More precisely, the four existing techniques define just four points in the \emph{solution space} constructed by our algorithm. Only one of these points is located on the Pareto optimality frontier, constructed by our algorithm (see Fig.~\ref{fig:pareto}).
 
 \begin{figure}[t]
-{\huge{pareto graph}}
-\label{fig:pareto}
-\caption{The relationship between our CPOG encoding algorithm and those proposed in~\cite{2009_mokhov_phd}.}
+\centering
+\includegraphics[scale=0.7]{fig/optimality_frontier}
+\caption[The optimality frontier]{\label{fig:pareto}The relationship between the optimality frontier, as found by our algorithm, and the solutions proposed in~\cite{2009_mokhov_phd}. On the axis $|G|$ we plot the number of logic gates needed to describe the instruction decoder and the axis $|X|$ corresponds to the number of variables used to encode the instructions.}
 \end{figure} 
  
-\begin{figure}[t]
-{\huge{pareto graph with two lines: vertical $Z$, horizontal $Y$}}
-\label{fig:pareto}
-\caption{The relationship between our CPOG encoding algorithm and those proposed in~\cite{2009_mokhov_phd}.}
-\end{figure} 
-
 The gist of the approach lies in a combination of binary search and boolean satisfiability solving (SAT). Binary search travels through a binary tree of potential solutions using a choice function of the form $f \in D \rightarrow \mathbb{B}$ where $D$ is domain limiting the space of explored solutions. In our case, such $D$ may define either a set of gate counts of a decoder circuit or, alternatively, the set of number of variables used in CPOG conditions. In a general case, $f$ takes the following form: 
 
 $$f(x) = \left \{ \begin{array}{l} \top,~ \text{when there exists a solution} ~ S ~ \text{such that its cost is}~ x \\ \bot,~ \text{otherwise}  \end{array} \right .$$   

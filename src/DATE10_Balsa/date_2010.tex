@@ -1,5 +1,7 @@
 \section{Balsa workflow optimisation through STG resynthesis}
 
+\label{sec:balsa-workflow}
+
 \begin{figure}
 \begin{centering}
 \includegraphics[width=0.45\paperwidth]{figures/balsa-design-workflow}
@@ -97,7 +99,14 @@ components. We will review each group separately.
 \subfloat[SequenceOptimised\label{fig:SequenceOptimised}]{
 
 \begin{centering}
-\includegraphics[scale=0.5]{figures/Control/sequence-HC}~~\includegraphics[scale=0.15]{figures/Control/sequenceoptimised}
+\begin{tabular}{cc}
+\mbox{
+\includegraphics[scale=0.6]{figures/Control/sequence-HC}
+\vspace{33mm}
+}
+&
+\includegraphics[scale=0.25]{figures/Control/sequenceoptimised}
+\end{tabular}
 \par\end{centering}
 
 }
@@ -105,7 +114,7 @@ components. We will review each group separately.
 \subfloat[Concur\label{fig:Concur}]{
 
 \begin{centering}
-\includegraphics[scale=0.5]{figures/Control/concur-HC}~~\includegraphics[scale=0.15]{figures/Control/concur}
+\includegraphics[scale=0.6]{figures/Control/concur-HC}~~\includegraphics[scale=0.25]{figures/Control/concur}
 \par\end{centering}
 
 }
@@ -137,19 +146,19 @@ to achieve CSC.
 
 \begin{figure}
 \subfloat[BinaryFunc\label{fig:BinaryFunc}]{\begin{centering}
-\includegraphics[scale=0.4]{figures/Data/binaryfunc-HC}~~\includegraphics[scale=0.11]{figures/Data/binaryfunc}
+\includegraphics[scale=0.6]{figures/Data/binaryfunc-HC}~~\includegraphics[scale=0.25]{figures/Data/binaryfunc}
 \par\end{centering}
 
 }
 
 \subfloat[CallMux\label{fig:CallMux}]{\begin{centering}
-\includegraphics[scale=0.5]{figures/Data/callmux-HC}~~\includegraphics[scale=0.13]{figures/Data/callmux}
+\includegraphics[scale=0.6]{figures/Data/callmux-HC}~~\includegraphics[scale=0.25]{figures/Data/callmux}
 \par\end{centering}
 
 }
 
 \subfloat[Variable\label{fig:Variable}]{\begin{centering}
-\includegraphics[scale=0.5]{figures/Data/variable-HC}~~\includegraphics[scale=0.13]{figures/Data/variable}
+\includegraphics[scale=0.6]{figures/Data/variable-HC}~~\includegraphics[scale=0.25]{figures/Data/variable}
 \par\end{centering}
 
 }
@@ -180,7 +189,7 @@ path control components.
 \begin{figure}
 \begin{raggedright}
 \subfloat[While\label{fig:While}]{\begin{centering}
-\includegraphics[bb=0bp 0bp 134bp 80bp,scale=0.5]{figures/while-HC}~~\includegraphics[scale=0.12]{figures/while}
+\includegraphics[bb=0bp 0bp 134bp 80bp,scale=0.6]{figures/while-HC}~~\includegraphics[scale=0.25]{figures/while}
 \par\end{centering}
 
 }
@@ -188,7 +197,7 @@ path control components.
 
 \begin{raggedright}
 \subfloat[Case\label{fig:Case}]{\begin{centering}
-\includegraphics[scale=0.5]{figures/case-HC}~~\includegraphics[scale=0.13]{figures/case}
+\includegraphics[scale=0.6]{figures/case-HC}~~\includegraphics[scale=0.25]{figures/case}
 \par\end{centering}
 
 }
@@ -212,7 +221,7 @@ handshakes must be preserved.
 
 \section{An example: GCD controller}
 
-\begin{figure}
+\begin{figure}[!t]
 \begin{centering}
 \includegraphics[width=0.3\paperwidth]{figures/breeze-gcd-partition}
 \par\end{centering}
@@ -245,7 +254,7 @@ additional third-party tools.
 
 \section{Experimental results}
 
-\begin{table}
+\begin{table}[!t]
 \begin{centering}
 \begin{tabular}{|c|c|c|c|}
 \hline 
@@ -280,7 +289,7 @@ While & 17 & 17 & 17\tabularnewline
 \end{table}
 
 
-\begin{table}
+\begin{table}[t]
 \begin{centering}
 \begin{tabular}{|c|c|}
 \hline 

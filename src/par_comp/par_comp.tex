@@ -1,4 +1,4 @@
-\chapter{Improved Parallel Composition of Labelled Petri Nets}
+\chapter{Improved Parallel Composition}
 
 \label{chap:ParComp}
 
@@ -7,3 +7,27 @@ The contents of this chapter is based on the results published previously in \ci
 \input{mainpart}
 \input{benchmarks}
 \input{DATE10_Balsa/date_2010}
+
+\section{Summary}
+
+We have presented an improved algorithm for computing the
+parallel composition of STGs or labelled Petri nets. Under the
+FCI assumptions, it allows to produce nets with fewer implicit
+places, which aids the subsequent structural algorithms like
+dummy contraction. It uses only simple structural checks and
+thus is very efficient even for large compositions, so the
+improvement comes at negligible cost.
+
+The algorithm was implemented in the \pcomp tool and evaluated
+on a set of scalable benchmarks. The experiments proved its
+efficiency, which increases even more when the components are
+pre-processed to remove dummies and ensure injective labelling
+(this is usually cheap, as the components are small; moreover,
+if the components come from a standard library of component
+types, this step can be completely eliminated).
+
+Another important advantage is that the improved algorithm
+places almost no additional effort on the user: the only
+requirement is to pass an additional command-line option to
+\pcomp so that it can assume the FCI property and apply the
+proposed optimisation.
