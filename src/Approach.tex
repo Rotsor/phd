@@ -4,7 +4,7 @@ The subject of this thesis is the advancement of compositional techniques for ci
 
 
 \section{Overview}
-Handshake circuits are widely applied in the design and synthesis of real-life hardware.
+Handshake circuits~\cite{van2004handshake} are widely applied in the design and synthesis of real-life hardware.
 One prominent problem is obtaining an efficient implementation from a \emph{structural} compositional specification.
 Syntax-based synthesis tools such as Balsa~\cite{balsa} are unable to take into account the compositional
 behaviour of STGs corresponding to handshake circuit components. To address this issue we propose 
@@ -50,11 +50,11 @@ components. A designer is able to use these components as ``building
 blocks'', and then obtain the final gate-level design through an
 automated mapping process. Some of the well-known asynchronous
 design automation packages, such as Tangram~\cite{951597}, and Balsa~\cite{balsa},
-define a high-level programming-like language that is used to describe
+define a high-level programming language that is used to describe
 systems. The language constructs are then directly translated into
 a network of \emph{handshake components}-- blocks with predefined
 functionality that use \emph{handshakes} to interface with other components,
-which are in turn mapped into a gate netlist ~ \cite{XXXX}. 
+which are in turn mapped into a gate netlist~~\cite{van2004handshake}.
 
 Although this method greatly enhances the designer's productivity,
 it has several important drawbacks. Of these, the control-path overhead

@@ -1,4 +1,4 @@
-\section{PG Encoding}
+\section{CPOG Encoding}
 
 Automated design of general purpose processing cores, application-specific
 instruction-set processors (ASIPs), and distributed Systems-on-Chip
@@ -10,25 +10,17 @@ more specific techniques (such as compiler-directed instruction set
 optimisation~\cite{2002_qin_date}) are constantly introduced into
 the instruction set architecture (ISA) design domain.
 
-\begin{figure}
-\begin{centering}
-\vspace{-3mm}
-\includegraphics[width=0.6\columnwidth]{fig/control}\vspace{-1mm}
+%\begin{figure}
+%\begin{centering}
+%\vspace{-3mm}
+%\includegraphics[width=0.6\columnwidth]{fig/control}\vspace{-1mm}
+%
+%\par\end{centering}
+%
+%\caption{CPOGs and processor microcontrol\label{fig:Dynamically-reconfigurable-controller}}
+%\vspace{-3mm}
+%\end{figure}
 
-\par\end{centering}
-
-\caption{CPOGs and processor microcontrol\label{fig:Dynamically-reconfigurable-controller}}
-\vspace{-3mm}
-\end{figure}
-
-{\huge{
-TODO: vyzhimka
-\begin{itemize}
-\item larger set of possible solutions
-\item synthesis of optimal decoder
-\item SAT
-\end{itemize}
-}}
 
 Synthesis of instruction sets is a particularly active research area.
 There are methods for automated ISA synthesis for a target platform
@@ -45,39 +37,43 @@ decoder circuitry overheads. The problem is usually approached by
 ad-hoc heuristics or application-specific optimisation techniques
 (see, for example,~\cite{2002_lee_iccad}).
 
-In this chapter we try to solve the general problem of optimal encoding
-of a given set of instructions with the aid of the Conditional Partial
-Order Graph (CPOG) model introduced recently~\cite{2009_mokhov_phd}\cite{2010_mokhov_ieee}.
-The key features of the model are: ability to describe systems in
-a compact functional form, and structural synthesis methods which
+The CPOG notation has an application in CPU design with a natural hardware correspondence: it desribes synshronous or asynchronous control logic over the units defined by CPOG vertices. Such logic is commonly called a \emph{decoder} -- a circuit that takes an instruction code word and produces control signals for CPU components.  
+
+In Chapter~\ref{chap:PGEncoding} we address the problem of CPOG \emph{encoding}~\cite{2009_mokhov_phd} -- the process of identification of an efficient CPOG from which a given set of partial orders may be obtained via the CPOG projection mechanism. An efficient encoding makes it possible to describe systems in
+a compact functional form and apply structural synthesis methods which
 significantly improve performance of the whole design flow. These
 features make the model very efficient for representation and management
-of processor instruction sets in hardware and EDA software. A CPOG
-is a superposition of a set of partial orders which can be extracted
-from it by providing the corresponding codewords, see Figure~\ref{fig:Dynamically-reconfigurable-controller}
-(top). It can be regarded as a custom associative memory for storing
-cause and effect relations within a predefined set of events.
+of processor instruction sets in hardware and EDA software. 
 
-There are different kinds of systems which can be described with the
-model. For example, a processor microcontroller executes partial orders
-(or \emph{instructions}) of primitive computational steps (or \emph{microinstructions})
-defined on a set of data path operational units, see Figure~\ref{fig:Dynamically-reconfigurable-controller}
-(bottom). The order is determined by an \emph{instruction code} --- 
-a combination of logical conditions presented
-to the controller by the environment~\cite{1994_de_micheli_book}.
-To this end, the microcontroller can be seen as an entity which communicates
-with two parts of the environment: one part is the source of condition
-signals (an instruction decoder) and the other part is a set of controlled
-objects with request-acknowledgement interface (data path operational
-units which execute the microinstructions).
+We discuss the known CPOG encoding techniques:
+\begin{itemize}
+\item \emph{binary encoding}, synthesising a CPOG with the minimal number of variables;
+\item \emph{matrix encoding}, where each vertex and arc are assigned a unique control variable;
+\item \emph{one hot enconding}, attributing a variable to each unique original scenario;
+\item \emph{weakly optimal encoding}\footnote{In \cite{2009_mokhov_phd}, this is referred to simply as \emph{optimal}.} finds a solution with the minimal total number of variables among the solutions with fewest literals (ground terms); like the matrix encoding, it yields a CPOG with single variable conditions; however, generally, it uses fewer variables in total.    
+\end{itemize}
 
-There are many criteria which determine the choice of a particular
-processor architecture and influence design of an instruction set:
-functionality, operation modes, resources, etc. In Section~\ref{sec-processor}
-we study an example of an instruction set (a subset of MSP430
-processor~\cite{mspmanual}) implemented on a minimalistic hardware
-platform. However, the main focus of this paper is optimal encoding
-of processor instruction sets in the general architecture-independent
-context. See~\cite{2011_mokhov_tr} for investigation of the architecture-level
-reasoning using the CPOG model.
+We proceed to discuss how we improve upon this work by introducing a new algorithm. The algorithm is able to identify a globally optimal solution for a given fixed set of optimality criteria. The techniques discussed above are only able to identify various forms of local optimums. More precisely, the four existing techniques define just four points in the \emph{solution space} constructed by our algorithm. Only one of these points is located on the Pareto optimality frontier, constructed by our algorithm (see Fig. \ref{fig:pareto}).
 
+\begin{figure}[t]
+{\huge{pareto graph}}
+\label{fig:pareto}
+\caption{The relationship between our CPOG encoding algorithm and those proposed in~\cite{2009_mokhov_phd}.}
+\end{figure} 
+ 
+\begin{figure}[t]
+{\huge{pareto graph with two lines: vertical $Z$, horizontal $Y$}}
+\label{fig:pareto}
+\caption{The relationship between our CPOG encoding algorithm and those proposed in~\cite{2009_mokhov_phd}.}
+\end{figure} 
+
+The gist of the approach lies in a combination of binary search and boolean satisfiability solving (SAT). Binary search travels through a binary tree of potential solutions using a choice function of the form $f \in D \rightarrow \mathbb{B}$ where $D$ is domain limiting the space of explored solutions. In our case, such $D$ may define either a set of gate counts of a decoder circuit or, alternatively, the set of number of variables used in CPOG conditions. In a general case, $f$ takes the following form: 
+
+$$f(x) = \left \{ \begin{array}{l} \top,~ \text{when there exists a solution} ~ S ~ \text{such that its cost is}~ x \\ \bot,~ \text{otherwise}  \end{array} \right .$$   
+
+\noindent
+Such function $f$ may be challenging to compute since the set from which solutions are drawn is typically large. Let $v$ and $g$ signify the maximum number of variables and gates; also let $s$ be the number of scenarious encoded in the original CPOG. Then the size of the solutions space is in the order of 
+
+$$\left (2 * (v + g) \right )^{2g} \left (2^{v} \right )^{s}$$  
+
+\noindent For instance, for $v=5$, $g=5$ and $s=5$ the formula above gives circa $10^{21}$ potential solutions to consider. Clearly, computing $f$ with a brute-force approach is infeasible. Note, however, that $f$ has a form of an existential quantifier binding indentifiers to finite domains. This form of statement is perfectly suited for SAT solving. To bridge to the SAT-level notation we have to do binary vector encoding of scenario and variable indices, gate identifiers and cost indicators. The result is processed by a SAT solver and the output is a binary representation of a decoding circuit. In particular, we have used Minisat~\cite{minisat} and clasp ~\cite{clasp} SAT solvers. As one example, we have been able to obtain an optimal solution for $v=8$, $s=8$ and $g \in 3 .. 12$.     

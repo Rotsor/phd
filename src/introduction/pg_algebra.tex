@@ -13,21 +13,35 @@ its components is not possible. We extend this formalism in several
 ways:
 
 \begin{itemize}
-\item We transition from the graphs representing partial orders to general graphs.
-Nevertheless, if partial orders are the most natural way to represent
-a certain aspect of system, this still can be handled.
-\item The new formalism is fully compositional.
+\item We transition from the graphs representing partial orders to general graphs and lift the assumption of graph acyclicity.
+Nevertheless, if a partial orders is the most natural way to represent
+a certain aspect of system, this still can be handled. 
+\item The new formalism is fully compositional -- it adds algebraic operations for combining existing specifications.
 \item We describe the equivalence relation between the specifications as
 a set of axioms, obtaining an algebra of parametrised graphs. This set of axioms is proved
 to be sound, minimal and complete~\cite{pg_algebra}.
-\item The developed formalism makes possible to manipulate specifications as
-algebraic expressions using the rules of the algebra. This
-can be viewed as adding a syntactic level to the semantic representation
+\item We have defined equivalence preserving transformations; this permits one to use the algebra to safely manipulate PG specifications. 
+This can be viewed as adding a syntactic level to the semantic representation
 of specifications, and is reminiscent of the relationship between digital
 circuits and Boolean algebra.
 \end{itemize}
+
+Since parametrised graphs are likely to be applied in a safety-critical toolchain, it is imperative to attain a degree of confidence in the properties of the PG formalism. Equally important is to convince prospective users that the technique is sound and lives up to its promises. To fulfil this goal, it was decided to construct in a strict and controlled manner a complete formalisation of the PG formalism. The Agda system \cite{agda} was chosen for its expressive notation language and extensive support for machine-checked formal inference. Agda has enjoyed a notable success as the basis for the formalisation of wide range of problems in the domain of programming language research~\cite{2xagda_usages}.
+
+%Says that Agda is LCF, what is LCF. What are the altrenatives: Isaballe/HOL, HOL-Light, ACL2, Coq, PVS, Nqthm. What the have achieved (the colouring problem, pentium div, ...)
+%
+%compare to Maude (2 lines)
+%
+%a small agda example: list 
+%
+%explain why an alegbraic specification is better suited than a model-based (VDM, Z, B) or process based (CSP, CCS).
+%
+%
+
+
+
 We demonstrate the usefulness of the developed formalism on the basis of two case
-studies. The first one is concerned with development of a phase encoding
+studies. The first one (Section ~\ref{subsect:PhaseEncoders}) is concerned with development of a phase encoding
 controller that represents information by the order of arrival of
 signals on $n$ wires. As there are $n!$ possible arrival orders,
 it is a challenge to specify the set of corresponding behavioural
@@ -37,7 +51,7 @@ describing the behaviours of a pair of wires (the latter is impossible
 with the CPOG formalism).
 
 
-The second case study is concerned with designing a microcontroller
+The second case study (Section ~\ref{subsect:MicrocontrollerDesign}) is concerned with designing a microcontroller
 for a simple processor. The processor can execute several classes
 of instructions and each class is characterised by a specific execution
 scenario of the operational units of the processor. In turn, the scenarios
