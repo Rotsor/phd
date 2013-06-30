@@ -1,26 +1,9 @@
-Dear all,
+Major things:
+* Chapter 6 - write it!
+* Introduction - introduce the changes Alex comes up with on Monday.
+* Look at the LaTeX warning messages
 
-Attached is the current version of my thesis draft. There is still a lot to do to make it of acceptable quality and I'm afraid I won't be able to do it without your help!
+Medium things:
+* Expand the isomorphism/bisimilarity story
+* Spellcheck
 
-The things I will be able to do by myself:
-* Tidy up the pictures and formatting
-* Complete the Appendix by adding the relevant source code
-* Fix the wrong theorem in Chapter 4
-
-The things I need help with:
-
-* Introduction:
-
-Sections 1.4-1.7 do not fit into introduction well at all. They are just introductions copied from the corresponding papers. We need to move the text somewhere or recombine into a sensible structure. Section 1.1. Motivation is also basically non-existant and needs to be expanded.
-
-* Conclusion:
-
-Current conclusion, as well as introduction, is just a collection of conclusions from various papers.
-
-* Chapters 6:
-
-I think there is some content intersections with Andrey's thesis and a little bit with Chapter 5.
-I will probably need to remove something, but I will need Andrey's help to do that.
-
-Have a good day,
-Arseniy

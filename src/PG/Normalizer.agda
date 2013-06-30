@@ -8,7 +8,8 @@ import Data.Product as Product
 open Product using(_,_; _×_)
 open import Level using () renaming (zero to ₀)
 
-open import PG.Formulae using (BoolFormula; _∧_; _∨_; ⊤; var; PGFormula; module PGFormula; pg-eval)
+open import PG.Formulae using 
+  (BoolFormula; _∧_; _∨_; ⊤; var; PGFormula; module PGFormula; pg-eval)
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality using (_≡_)
 import Data.List as List
@@ -51,7 +52,8 @@ module WithOrder {_<_ : V → V → Set} (A-STO : IsStrictTotalOrder _≡_ _<_) 
   newArrows p q = map inj₂ (vertices p ⊗ vertices q)
   
   _⇾₁_ : Lit → Lit → List Lit
-  (p , f) ⇾₁ (q , g) = (p , f) ∷ (q , g) ∷ (map (flip _,_ (f ∧ g)) (newArrows p q))
+  (p , f) ⇾₁ (q , g) = 
+    (p , f) ∷ (q , g) ∷ (map (flip _,_ (f ∧ g)) (newArrows p q))
 
   _⇾ʳ_ : Lit → NF → NF
   lit ⇾ʳ [] = lit ∷ []

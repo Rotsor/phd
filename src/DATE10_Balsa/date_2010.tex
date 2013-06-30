@@ -4,7 +4,7 @@
 
 \begin{figure}
 \begin{centering}
-\includegraphics[width=0.45\paperwidth]{figures/balsa-design-workflow}
+\includegraphics[width=0.40\paperwidth]{figures/balsa-design-workflow}
 \par\end{centering}
 
 \centering{}\caption{Balsa design workflow\label{fig:Balsa-design-workflow}}
@@ -13,7 +13,7 @@
 
 \begin{figure}
 \begin{centering}
-\includegraphics[width=0.45\paperwidth]{figures/balsa-workflow-modification}
+\includegraphics[width=0.40\paperwidth]{figures/balsa-workflow-modification}
 \par\end{centering}
 
 \caption{Modified Balsa workflow\label{fig:Modified-Balsa-workflow}}
@@ -95,28 +95,25 @@ components. We will review each group separately.
 
 \subsection{Pure control path components}
 
-\begin{figure}
-\subfloat[SequenceOptimised\label{fig:SequenceOptimised}]{
-
-\begin{centering}
-\begin{tabular}{cc}
-\mbox{
-\includegraphics[scale=0.6]{figures/Control/sequence-HC}
-\vspace{33mm}
+\newcommand{\vcent}[1]{
+  $\vcenter{\hbox{#1}}$
 }
-&
-\includegraphics[scale=0.25]{figures/Control/sequenceoptimised}
-\end{tabular}
-\par\end{centering}
+\newcommand{\balsafigSZ}[1]{
+\vcent{\includegraphics[scale=0.6]{#1}}
+}
 
+\begin{figure}
+
+\subfloat[Sequence\label{fig:SequenceOptimised}]{
+\centering
+\balsafigSZ{figures/Control/sequence-HC}
+~~
+\vcent{\includegraphics[scale=0.25]{figures/Control/sequenceoptimised}}
 }
 
 \subfloat[Concur\label{fig:Concur}]{
-
-\begin{centering}
-\includegraphics[scale=0.6]{figures/Control/concur-HC}~~\includegraphics[scale=0.25]{figures/Control/concur}
-\par\end{centering}
-
+\centering
+\balsafigSZ{figures/Control/concur-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Control/concur}}
 }
 
 \caption{Pure control path handshake components and their respective STGs}
@@ -146,19 +143,19 @@ to achieve CSC.
 
 \begin{figure}
 \subfloat[BinaryFunc\label{fig:BinaryFunc}]{\begin{centering}
-\includegraphics[scale=0.6]{figures/Data/binaryfunc-HC}~~\includegraphics[scale=0.25]{figures/Data/binaryfunc}
+\balsafigSZ{figures/Data/binaryfunc-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Data/binaryfunc}}
 \par\end{centering}
 
 }
 
 \subfloat[CallMux\label{fig:CallMux}]{\begin{centering}
-\includegraphics[scale=0.6]{figures/Data/callmux-HC}~~\includegraphics[scale=0.25]{figures/Data/callmux}
+\balsafigSZ{figures/Data/callmux-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Data/callmux}}
 \par\end{centering}
 
 }
 
 \subfloat[Variable\label{fig:Variable}]{\begin{centering}
-\includegraphics[scale=0.6]{figures/Data/variable-HC}~~\includegraphics[scale=0.25]{figures/Data/variable}
+\balsafigSZ{figures/Data/variable-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Data/variable}}
 \par\end{centering}
 
 }
@@ -189,7 +186,7 @@ path control components.
 \begin{figure}
 \begin{raggedright}
 \subfloat[While\label{fig:While}]{\begin{centering}
-\includegraphics[bb=0bp 0bp 134bp 80bp,scale=0.6]{figures/while-HC}~~\includegraphics[scale=0.25]{figures/while}
+\vcent{\includegraphics[bb=0bp 0bp 134bp 80bp,scale=0.6]{figures/while-HC}}~~\vcent{\includegraphics[scale=0.25]{figures/while}}
 \par\end{centering}
 
 }
@@ -197,7 +194,7 @@ path control components.
 
 \begin{raggedright}
 \subfloat[Case\label{fig:Case}]{\begin{centering}
-\includegraphics[scale=0.6]{figures/case-HC}~~\includegraphics[scale=0.25]{figures/case}
+\balsafigSZ{figures/case-HC}~~\vcent{\includegraphics[scale=0.25]{figures/case}}
 \par\end{centering}
 
 }

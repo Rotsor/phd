@@ -24,9 +24,12 @@ record PGOps (B G : Set) : Set where
  open GraphOps graph-ops public
 
 IsBoolAlg : {B : Set} → (B-eq : Eq B) → (bool-ops : BoolOps B) → Set
-IsBoolAlg (equality eq) ops = let open BoolOps ops in IsBooleanAlgebra eq _∨_ _∧_ ¬ ⊤ ⊥
+IsBoolAlg (equality eq) ops = let open BoolOps ops in 
+  IsBooleanAlgebra eq _∨_ _∧_ ¬ ⊤ ⊥
 
-record IsPG {B G : Set} (B-eq : Eq B) (G-eq : Eq G) (PG-ops : PGOps B G) (B-ops : BoolOps B) : Set where
+record IsPG {B G : Set} 
+  (B-eq : Eq B) (G-eq : Eq G) 
+  (PG-ops : PGOps B G) (B-ops : BoolOps B) : Set where
  open PGOps PG-ops
  open Eq G-eq
  open Eq B-eq renaming (_≈_ to _B≈_)

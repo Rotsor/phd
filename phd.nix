@@ -19,12 +19,10 @@ let pkgs = import <nixpkgs> {}; in
 	lhs2TeX --agda agda.tex > agda-processed.tex
 	runhaskell $breaker_hs -o1 agda-preamble.tex -o2 agda-processed-body.tex < agda-processed.tex
 	runhaskell $breaker_hs -o1 /dev/null -o2 agda-listing-body.tex < listing-processed.tex
-	ls
-	cat agda-processed-body.tex
 	export TEXINPUTS=$BuildDir/styles:$BuildDir/DATE10_Balsa:$BuildDir/par_comp:
 	export BIBINPUTS=$BuildDir/par_comp:
 	echo RRR Latex 1
-	latex main > /dev/null
+	latex main # > /dev/null
 	echo RRR Bibtex
 	bibtex main
 	echo RRR Latex 2

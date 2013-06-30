@@ -93,7 +93,9 @@ module GraphTheory {P : Set} (graph : Graph P) where
     a + ε
      ≈⟨ sym r-deco ⟩
     (a + ε) + (a + ε) + ε
-     ≈⟨ +-cong₁ (+-assoc ≈≈≈ (+-cong₂ (+-comm ≈≈≈ +-assoc) ≈≈≈ sym +-assoc)) ≈≈≈ +-assoc ⟩
+     ≈⟨ +-cong₁ 
+        (+-assoc ≈≈≈ (+-cong₂ (+-comm ≈≈≈ +-assoc) ≈≈≈ sym +-assoc)) 
+        ≈≈≈ +-assoc ⟩
     a + a + (ε + ε + ε)
      ≈⟨ +-cong₂ r-deco ⟩
     a + a + ε 
@@ -244,7 +246,7 @@ module GraphTheory {P : Set} (graph : Graph P) where
   ⇾arg2Monotony r+s≈s = sym distribˡ ≈≈≈ ⇾-cong₂ r+s≈s
 
   ⇾monotony : {p q r s : P} → p ⊆ q → r ⊆ s → p ⇾ r ⊆ q ⇾ s
-  ⇾monotony {p} {q} {r} {s} p+q≈q r+s≈s = ⊆-trans (⇾arg1Monotony p+q≈q) (⇾arg2Monotony r+s≈s)
+  ⇾monotony p+q≈q r+s≈s = ⊆-trans (⇾arg1Monotony p+q≈q) (⇾arg2Monotony r+s≈s)
 
   ⇾-preserves-_⊆_ : _⇾_ Preserves₂ _⊆_ ⟶ _⊆_ ⟶ _⊆_
   ⇾-preserves-_⊆_ = ⇾monotony

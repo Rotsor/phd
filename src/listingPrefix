@@ -3,4 +3,6 @@
 
 %%%%%%% BREAK HERE %%%%%%%
 
+\renewcommand{\hscodestyle}{\scriptsize}
+
 \begin{code}

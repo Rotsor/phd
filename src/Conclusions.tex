@@ -27,7 +27,7 @@ proposed optimisation.
 
 \section{PG Algebra}
 
-We introduced a new formalism called Parameterised Graphs and the
+We introduced a new formalism called Parametrised Graphs and the
 corresponding algebra. The formalism allows to manage a large number
 of system configurations and execution modes, exploit similarities
 between them to simplify the specification, and to work with groups
@@ -36,7 +36,7 @@ modes and groups of modes can be managed in a compositional way, and
 the specifications can be manipulated (transformed and/or optimised)
 algebraically in a fully formal and natural way.
 
-We develop two variants of the algebra of parameterised graphs, corresponding
+We develop two variants of the algebra of parametrised graphs, corresponding
 to the two natural graph equivalences: graph isomorphism and isomorphism
 of transitive closures. Both cases are specified axiomatically, and
 the soundness, minimality and completeness of the resulting sets of
@@ -44,7 +44,7 @@ axioms are formally proved. Moreover, the canonical forms of algebraic
 terms are developed in each case.
 
 The usefulness of the developed formalism has been demonstrated on
-two case studies, a phase encoding controller and a processor microcontroller.
+two case studies, a phase encoding controller and a processor micro-controller.
 Both have a large number of execution scenarios, and the developed
 formalism allows to capture them algebraically, by composing individual
 scenarios and groups of scenarios. The possibility of algebraical
@@ -68,13 +68,13 @@ of graphs~\cite{2005_McConnell_modular}.\\
 
 \section{PG Encoding}
 
-The Chapter~\ref{chap:PGEncoding} presented the CPOG model based methodology for microarchitecture
+The Chapter~\ref{chap:PGEncoding} presented the CPOG model based methodology for micro architecture
 design and studied its application for specification and synthesis
 of the central processor microcontroller. The key contribution is
-the method for synthesis of optimal instruction opcodes; the corresponding
+the method for synthesis of optimal instruction op-codes; the corresponding
 optimisation problem is formulated in terms of CPOGs and reduced to
 the well-known Boolean satisfiability problem. The method is implemented
-in a software tool and can be used within the conventional microarchitecture
+in a software tool and can be used within the conventional micro architecture
 design flow.
 
 The studied processor example is purely academic, however, it captures
@@ -88,13 +88,13 @@ and optimisation of the encoding algorithms.
 \section{PG Algebra Formalisation}
 We have formalised the definitions of algebra of parametrised graph in Agda, and developed the machine-checked proofs of several properties of that algebra.
 
-The formula representation data structure was designed together with the custom structural equivalence relation on formula representations for convenient formula manipulations. The equivalence relation has been proven equivalent to the one defined using formula semantics, thus showing its adequacy.
+The formula representation data structure was designed together with the custom structural equivalence relation on formula representations for convenient formula manipulations. The equivalence relation has been proved equivalent to the one defined using formula semantics, thus showing its adequacy.
 
 The normal form representation data structure for PG formulae was designed with its semantics defined as translation to the corresponding general formula representations.
 
-The algorithm of finding the normal form of general formulae was developed and was proven to be correct.
+The algorithm of finding the normal form of general formulae was developed and was proved to be correct.
 
-The immediate future work includes formalizing the proof of CPOG being a model of PG Algebra and modification of algorithm to compute the canonical form (where each graph node is mentioned no more than once) instead of just a normal form. Canonical form is much more useful because its size is at most quadratic while the size of a normal form is exponential in general.
+The immediate future work includes formalising the proof of CPOG being a model of PG Algebra and modification of algorithm to compute the canonical form (where each graph node is mentioned no more than once) instead of just a normal form. Canonical form is much more useful because its size is at most quadratic while the size of a normal form is exponential in general.
 
 The code used in this thesis is attached as an appendix.
 
