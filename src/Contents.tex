@@ -19,43 +19,18 @@
 
 \input{pg-encoding/2010_encoding_iet}
 
-% Encoding
-
-% \section{The problem of choosing the optimal encoding}
-
-% \section{Formulating the encoding problem as SAT problem}
-
-% \section{Experimental results}
-
-% \section{Conclusions}
-
-% \chapter{Parametrised Graphs Algebra}
-
-% Algebra
-
-% \section{Generalising CPOGs}
-
-% \section{Definitions}
-
-% \section{Properties and their proofs}
-
-% \section{Formally verified tools for PG formula manipulation}
-
-% \section{Conclusions}
-
 \input{Conclusions}
 
-\chapter*{Appendix. Formal proof of PG Algebra properties}
+\renewcommand{\chaptername}{Appendix}
+\setcounter{chapter}{0}
+\renewcommand\thechapter{\Alph{chapter}}
+
+\chapter{Formal proof of PG Algebra properties}
 
 What follows is the full Agda source code of formal proofs used in Chapter~\ref{chap:PGAlgebra}.
 
 \renewcommand \textlambda {\ensuremath{\lambda}}
 
-\input{agda-listing-body}
-
 \setlength{\mathindent}{0.0in}
 
-% \section{Workcraft framework plugin: Breeze handshake circuits}
-
-% \section{Workcraft framework plugin: CPOG}
-
+\input{agda-listing-body}

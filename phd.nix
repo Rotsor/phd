@@ -30,13 +30,21 @@ let pkgs = import <nixpkgs> {}; in
 	echo RRR Bibtex
 	bibtex main
 	echo RRR Latex 2
-	latex main
+	latex main > /dev/null
 	echo RRR Latex 3
 	latex main
 	echo RRR DVIPDF
 	dvipdf main.dvi
 
-	cp $BuildDir/main.pdf $out
+	latex collaboration
+	bibtex collaboration
+	latex collaboration
+	latex collaboration
+	dvipdf collaboration.dvi
+
+	mkdir $out
+	cp $BuildDir/main.pdf $out/thesis.pdf
+	cp $BuildDir/collaboration.pdf $out/
 '';
 };
 }

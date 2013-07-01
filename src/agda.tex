@@ -472,11 +472,8 @@ between the PGs with a set of axioms, thus obtaining an algebraic structure.
 
 \section{Algebraic structure of Parametrised Graphs\label{sec:Algebra-of-parametrised}}
 
-A parametrised graph $(V, E, C, D, X)$
-where $E \subseteq V \times V$ and $C \in V \rightarrow \mathrm{FORMULA}(X)$, $D \in E \rightarrow \mathrm{FORMULA}(X)$ provide vertex and edge conditions; $X$ is the set of identifiers occuring free in parametrisation conditions. Some $\varphi$ from $\mathrm{FORMULA}(X)$ is a Boolean predicate with free variables from $X$. An element $\mathsf{x} \in X$ is an atomic occurrence of $x$ in a formula from $\mathrm{FORMULA}(X)$.  
-k-restricted
-1-restricted
-
+A parametrised graph is a quintuple $(V, E, C, D, X)$
+where $E \subseteq V \times V$ and $C \in V \rightarrow \mathrm{FORMULA}(X)$, $D \in E \rightarrow \mathrm{FORMULA}(X)$ provide vertex and edge conditions; $X$ is the set of identifiers occuring free in parametrisation conditions. Some $\varphi$ from $\mathrm{FORMULA}(X)$ is a Boolean predicate with free variables from $X$. We consider a predicate equal to another predicate whenever they are extensionally equal. For any $x \in X$, we say that the formula $\mathsf{x} \in \mathrm{FORMULA}(X)$ is an atomic occurrence of $x$.
 
 In this section we define the \emph{algebraic structure of parametrised graphs}
 (PG-algebra).
@@ -591,8 +588,6 @@ is sound, minimal and complete w.r.t. PGs.
 
 \caption{Simplifying expression~(\ref{eq:H_ADD_XCHG}) using the Closure axiom\label{fig:Simplifying-TPG-expressions}}
 \end{figure*}
-
-
 
 \section{Transitive Parametrised Graphs and their algebra}
 
@@ -867,7 +862,7 @@ in a way similar to~\cite{2010_mokhov_ieee}.
 \end{figure}
 
 
-\section{Machine-assisted Formalisation of Parametrised Graph Algebra}
+\section{Machine-assisted formalisation of Parametrised Graph theory}
 
 While developing mathematical theories and proofs it is important to maintain logical soundness.
 Even if the proof correctness may be obvious to its author, the peer researchers are often unable (because the proof is not detailed enough) or not willing (because the proof is too involved) to verify it rigorously.

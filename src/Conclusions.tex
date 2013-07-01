@@ -24,7 +24,6 @@ requirement is to pass an additional command-line option to
 \pcomp so that it can assume the FCI property and apply the
 proposed optimisation.
 
-
 \section{PG theory}
 
 We introduced a new formalism called Parametrised Graphs and the
@@ -78,23 +77,20 @@ The immediate future work includes formalising the proof of CPOG being a model o
 
 The code used in this thesis is attached as an appendix.
 
-\section{PG Encoding}
+\section{Processor instruction set encoding}
 
-The Chapter~\ref{chap:PGEncoding} presented the CPOG model based methodology for micro architecture
+The Chapter~\ref{chap:PGEncoding} presented the PG model based methodology for micro architecture
 design and studied its application for specification and synthesis
-of the central processor microcontroller. The key contribution is
+of a central processor microcontroller. The key contribution is
 the method for synthesis of optimal instruction op-codes; the corresponding
-optimisation problem is formulated in terms of CPOGs and reduced to
+optimisation problem is formulated in terms of PGs and reduced to
 the well-known Boolean satisfiability problem. The method is implemented
 in a software tool and can be used within the conventional micro architecture
 design flow.
 
-The studied processor example is purely academic, however, it captures
+The studied processor example is purely academic. Nonetheless, it captures
 many important features of real processors. It has been demonstrated
-that the CPOG model is capable of modelling concurrency between different
+that the PG model is capable of modelling concurrency between different
 subsystems and handling multiple choice during instruction execution.
 Future work focuses on specification and synthesis of a real processor
 and optimisation of the encoding algorithms.
-
-
-\section{PG Algebra Formalisation}
