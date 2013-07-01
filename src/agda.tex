@@ -57,10 +57,10 @@
 
 %%%%%%% BREAK HERE %%%%%%%
 
-\chapter{Theory of Parameterised Graphs}
+\chapter{Theory of Parametrised Graphs}
 
 This chapter is based on the results previously published in~\cite{pg_algebra}. 
-It introduces a new formalism called Parameterised Graphs (PG), 
+It introduces a new formalism called Parametrised Graphs (PG), 
 based on CPOG formalism introduced in~\cite{2010_mokhov_ieee} and tries to capture its 
 most important characteristics in an algebraic structure we call PG-algebra.
 We introduce some of the theorems in the theory of PG-algebra and provide their proofs.
@@ -69,9 +69,9 @@ so they can be machine-checked instead of being manually inspected.
 
 \label{chap:PGAlgebra}
 
-\section{Parameterised Graphs\label{sec:Parametrised-Graphs}}
+\section{Parametrised Graphs\label{sec:Parametrised-Graphs}}
 
-A \emph{Parameterised Graph} (PG) is a model which has evolved from
+A \emph{Parametrised Graph} (PG) is a model which has evolved from
 Conditional Partial Order Graphs (CPOG)~\cite{2010_mokhov_ieee}.
 We consider directed graphs $G=(V,E)$ whose vertices are picked from
 the fixed alphabet of \emph{actions} $\mathcal{A}=\{a,b,...\}$. Hence
@@ -161,7 +161,7 @@ action~$a$ can occur, but all the remaining actions are locked.
 Given a graph~$G$, the unary \emph{condition} operations can either
 preserve it (\emph{true condition} $[1]G$) or nullify it (\emph{false
 condition} $[0]G$). They should be considered as a family $\{[b]\}_{b\in\mathbb{B}}$
-of operations parameterised by a Boolean value~$b$.
+of operations parametrised by a Boolean value~$b$.
 
 Having defined the basic operations on the graphs, one can build graph
 expressions using these operations, the empty graph $\varepsilon$,
@@ -171,7 +171,7 @@ much like the usual arithmetical expressions. We now consider replacing
 the Boolean constants with Boolean variables or general predicates
 (this step is akin going from arithmetic to algebraic expressions).
 The value of such an expression depends on the values of its parameters,
-and so we call such an expression a \emph{parameterised graph}~(PG).
+and so we call such an expression a \emph{parametrised graph}~(PG).
 
 One can easily prove the following properties of the operations introduced
 above.
@@ -469,9 +469,15 @@ graph operations. The next section describes the equivalence relation
 between the PGs with a set of axioms, thus obtaining an algebraic structure.
 
 
-\section{Algebraic structure of parameterised graphs\label{sec:Algebra-of-parametrised}}
+\section{Algebraic structure of parametrised graphs\label{sec:Algebra-of-parametrised}}
 
-In this section we define the \emph{algebraic structure of parameterised graphs}
+A parametrised graph $(V, E, C, D, X)$
+where $E \subseteq V \times V$ and $C \in V \rightarrow \mathrm{FORMULA}(X)$, $D \in E \rightarrow \mathrm{FORMULA}(X)$ provide vertex and edge conditions; $X$ is the set of identifiers occuring free in parametrisation conditions. Some $\varphi$ from $\mathrm{FORMULA}(X)$ is a boolean predicate with free variables from $X$. An element $\mathsf{x} \in X$ is an atomic occurrence of $x$ in a formula from $\mathrm{FORMULA}(X)$.  
+k-restricted
+1-restricted
+
+
+In this section we define the \emph{algebraic structure of parametrised graphs}
 (PG-algebra).
 
 A PG-algebra is a tuple~$\left\langle \mathcal{G},+,\rightarrow,[0],[1]\right\rangle $,
@@ -587,7 +593,7 @@ is sound, minimal and complete w.r.t. PGs.
 
 
 
-\section{Transitive parameterised graphs and their algebra}
+\section{Transitive parametrised graphs and their algebra}
 
 In many cases the arcs of the graphs are interpreted as the causality
 relation, and so the graph itself is a partial order. However, in
@@ -596,14 +602,14 @@ i.e. two graphs should be considered equal whenever their transitive
 closures are equal. E.g. in this case the graphs specified by the
 expressions $a\rightarrow b+b\rightarrow c$ and $a\rightarrow b+a\rightarrow c+b\rightarrow c$
 are considered as equal. PGs with this equality relation are called
-\emph{Transitive Parameterised Graphs} (TPG). To capture this algebraically,
+\emph{Transitive Parametrised Graphs} (TPG). To capture this algebraically,
 we augment the PG-algebra with the \emph{Closure} axiom:
 \[
 \mbox{{if\ }}q\neq\varepsilon\mbox{{\ then\ }}p\!\rightarrow\! q+q\!\rightarrow\! r=p\!\rightarrow\! q+p\!\rightarrow\! r+q\!\rightarrow\! r.
 \]
 One can see that by repeated application of this axiom one can obtain
 the transitive closure of any graph, including those with cycles.
-The resulting algebraic structure is called Transitive Parameterised Graphs Algebra
+The resulting algebraic structure is called Transitive Parametrised Graphs Algebra
 (TPG-algebra).
 
 Note that the condition $q\ne\varepsilon$ in the Closure axiom is
@@ -875,14 +881,14 @@ The section extensively uses the syntax of Agda and references several definitio
 
 
 \DeclareUnicodeCharacter{949}{\varepsilon} % ε
-\DeclareUnicodeCharacter{8702}{\seq} % ⇾
+\DeclareUnicodeCharacter{8702}{\seqqq} % ⇾
 \DeclareUnicodeCharacter{737}{^{l}} % ˡ
 \DeclareUnicodeCharacter{738}{^{s}} % ˢ
 \DeclareUnicodeCharacter{8759}{\colon\colon} % ∷
 \DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}} % ∎
 
 
-\newcommand{\seq}{\gg}
+\newcommand{\seqqq}{\gg}
 \newcommand{\hyp}{\text{-}}
 
 %format Set = "\Q{Set}"
@@ -897,18 +903,18 @@ The section extensively uses the syntax of Agda and references several definitio
 
 %format + = "\D{+}"
 %format _+_ = "\_" + "\_"
-%format ⇾ = "\D{\seq}"
+%format ⇾ = "\D{\seqqq}"
 %format _⇾_ = "\_" ⇾ "\_"
-%format ⇾-assoc ="\D{\seq{}assoc}"
+%format ⇾-assoc ="\D{\seqqq{}assoc}"
 %format +-assoc ="\D{+assoc}"
 %format +-comm = "\D{+comm}"
-%format ⇾-identityˡ = "\D{\seq{}identity^l}"
-%format ⇾-identityʳ = "\D{\seq{}identity^r}"
+%format ⇾-identityˡ = "\D{\seqqq{}identity^l}"
+%format ⇾-identityʳ = "\D{\seqqq{}identity^r}"
 %format distribʳ = "\D{distrib^r}"
 %format distribˡ = "\D{distrib^l}"
 %format decomposition = "\D{decomposition}"
-%format ⇾ʳ = "\D{\seq{}_r}"
-%format ⇾₁ = "\D{\seq{}_1}"
+%format ⇾ʳ = "\D{\seqqq{}_r}"
+%format ⇾₁ = "\D{\seqqq{}_1}"
 %format _⇾₁_ = "\_" ⇾₁ "\_"
 %format _⇾ʳ_ = "\_" ⇾ʳ "\_"
 %format ∷ = "\C{::}"
@@ -1037,7 +1043,7 @@ The condition operation must have the following properties:
 %format and-condition = "\D{and\hyp{}condition}"
 %format or-condition = "\D{or\hyp{}condition}"
 %format conditional-+ = "\D{conditional+}"
-%format conditional-⇾ = "\D{conditional\!\seq}"
+%format conditional-⇾ = "\D{conditional\!\seqqq}"
 
 \begin{code}
   true-condition : ∀ x → [ ⊤ ] x ≈ x
@@ -1053,7 +1059,7 @@ if there is a graph algebra on |G|, a boolean algebra on |B| and a condition ope
 
 \subsubsection{Derived Theorems}
 
-The following theorems has been derived for the Parameterised Graph algebra.
+The following theorems has been derived for the Parametrised Graph algebra.
 
 %format choice-propagation₁ = "\D{choice\hyp{}propagation_1}"
 %format choice-propagation₂ = "\D{choice\hyp{}propagation_2}"
@@ -1092,7 +1098,7 @@ To perform automated manipulations of PG algebra formulae, we describe the formu
 
 %format + = "\C{+}"
 %format _+_ = "\_" + "\_"
-%format ⇾ = "\C{\seq}"
+%format ⇾ = "\C{\seqqq}"
 %format _⇾_ = "\_" ⇾ "\_"
 %format ε = "\C{ε}"
 %format var = "\C{var}"
@@ -1110,7 +1116,7 @@ To perform automated manipulations of PG algebra formulae, we describe the formu
 \end{code}
 
 %format _+-s_ = "\_\D{+_s}\_"
-%format _⇾-s_ = "\_\D{\seq_s}\_"
+%format _⇾-s_ = "\_\D{\seqqq_s}\_"
 %format ε-s = "\D{ε_s}"
 %format cond-s = "\D{[}\_\D{]_s}\_"
 %format var-s = "\D{var_s}"
@@ -1156,7 +1162,7 @@ Here we define a notion of PG formula equivalence. We say that two formula are e
 can be structurally transformed one into the other by the set of rules corresponding to the equality rules of PG algebra.
 We express this with an indexed inductive data family by explicitly enumerating all the important constructors.
 
-%format ⇾-assoc ="\C{\seq{}assoc}"
+%format ⇾-assoc ="\C{\seqqq{}assoc}"
 %format +-assoc ="\C{+assoc}"
 %format +-comm = "\C{+comm}"
 %format V = "\D{V}"
@@ -1253,7 +1259,7 @@ A |Lit| of the form |(node , condition)| corresponds to the formula |[ condition
 To automate the translation of formulae to normal form we have developed the algorithm presented in this subsection.
 
 %format +-nf = "\D{+_{NF}}"
-%format ⇾-nf = "\D{\seq_{NF}}"
+%format ⇾-nf = "\D{\seqqq_{NF}}"
 %format _⇾-nf_ = "\_" ⇾-nf "\_"
 %format _+-nf_ = "\_" +-nf "\_"
 %format fromVar = "\D{fromVar}"
@@ -1321,9 +1327,9 @@ Here |vertices n| is the list of graph vertices contained in node |n| -- one ver
 \end{itemize}
 
 %format +-correct = "\D{+correct}"
-%format ⇾-correct = "\D{\seq{}correct}"
-%format ⇾ʳ-correct = "\D{\seq_rcorrect}"
-%format ⇾₁-correct = "\D{\seq_1correct}"
+%format ⇾-correct = "\D{\seqqq{}correct}"
+%format ⇾ʳ-correct = "\D{\seqqq_rcorrect}"
+%format ⇾₁-correct = "\D{\seqqq_1correct}"
 %format normalise-correct = "\D{normalise\hyp{}correct}"
 %format newArrows-correct = "\D{newArrows\hyp{}correct}"
 

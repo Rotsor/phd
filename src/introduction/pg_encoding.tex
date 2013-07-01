@@ -1,5 +1,8 @@
+
+
 \section{CPOG Encoding}
 
+{\color{blue}{
 Automated design of general purpose processing cores, application-specific
 instruction-set processors (ASIPs), and distributed Systems-on-Chip
 (SoCs) has gained a lot of attention from academia and industry~\cite{2006_dutt_chapter}.
@@ -36,6 +39,7 @@ within the allocated intervals. This limits performance due to instruction
 decoder circuitry overheads. The problem is usually approached by
 ad-hoc heuristics or application-specific optimisation techniques
 (see, for example,~\cite{2002_lee_iccad}).
+}}
 
 The CPOG notation has an application in CPU design with a natural hardware correspondence: it desribes synshronous or asynchronous control logic over the units defined by CPOG vertices. Such logic is commonly called a \emph{decoder} -- a circuit that takes an instruction code word and produces control signals for CPU components.  
 
@@ -58,16 +62,16 @@ We proceed to discuss how we improve upon this work by introducing a new algorit
 \begin{figure}[t]
 \centering
 \includegraphics[scale=0.7]{fig/optimality_frontier}
-\caption[The optimality frontier]{\label{fig:pareto}The relationship between the optimality frontier, as found by our algorithm, and the solutions proposed in~\cite{2009_mokhov_phd}. On the axis $|G|$ we plot the number of logic gates needed to describe the instruction decoder and the axis $|X|$ corresponds to the number of variables used to encode the instructions.}
+\caption[The optimality frontier]{\label{fig:pareto}The relationship between the optimality frontier, as found by our algorithm, and the solutions proposed in~\cite{2009_mokhov_phd}. On the axis $g$ we plot the number of logic gates needed to describe the instruction decoder and the axis $v$ corresponds to the number of variables used to encode the instructions.}
 \end{figure} 
  
 The gist of the approach lies in a combination of binary search and boolean satisfiability solving (SAT). Binary search travels through a binary tree of potential solutions using a choice function of the form $f \in D \rightarrow \mathbb{B}$ where $D$ is domain limiting the space of explored solutions. In our case, such $D$ may define either a set of gate counts of a decoder circuit or, alternatively, the set of number of variables used in CPOG conditions. In a general case, $f$ takes the following form: 
 
-$$f(x) = \left \{ \begin{array}{l} \top,~ \text{when there exists a solution} ~ S ~ \text{such that its cost is}~ x \\ \bot,~ \text{otherwise}  \end{array} \right .$$   
+$$f(x) = \left \{ \begin{array}{l} 1,~ \text{when there exists a solution} ~ S ~ \text{such that its cost is}~ x \\ 0,~ \text{otherwise}  \end{array} \right .$$   
 
 \noindent
 Such function $f$ may be challenging to compute since the set from which solutions are drawn is typically large. Let $v$ and $g$ signify the maximum number of variables and gates; also let $s$ be the number of scenarious encoded in the original CPOG. Then the size of the solutions space is in the order of 
 
-$$\left (2 * (v + g) \right )^{2g} \left (2^{v} \right )^{s}$$  
+$$\left (2 (v + g) \right )^{2g} \left (2^{v} \right )^{s}$$  
 
-\noindent For instance, for $v=5$, $g=5$ and $s=5$ the formula above gives circa $10^{21}$ potential solutions to consider. Clearly, computing $f$ with a brute-force approach is infeasible. Note, however, that $f$ has a form of an existential quantifier binding indentifiers to finite domains. This form of statement is perfectly suited for SAT solving. To bridge to the SAT-level notation we have to do binary vector encoding of scenario and variable indices, gate identifiers and cost indicators. The result is processed by a SAT solver and the output is a binary representation of a decoding circuit. In particular, we have used Minisat~\cite{minisat} and clasp ~\cite{clasp} SAT solvers. As one example, we have been able to obtain an optimal solution for $v=8$, $s=8$ and $g \in 3 .. 12$.     
+\noindent For instance, for $v=5$, $g=5$ and $s=5$ the formula above gives circa $10^{21}$ potential solutions to consider. Clearly, computing $f$ with a brute-force approach is infeasible. Note, however, that $f$ has a form of an existential quantifier binding indentifiers to finite domains. This form of statement is perfectly suited for SAT solving. To bridge to the SAT-level notation we have to do binary vector encoding of scenario and variable indices, gate identifiers and cost indicators. The result is processed by a SAT solver and the output is a binary representation of a decoding circuit. In particular, we have used \noun{MiniSat}~\cite{2004_miniSAT_lncs} and \noun{clasp}~\cite{clasp} SAT solvers. As one example, we have been able to obtain an optimal solution for $v=8$, $s=8$ and $g \in 3 .. 12$.     

@@ -25,8 +25,62 @@ and can be efficiently solved by modern SAT solvers. Application of
 all the presented techniques is demonstrated on a processor design
 example.
 
+\section{Problem Statement}
+In microcontroller design, the encoding of an instruction set is a common reoccuring problem. A form of encoding optimality is essential to achieve a more compact instruction decoder logic, while, at the same time, offering higher decoding performance. The first step is to represent each instruction microcode as a TPG \emph{scenario}. Such scenario is a program each instruction of each is a reference to a microcontroller unit. The directed graph semantics underlaying PGs expresses the casual dependendencies between events of unit firings; informally, this means that instruction execution steps may be ordered sequentially or concurrently.   
 
-\subsection{Criteria for optimality\label{sec:Criteria-for-optimality}}
+
+An encoding scheme must ensure that every scenario is adeqautely represented in the composed graph. This property, called the \emph{encoding correctness condition}, is formulated by the following statement
+
+$$
+S_i = G \mid_{X = \theta_i} 
+$$
+
+\noindent
+here $X$ is the set of free variables of PG $G$ (Chapter~\ref{chap:PGAlgebra}), $S_i$ is a scenario from a scenario set $S$ and $X = \theta_i$ stands for $\bigwedge_{x \in X} \mathsf{x} = \theta_i(x)$. The condition states that a scenario is properly decoded by applying an opcode-defined graph specialisation $\theta$. Every encoding schema may be characterised by a specific choice of set $X$ and encoding function $\theta$. We refer to a tuple of $(X, \theta)$ as encoding of a scenario set $S$.
+
+
+To uniquely determine, upto PG equivalence, and for encoding and scenario set a compositional graph $G$ one also needs to consider the \emph{property of composition minimality}: 
+
+$$
+G = \sum_{i < n} [X = \theta_i](G \mid_{X = \theta_i}) 
+$$
+
+\noindent
+Informally, the condition states that $G$ does not contain anything in addition to the encoding of scenarios $S$.
+
+To give an intuition behind encoding we shall consider a simple case of encoding for two scnearios $S_1, S_2$. This encoding is constructed by putting together, in a certain manner, graphs $S_1$ and $S_2$. More precisely, we overlay the graphs of $S_1$ and $S_2$ using the $+$ operator: 
+
+$$
+G \DEF [X = \theta_1]S_1 + [X = \theta_2]S_2
+$$
+
+\noindent
+The overlaid graphs are conditioned by their opcodes. In the above, $\theta_1, \theta_2$ is a unique value of vector $X$ identifying a given scenario. 
+
+In a general case, for $n$ scenarios, this statement takes the following form:
+
+$$
+G \DEF \sum_{i < n} [X = \theta_i]S_i 
+$$
+
+\noindent
+Such encoding constructing preserves the property of composition mininimality provided the correctness property also holds. Let us now briefly consider one particilar encoding scheme - the \emph{one hot} encoding - to the composition of scenarios $S_1, S_2$: 
+
+$$
+G \DEF [\mathsf{x}_1 = 1 \wedge \mathsf{x}_2 = 0]S_1 + [\mathsf{x}_1 = 0 \wedge \mathsf{x}_2 = 1]S_2
+$$
+
+\noindent
+It is easy to check that one hot encoding satisfies the correctness condition. For instance, for the case of scenario $S_1$, we can prove that the scenario can be obtained via graph $G$ specialisation as follows:
+
+
+$$
+S_1 = ([\mathsf{x}_1 = 1 \wedge \mathsf{x}_2 = 0]S_1 + [\mathsf{x}_1 = 0 \wedge \mathsf{x}_2 = 1]S_2) \mid_{\mathsf{x}_1 = 1 \wedge \mathsf{x}_2 = 0}
+$$
+
+\noindent
+which is obviously correct by the definition of the specialisation operator $H|_p$.
+
 
 A common measure of complexity of a Boolean formula $f$ is denoted
 as $C(f)$ and is defined to be the total count of literals in it,
@@ -41,6 +95,88 @@ can be reused. To take advantage of this fact we use the new metric $G(C)$, show
 We use two versions of this metric, differing in type of gates allowed: one with AND/OR gates with 
 all possible input and output inversions and another one with NAND-gates only.
 
+\subsection{Overview}
+
+In this section we briefly discuss the encoding approaches developed in \cite{2009_mokhov_phd}. We implement as SAT-based solution for the pre-existing techniques (weakly optimal encoding) and introduce a new, more powerful technique for identifying globally optimal solutions. 
+
+\subsubsection{One hot}
+
+The one hot encoding scheme associates a unique indicator variable (a hot wire) with each scenario. The set of free variables is exactly that of the scenarios being encoded:
+
+$$
+X = \mathbf{S}
+$$
+
+\noindent
+where $\mathbf{S}$ is the scenario set. The encoding is very simple: one sets $i$-th bit to 1 to select an $i$-th scenario and the rest must be reset to zero:
+
+$$\theta_i(s) = (S_i = s), \quad \text{where} ~ s, S_i \in \mathbf{S}$$
+
+
+\subsubsection{Matrix encoding}
+
+The matrix encoding allocates a unique variable for each edge and vertex of scenario graphs $S_i$. Hence, the set of free variables is given as
+
+$$
+X = \{0\}\times V \cup \{1\} \times  E
+$$
+
+\noindent
+An encoding bit is set depending on whether a given edge or vertex are included in a given scenario $s$: 
+ 
+$$
+\begin{array}{l}
+\theta_i(0, v) = C_i(v), \quad \text{where} ~ v \in V_i \\
+\theta_i(1, e) = D_i(e), \quad \text{where} ~ e \in E_i  
+\end{array}
+$$
+
+\noindent
+where scenario $S_i$ is defined by a PG of the form $(V_i, E_i, C_i, D_i, X_i)$.
+
+\subsubsection{Binary encoding}
+
+Binary encoding associates a scenario index with the value of binary number coded by an instruction opcode. One specific form of $X$ can be given as    
+
+$$
+X = 1 .. \lceil \log | \mathbf{S} | \rceil
+$$
+
+\noindent
+where $\mathbf{S}$ is the scenario set.
+
+
+The encoding function computes the $k$-th bit of $i$-th scenario opcode as a binary encoding of a natural number representing the scenario index:
+ 
+$$\theta_i(k) = \left \lfloor {i - 1 \over {2^{k-1}}} \right \rfloor ~\mathrm{mod}~2, \quad \text{where} ~ k ~ \text{is the bit position}$$
+
+\subsubsection{Weakly optimal}
+
+The optimal encoding tries minimize the size of set $X$ within the universe of solutions with 1-restricted conditions. We say that a graph is 1-restricted if all the edge and vertex conditions contain at most one literal. It has been showin in \cite{2009_mokhov_phd} that the problem of computing an optimal encoding is NP-complete thus barring any attempts at brute force solutions. It is challenging to give a compact characterisation of optimal encoding in th terms of free variable set $X$ and coding function $\theta$. In the continuation of the Chapter we shall give a SAT formulation of this encoding approach. 
+
+
+\subsection{Globally optimal encoding\label{Sec:Generating-optimal-opcodes}}
+
+The weakly optimal encoding method presented above generates the smallest
+PG description of a set of partial orders but the number of used
+variables cannot be controlled; in many practical cases it will use
+more variables than is affordable under the design or technology constraints.
+In this section we briefly describe a method for generating the smallest
+PG given a limit on the number of variables, i.e. given the required
+length of the instruction codes.
+
+Let $L$ be the given limit on the number of variables. We generate all non-trivial
+encoding constraints and try to satisfy them with opcode variables.
+Only $L$ of them are free variables $X=\{x_{1},\ x_{2},\ ...,\ x_{L}\}$;
+other variables $F=\{f_{1},\ f_{2},\ ...,\ f_{m}$\} are not free
+--- they are expressed in terms of variables from $X\cup F$ using
+Boolean binary functions, e.g. $f_{1}=x_{1}+\overline{x_{3}}$, $f_{2}=f_{1}\cdot x_{2}$,
+etc. As $L$ is fixed all we have to do is to minimise the number
+of non-free variables $m$. This minimisation problem requires exploration
+of large search space; fortunately, it still belongs to the NP complexity
+class and we can reduce it to the SAT problem: the solver has to `guess'
+all the opcodes, formulae of variables in $F$, and allocation of
+all variables $X\cup F$ to the non-trivial encoding constraints.
 
 
 \section{SAT formulation\label{sec:SAT-formulation}}
@@ -59,8 +195,8 @@ function and use a binary search to minimise its value by calling
 the SAT solver with different cost constraints.
 
 We have implemented all the techniques presented in this section in
-an automated software tool which uses \noun{MiniSAT}~\cite{2004_miniSAT_lncs}
-as a SAT solver engine. \noun{MiniSAT} operates on CNF (conjunctive
+an automated software tool which uses \noun{MiniSat}~\cite{2004_miniSAT_lncs} and \noun{clasp}~\cite{clasp}
+as SAT solver engines. They operate on CNF (conjunctive
 normal form) representations of Boolean formulae. Since our SAT-instances
 are not necessarily given in CNF, we implemented their automated conversion
 to CNF formulae. This conversion introduces intermediate variables
@@ -306,60 +442,11 @@ The next section demonstrates application of this technique in a processor
 microcontroller design.
 
 
-\section{Processor design example\label{sec-processor}
-}
-
-This section demonstrates application of the CPOG-based methodology
-to specification and synthesis of processor microcontrollers, and
-discusses the results of optimal instruction encoding methods presented
-in the previous section. Specification of such a complex system as
-a processor starts at the architectural level which helps to deal
-with the system complexity by structural abstraction~\cite{1994_de_micheli_book}.
-Numerous processor architectures have emerged since fundamental von
-Neumann architecture\emph{~}\cite{1946_burks_architecture} and Harvard
-architecture\emph{~}\cite{1946_aiken_calculator} were proposed.
-The example processor is built on the basis of Harvard architecture;
-however, the method for optimal encoding of instructions presented
-here is applicable to both architectures, including their
-numerous derivatives.
-
-\begin{figure}
-\begin{centering}
-\includegraphics[width=0.75\columnwidth]{fig/processor_architecture}
-
-\par\end{centering}
-
-\caption{Architecture of example processor\label{app-fig-Architecture-of-example}}
-\end{figure}
+\section{Processor design example\label{sec-processor}}
 
 
-
-\subsection{Architecture}
-
-Figure~\ref{app-fig-Architecture-of-example} shows the architecture
-of the example processor. Separate \emph{Program memory} and \emph{Data
-memory} blocks are accessed via \emph{Instruction fetch} (IFU) and
-\emph{Memory access} (MAU) operational units, respectively. The
-other two operational units are: ALU and \emph{Program counter increment
-unit} (PCIU). The units are controlled via request-acknowledgement
-interfaces (depicted as bidirectional arrows) by \emph{Central microcontroller}
-which is our primary specification and synthesis objective. 
-
-There are four registers: general purpose registers $A$ and $B$,
-\emph{Program counter} (PC) which stores address of the current
-instruction in the program memory, and \emph{Instruction register}
-(IR) which stores opcode of the current instruction. For the purpose
-of this example the actual width of the registers (the number of bits
-they can store) is not important. ALU has access to all the registers
-via the register bus; MAU accesses only general purpose registers;
-IFU reads opcode of the next instruction into IR given its address
-in PC; PCIU is responsible for incrementing PC (moving to the next
-instruction). The microcontroller has access to the opcode and ALU
-\emph{flags} (information about the current state of ALU which is
-used in branching instructions).
-
-\subsection{Dump 2}
-\input{pg-encoding/dump2}
+%\subsection{Dump 2}
+%\input{pg-encoding/dump2}
 
 \input{pg-encoding/case_study_mc}
 
@@ -385,21 +472,21 @@ columns of Table~\ref{tab:Synthesised-instruction-codes}. Note that
 the optimal 3-bit opcodes are very different from the trivial $000-111$
 sequential encoding.
 
-\begin{figure}[h]
+\begin{figure}[!t]
 \begin{centering}
 \subfloat[Trivial encoding (35 literals)]{
 
-\includegraphics[scale=0.39]{fig/processor_cpog}}\hfill{}\subfloat[Optimal encoding (16 literals)]{
+\includegraphics[scale=0.45]{fig/processor_cpog}}\hfill{}\subfloat[Optimal encoding (16 literals)]{
 
-\includegraphics[scale=0.39]{fig/CPOG_L_8}}
+\includegraphics[scale=0.45]{fig/CPOG_L_8}}
 \par\end{centering}
 
 \begin{centering}
 \subfloat[Optimal encoding $L=3$ (31 literals)]{
 
-\includegraphics[scale=0.39]{fig/CPOG_L_3}}\hfill{}\subfloat[Optimal encoding $L=5$ (21 literals)]{
+\includegraphics[scale=0.45]{fig/CPOG_L_3}}\hfill{}\subfloat[Optimal encoding $L=5$ (21 literals)]{
 
-\includegraphics[scale=0.39]{fig/CPOG_L_5}}
+\includegraphics[scale=0.45]{fig/CPOG_L_5}}
 \par\end{centering}
 
 \caption{Synthesised CPOGs\label{fig:Synthesised-CPOGs}}
@@ -420,9 +507,9 @@ d) show the optimal CPOGs encoded with 3 and 5 ($X=\{x,\ y,\ z,\ u,\ v\}$)
 variables, respectively; derived variables (denoted by names starting
 from $a$) are shown in boxes.
 
-\begin{figure}[h]
+\begin{figure}[!t]
 \begin{centering}
-\includegraphics[scale=0.45]{fig/encoding_graph}
+\includegraphics[scale=0.52]{fig/encoding_graph}
 \par\end{centering}
 
 \caption{Comparison of different gate bases\label{fig:Comparison-of-different}}
@@ -508,3 +595,9 @@ is guaranteed.
 Finally, the chosen CPOG can be mapped into equations to produce the
 physical implementation of the microcontroller using the mapping algorithms
 from~\cite{2009_mokhov_phd}\cite{2010_mokhov_ieee}.
+
+\section{Summary}
+
+In this Chapter we have considered the problem of microcontroller instruction design and encoding. We have shown how the application of Parametrised Graphs helps to semi- or completely automatically derive the specification of entire controller from the specification of individual instruction microcode. Crucially, the result is amenable to further transformations possibly with automated rewriting tools. 
+
+We have developed a new technique for Parametrised Graph encoding that permits the computation of the globally optimal solution to the PG encoding problem. We do translation into a SAT instance to harness the power of SAT solving tools. The proposal has important practical applications in microelectronics industry and we plan to further pursue the fruitul direction.

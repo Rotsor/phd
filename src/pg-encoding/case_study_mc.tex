@@ -1,4 +1,4 @@
-\subsection{Processor microcontroller and instruction set design\label{app-sub-Design-of-instruction}}
+
 
 This section demonstrates application of TPG-algebra to designing
 processor microcontrollers. Specification of such a complex system
@@ -49,11 +49,11 @@ class) because the scenario is the same from its point of view (it
 is the responsibility of ALU to detect which operation it has to perform
 according to the current opcode). 
 
+
 \begin{figure}
 \begin{centering}
 \includegraphics[width=1.04\columnwidth]{fig/processor_architecture}
 \par\end{centering}
-
 \caption{Architecture of an example processor\label{app-fig-Architecture-of-example}}
 \vspace{-6mm}
 \end{figure}
@@ -63,25 +63,25 @@ according to the current opcode).
 \begin{centering}
 \subfloat[ALU op. Rn to Rn]{
 
-\includegraphics[scale=0.36]{fig/po_ALU_Rn_Rn}}\hfill{}\subfloat[ALU op. \#123 to Rn]{
+\includegraphics[scale=0.42]{fig/po_ALU_Rn_Rn}}\hfill{}\subfloat[ALU op. \#123 to Rn]{
 
-\includegraphics[scale=0.36]{fig/po_ALU_123_Rn}}\hfill{}\subfloat[ALU op. Rn to PC]{
+\includegraphics[scale=0.42]{fig/po_ALU_123_Rn}}\hfill{}\subfloat[ALU op. Rn to PC]{
 
-\includegraphics[scale=0.36]{fig/po_ALU_Rn_PC}}\hfill{}\subfloat[ALU op. \#123 to PC]{
+\includegraphics[scale=0.42]{fig/po_ALU_Rn_PC}}\hfill{}\subfloat[ALU op. \#123 to PC]{
 
-\includegraphics[scale=0.36]{fig/po_ALU_123_PC}}
+\includegraphics[scale=0.42]{fig/po_ALU_123_PC}}
 \par\end{centering}
 
 \begin{centering}
 \subfloat[Memory access]{
 
-\includegraphics[scale=0.36]{fig/po_MAU}}\hfill{}\subfloat[Cond. ALU op. Rn to Rn]{
+\includegraphics[scale=0.42]{fig/po_MAU}}\hfill{}\subfloat[Cond. ALU op. Rn to Rn]{
 
-\includegraphics[scale=0.36]{fig/po_CALU_Rn_Rn}}\hfill{}\subfloat[Cond. ALU op. \#123 to Rn]{
+\includegraphics[scale=0.42]{fig/po_CALU_Rn_Rn}}\hfill{}\subfloat[Cond. ALU op. \#123 to Rn]{
 
-\includegraphics[scale=0.36]{fig/po_CALU_123_Rn}}\hfill{}\subfloat[Cond. ALU op. \#123 to PC]{
+\includegraphics[scale=0.42]{fig/po_CALU_123_Rn}}\hfill{}\subfloat[Cond. ALU op. \#123 to PC]{
 
-\includegraphics[scale=0.36]{fig/po_CALU_123_PC}}
+\includegraphics[scale=0.42]{fig/po_CALU_123_PC}}
 \par\end{centering}
 
 \caption{TPG specifications of instruction classes\label{app-fig-Scenarios-of-8}}
@@ -158,7 +158,7 @@ by incrementing the PC: $(\mathit{ALU}+\mathit{PCIU})\rightarrow\mathit{PCIU'}$.
 Finally, the next instruction is fetched: $\mathit{IFU'}$.
 \end{itemize}
 \begin{figure*}
-\centering{}\hspace*{\fill}%
+\centering
 \begin{tabular}{||c||||c||}
 \hline 
 {\small Instructions class} & {\small Opcode: $xyz$}\tabularnewline
@@ -180,7 +180,15 @@ Finally, the next instruction is fetched: $\mathit{IFU'}$.
 \hline 
 {\small C/ALU \#123 to PC} & {\small 011}\tabularnewline
 \hline 
-\end{tabular}\hspace*{\fill}\raisebox{-5em}[0em]{\includegraphics[scale=0.5]{fig/CPOG_L_3}}\hspace*{\fill}\caption{Optimal 3-bit instruction opcodes and the corresponding TPG specification
+\end{tabular}
+
+~\\
+\vspace{5mm}
+~\\
+
+\includegraphics[scale=0.5]{fig/CPOG_L_3}
+
+\caption{Optimal 3-bit instruction opcodes and the corresponding TPG specification
 of the microcontroller\label{fig:opcodes-and-CG}}
 \vspace{-6mm}
 \end{figure*}
@@ -198,8 +206,8 @@ $A<B$ by $lt$):
 This expression can be simplified using the rules of TPG-algebra:%
 \footnote{This case illustrates the advantage of using the new hierarchical
 approach that allows to specify the system as a composition of scenarios
-and formally manipulate them in an algebraic fashion. In the previous
-paper~\cite{2011_mokhov_iet} the CPOG for this class of instruction
+and formally manipulate them in an algebraic fashion. In our previous work~\cite{2011_mokhov_iet},
+the CPOG for this class of instruction
 was designed monolithically, and because of this the arc between $\mathit{ALU'}$
 and $\mathit{IFU'}$ was missed. Adding this arc not only fixes the
 dangerous race between these two blocks, but also leads to a smaller
@@ -247,9 +255,7 @@ and TPGs allow for a formal statement of this optimisation problem
 and aid in its solving; in particular, the sizes of the TPG-algebra
 expression or TPG are useful measures of microcontroller complexity
 (there is a compositional translation from a TPG-algebra expression
-into a linear-size circuit). The details on the method to select the optimal encoding
-are presented in Chapter~\ref{chap:PGEncoding}.
-We just note that it is natural to use three bits for opcodes as there
+into a linear-size circuit). Note that it is natural to use three bits for opcodes as there
 are eight classes of instructions, and give an example of optimal
 3-bit encoding in the table in Fig.~\ref{fig:opcodes-and-CG}; the
 TPG specification of the corresponding microcontroller is shown in

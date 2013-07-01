@@ -1,3 +1,43 @@
+This section demonstrates application of the CPOG-based methodology
+to specification and synthesis of processor microcontrollers, and
+discusses the results of optimal instruction encoding methods presented
+in the previous section. Specification of such a complex system as
+a processor starts at the architectural level which helps to deal
+with the system complexity by structural abstraction~\cite{1994_de_micheli_book}.
+Numerous processor architectures have emerged since fundamental von
+Neumann architecture\emph{~}\cite{1946_burks_architecture} and Harvard
+architecture\emph{~}\cite{1946_aiken_calculator} were proposed.
+The example processor is built on the basis of Harvard architecture;
+however, the method for optimal encoding of instructions presented
+here is applicable to both architectures, including their
+numerous derivatives.
+
+
+\subsection{Architecture}
+
+Figure~\ref{app-fig-Architecture-of-example} shows the architecture
+of the example processor. Separate \emph{Program memory} and \emph{Data
+memory} blocks are accessed via \emph{Instruction fetch} (IFU) and
+\emph{Memory access} (MAU) operational units, respectively. The
+other two operational units are: ALU and \emph{Program counter increment
+unit} (PCIU). The units are controlled via request-acknowledgement
+interfaces (depicted as bidirectional arrows) by \emph{Central microcontroller}
+which is our primary specification and synthesis objective. 
+
+There are four registers: general purpose registers $A$ and $B$,
+\emph{Program counter} (PC) which stores address of the current
+instruction in the program memory, and \emph{Instruction register}
+(IR) which stores opcode of the current instruction. For the purpose
+of this example the actual width of the registers (the number of bits
+they can store) is not important. ALU has access to all the registers
+via the register bus; MAU accesses only general purpose registers;
+IFU reads opcode of the next instruction into IR given its address
+in PC; PCIU is responsible for incrementing PC (moving to the next
+instruction). The microcontroller has access to the opcode and ALU
+\emph{flags} (information about the current state of ALU which is
+used in branching instructions).
+
+
 Now we have to define the set of instructions of the processor. Rather
 than to list every single instruction it is easier to describe classes
 of instructions with the same \emph{addressing mode}~\cite{mspmanual}

@@ -10,6 +10,10 @@ let pkgs = import <nixpkgs> {}; in
 #	runhaskell ${./inkscaper.hs}
 	export BuildDir=`pwd`
 
+#	echo "\begin{verbatim}" >> listing.tex
+#	cat PG/*.agda >> listing.tex
+#	echo "\end{verbatim}" >> listing.tex
+
 	cat listingPrefix >> listing.tex
 	cat PG/*.agda >> listing.tex
 	cat listingSuffix >> listing.tex
@@ -31,6 +35,7 @@ let pkgs = import <nixpkgs> {}; in
 	latex main
 	echo RRR DVIPDF
 	dvipdf main.dvi
+
 	cp $BuildDir/main.pdf $out
 '';
 };

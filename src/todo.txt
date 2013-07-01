@@ -1,9 +1,10 @@
 Major things:
 * Chapter 6 - write it!
-* Introduction - introduce the changes Alex comes up with on Monday.
-* Look at the LaTeX warning messages
+* Introduction - introduce the Alex suggestions on Monday.
 
 Medium things:
+* Figure 3.3 description sucks
 * Expand the isomorphism/bisimilarity story
 * Spellcheck
+* Look at the LaTeX warning messages
 

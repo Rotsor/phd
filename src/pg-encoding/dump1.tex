@@ -362,33 +362,4 @@ explained in Section~\ref{sec:SAT-formulation}.
 
 
 
-\subsection{Generating optimal opcodes of specified length\label{Sec:Generating-optimal-opcodes}}
-
-The optimal encoding method presented above generates the smallest
-CPOG description of a set of partial orders but the number of used
-variables cannot be controlled; in many practical cases it will use
-more variables than is affordable under the design or technology constraints.
-In this section we briefly describe a method for generating the smallest
-CPOG given a limit on the number of variables, i.e. given the required
-length of the instruction codes.
-
-Let $L$ be the given limit on the number of variables. The method
-is based on the same principle as before: we generate all non-trivial
-encoding constraints and try to satisfy them with opcode variables.
-Only $L$ of them are free variables $X=\{x_{1},\ x_{2},\ ...,\ x_{L}\}$;
-other variables $F=\{f_{1},\ f_{2},\ ...,\ f_{m}$\} are not free
---- they are expressed in terms of variables from $X\cup F$ using
-Boolean binary functions, e.g. $f_{1}=x_{1}+\overline{x_{3}}$, $f_{2}=f_{1}\cdot x_{2}$,
-etc. As $L$ is fixed all we have to do is to minimise the number
-of non-free variables $m$. This minimisation problem requires exploration
-of large search space; fortunately, it still belongs to the NP complexity
-class and we can reduce it to the SAT problem: the solver has to `guess'
-all the opcodes, formulae of variables in $F$, and allocation of
-all variables $X\cup F$ to the non-trivial encoding constraints.
-See the next section for implementation details.
-
-We used a processor design example as our benchmark to validate all
-the instruction code synthesis techniques presented in this section.
-The results are discussed in Section~\ref{sec-processor}.
-
 
