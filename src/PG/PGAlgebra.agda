@@ -19,44 +19,44 @@ record BoolOps (B : Set) : Set where
 record PGOps (B G : Set) : Set where
  infix 20 [_]_
  field
-  graph-ops : GraphOps G
+  graphops : GraphOps G
   [_]_ : B → G → G
- open GraphOps graph-ops public
+ open GraphOps graphops public
 
-IsBoolAlg : {B : Set} → (B-eq : Eq B) → (bool-ops : BoolOps B) → Set
+IsBoolAlg : {B : Set} → (Beq : Eq B) → (boolops : BoolOps B) → Set
 IsBoolAlg (equality eq) ops = let open BoolOps ops in 
   IsBooleanAlgebra eq _∨_ _∧_ ¬ ⊤ ⊥
 
 record IsPG {B G : Set} 
-  (B-eq : Eq B) (G-eq : Eq G) 
-  (PG-ops : PGOps B G) (B-ops : BoolOps B) : Set where
- open PGOps PG-ops
- open Eq G-eq
- open Eq B-eq renaming (_≈_ to _B≈_)
- open BoolOps B-ops
+  (Beq : Eq B) (Geq : Eq G) 
+  (PGops : PGOps B G) (Bops : BoolOps B) : Set where
+ open PGOps PGops
+ open Eq Geq
+ open Eq Beq renaming (_≈_ to _B≈_)
+ open BoolOps Bops
  field
-  is-graph : IsGraph G-eq graph-ops
-  is-bool : IsBoolAlg B-eq B-ops
+  isgraph : IsGraph Geq graphops
+  isbool : IsBoolAlg Beq Bops
 
-  cond-cong : ∀ {f g x y} → f B≈ g → x ≈ y → [ f ] x ≈ [ g ] y
+  condcong : ∀ {f g x y} → f B≈ g → x ≈ y → [ f ] x ≈ [ g ] y
 
-  true-condition : ∀ x → [ ⊤ ] x ≈ x
-  false-condition : ∀ x → [ ⊥ ] x ≈ ε
-  and-condition : ∀ f g x → [ f ∧ g ] x ≈ [ f ] [ g ]  x
-  or-condition : ∀ f g x → [ f ∨ g ] x ≈ [ f ] x + [ g ]  x
-  conditional-+ : ∀ f x y → [ f ] (x + y) ≈ [ f ] x + [ f ] y
-  conditional-⇾ : ∀ f x y → [ f ] (x ⇾ y) ≈ [ f ] x ⇾ [ f ] y
- open PGOps PG-ops public
- open Eq G-eq public
- open IsGraph is-graph public
- open IsBooleanAlgebra is-bool public using ()
- open BoolOps B-ops public
+  truecondition : ∀ x → [ ⊤ ] x ≈ x
+  falsecondition : ∀ x → [ ⊥ ] x ≈ ε
+  andcondition : ∀ f g x → [ f ∧ g ] x ≈ [ f ] [ g ]  x
+  orcondition : ∀ f g x → [ f ∨ g ] x ≈ [ f ] x + [ g ]  x
+  conditional+ : ∀ f x y → [ f ] (x + y) ≈ [ f ] x + [ f ] y
+  conditional⇾ : ∀ f x y → [ f ] (x ⇾ y) ≈ [ f ] x ⇾ [ f ] y
+ open PGOps PGops public
+ open Eq Geq public
+ open IsGraph isgraph public
+ open IsBooleanAlgebra isbool public using ()
+ open BoolOps Bops public
 
 record PG (B G : Set) : Set₁ where
  field
-  B-eq : Eq B
-  G-eq : Eq G
-  pg-ops : PGOps B G
-  B-ops : BoolOps B
-  isPg : IsPG B-eq G-eq pg-ops B-ops
+  Beq : Eq B
+  Geq : Eq G
+  pgops : PGOps B G
+  Bops : BoolOps B
+  isPg : IsPG Beq Geq pgops Bops
  open IsPG isPg public

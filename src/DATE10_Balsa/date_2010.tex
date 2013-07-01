@@ -3,18 +3,16 @@
 \label{sec:balsa-workflow}
 
 \begin{figure}
-\begin{centering}
+\centering
 \includegraphics[width=0.40\paperwidth]{figures/balsa-design-workflow}
-\par\end{centering}
 
-\centering{}\caption{Balsa design workflow\label{fig:Balsa-design-workflow}}
+\caption{Balsa design workflow\label{fig:Balsa-design-workflow}}
 \end{figure}
 
 
 \begin{figure}
-\begin{centering}
+\centering
 \includegraphics[width=0.40\paperwidth]{figures/balsa-workflow-modification}
-\par\end{centering}
 
 \caption{Modified Balsa workflow\label{fig:Modified-Balsa-workflow}}
 \end{figure}
@@ -69,7 +67,7 @@ The data path is generated automatically side-by-side with the STG
 behaviour model.
 
 
-\section{Support of Breeze Handshake Circuits as Interpreted Graph Model in
+\subsection{Support of Breeze handshake circuits as interpreted graph model in
 \noun{Workcraft}}
 
 For the purpose of implementation of the design flow discussed in
@@ -86,14 +84,14 @@ of components is being expanded and will include all Breeze components
 with support for different handshake protocols.
 
 
-\section{STG specifications of individual handshake components\label{sec:Individual-component-examples}}
+\subsection{STG specifications of individual handshake components\label{sec:Individual-component-examples}}
 
 Balsa components can be roughly divided in three groups: pure control
 components, data path control components and data-control interface
 components. We will review each group separately.
 
 
-\subsection{Pure control path components}
+\subsubsection{Pure control path components}
 
 \newcommand{\vcent}[1]{
   $\vcenter{\hbox{#1}}$
@@ -103,7 +101,7 @@ components. We will review each group separately.
 }
 
 \begin{figure}
-
+\centering
 \subfloat[Sequence\label{fig:SequenceOptimised}]{
 \centering
 \balsafigSZ{figures/Control/sequence-HC}
@@ -139,25 +137,23 @@ problems: a significant number of auxiliary signals have to be introduced
 to achieve CSC.
 
 
-\subsection{Data path control components}
+\subsubsection{Data path control components}
 
 \begin{figure}
+\centering
 \subfloat[BinaryFunc\label{fig:BinaryFunc}]{\begin{centering}
 \balsafigSZ{figures/Data/binaryfunc-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Data/binaryfunc}}
 \par\end{centering}
-
 }
 
 \subfloat[CallMux\label{fig:CallMux}]{\begin{centering}
 \balsafigSZ{figures/Data/callmux-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Data/callmux}}
 \par\end{centering}
-
 }
 
 \subfloat[Variable\label{fig:Variable}]{\begin{centering}
 \balsafigSZ{figures/Data/variable-HC}~~\vcent{\includegraphics[scale=0.25]{figures/Data/variable}}
 \par\end{centering}
-
 }
 
 \caption{Pure control path handshake components and their respective STGs}
@@ -181,9 +177,10 @@ Variable~(Figure~\ref{fig:Variable}) are good examples of the data
 path control components.
 
 
-\subsection{Data-control interface components}
+\subsubsection{Data-control interface components}
 
 \begin{figure}
+\centering
 \begin{raggedright}
 \subfloat[While\label{fig:While}]{\begin{centering}
 \vcent{\includegraphics[bb=0bp 0bp 134bp 80bp,scale=0.6]{figures/while-HC}}~~\vcent{\includegraphics[scale=0.25]{figures/while}}
@@ -216,12 +213,11 @@ STGs can become quite complex and the strict behaviour of their data-path
 handshakes must be preserved.
 
 
-\section{An example: GCD controller}
+\subsection{An example: GCD controller}
 
 \begin{figure}[!t]
-\begin{centering}
+\centering
 \includegraphics[width=0.3\paperwidth]{figures/breeze-gcd-partition}
-\par\end{centering}
 
 \caption{Breeze Handshake Circuit model of a GCD block\label{fig:GCD}}
 \end{figure}
@@ -249,7 +245,7 @@ whereas decomposition on the STG level is a complex task, which requires
 additional third-party tools.
 
 
-\section{Experimental results}
+\subsection{Experimental results}
 
 \begin{table}[!t]
 \begin{centering}

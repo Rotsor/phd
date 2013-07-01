@@ -147,37 +147,4 @@ for details on dynamic CPOGs, which allow some of the operational
 variables to be evaluated during execution of one of the scenarios
 (in our case such dynamic variables are $\{le,\ ge\}$).
 
-\begin{table}[h]
-\centering
-
-\begin{tabular}{|c||c|c|c|c|}
-\hline 
-\multirow{2}{*}{Instructions class} & 
-\multirow{2}{*}{Trivial encoding} & 
-\multicolumn{3}{c|}{ Optimal encoding} \tabularnewline
-\cline{3-5}
-& & $L=8$ & {$L=3$} & {$L=5$} \tabularnewline
-\hline 
-\hline 
-{ ALU Rn to Rn} & { 000} & { 00000000} & { 000} & { 00000}\tabularnewline
-\hline 
-{ ALU \#123 to Rn} & { 001} & { 01001010} & { 110} & { 01001}\tabularnewline
-\hline 
-{ ALU Rn to PC} & { 010} & { 00010001} & { 101} & { 00010}\tabularnewline
-\hline 
-{ ALU \#123 to PC} & { 011} & { 01000010} & { 010} & { 01000}\tabularnewline
-\hline 
-{ Memory access} & { 100} & { 01000100} & { 100} & { 00100}\tabularnewline
-\hline 
-{ C/ALU Rn to Rn} & { 101} & { 00100000} & { 001} & { 10000}\tabularnewline
-\hline 
-{ C/ALU \#123 to Rn} & { 110} & { 10111010} & { 111} & { 11001}\tabularnewline
-\hline 
-{ C/ALU \#123 to PC} & { 111} & { 10110010} & { 011} & { 11000}\tabularnewline
-\hline 
-\end{tabular}
-
-\caption{Synthesised instruction codes\label{tab:Synthesised-instruction-codes}}
-\end{table}
-
 

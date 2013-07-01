@@ -26,7 +26,7 @@ let pkgs = import <nixpkgs> {}; in
 	export TEXINPUTS=$BuildDir/styles:$BuildDir/DATE10_Balsa:$BuildDir/par_comp:
 	export BIBINPUTS=$BuildDir/par_comp:
 	echo RRR Latex 1
-	latex main # > /dev/null
+	latex main > latex.log || (cat latex.log && false)
 	echo RRR Bibtex
 	bibtex main
 	echo RRR Latex 2

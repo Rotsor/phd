@@ -44,7 +44,8 @@
   \newcommand{\white}{\blackFG}
 }
 
-\ColourStuff
+% \ColourStuff
+\MonochromeStuff
 
 \newcommand{\K}[1]{\yellow{\mathsf{#1}}}
 \newcommand{\Q}[1]{\green{\mathsf{#1}}}
@@ -469,10 +470,10 @@ graph operations. The next section describes the equivalence relation
 between the PGs with a set of axioms, thus obtaining an algebraic structure.
 
 
-\section{Algebraic structure of parametrised graphs\label{sec:Algebra-of-parametrised}}
+\section{Algebraic structure of Parametrised Graphs\label{sec:Algebra-of-parametrised}}
 
 A parametrised graph $(V, E, C, D, X)$
-where $E \subseteq V \times V$ and $C \in V \rightarrow \mathrm{FORMULA}(X)$, $D \in E \rightarrow \mathrm{FORMULA}(X)$ provide vertex and edge conditions; $X$ is the set of identifiers occuring free in parametrisation conditions. Some $\varphi$ from $\mathrm{FORMULA}(X)$ is a boolean predicate with free variables from $X$. An element $\mathsf{x} \in X$ is an atomic occurrence of $x$ in a formula from $\mathrm{FORMULA}(X)$.  
+where $E \subseteq V \times V$ and $C \in V \rightarrow \mathrm{FORMULA}(X)$, $D \in E \rightarrow \mathrm{FORMULA}(X)$ provide vertex and edge conditions; $X$ is the set of identifiers occuring free in parametrisation conditions. Some $\varphi$ from $\mathrm{FORMULA}(X)$ is a Boolean predicate with free variables from $X$. An element $\mathsf{x} \in X$ is an atomic occurrence of $x$ in a formula from $\mathrm{FORMULA}(X)$.  
 k-restricted
 1-restricted
 
@@ -593,7 +594,7 @@ is sound, minimal and complete w.r.t. PGs.
 
 
 
-\section{Transitive parametrised graphs and their algebra}
+\section{Transitive Parametrised Graphs and their algebra}
 
 In many cases the arcs of the graphs are interpreted as the causality
 relation, and so the graph itself is a partial order. However, in
@@ -887,7 +888,6 @@ The section extensively uses the syntax of Agda and references several definitio
 \DeclareUnicodeCharacter{8759}{\colon\colon} % ∷
 \DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}} % ∎
 
-
 \newcommand{\seqqq}{\gg}
 \newcommand{\hyp}{\text{-}}
 
@@ -1016,7 +1016,7 @@ The following theorems has been derived from the axioms:
 The graph algebra introduced in the previous subsection can only describe static event dependencies.
 To describe complex dynamic systems one has to consider the conditional behaviour as well.
 To do this, we have extended the graph algebra by annotating the graphs with conditions.
-Given a set |G| of the parametrised graphs and a set |B| of all the possible boolean conditions, together with the following operations:
+Given a set |G| of the parametrised graphs and a set |B| of all the possible Boolean conditions, together with the following operations:
 
 \begin{code}
   _∨_ : B → B → B
@@ -1055,7 +1055,7 @@ The condition operation must have the following properties:
 \end{code}
 
 We say that there is a \emph{parametrised graph algebra} on a set |G| with a condition set |B|
-if there is a graph algebra on |G|, a boolean algebra on |B| and a condition operator satisfying the requirements above.
+if there is a graph algebra on |G|, a Boolean algebra on |B| and a condition operator satisfying the requirements above.
 
 \subsubsection{Derived Theorems}
 
@@ -1089,7 +1089,7 @@ Strengthened condition regularisation. This generalizes the regularisation theor
                               → [ f ] p ⇾ [ g ] q ≈ [ f ] p + [ g ] q + [ f ∧ g ] z
 \end{code}
 
-\subsection{Parametrised Graph Formulae}
+\subsection{Parametrised Graph formulae}
 
 To perform automated manipulations of PG algebra formulae, we describe the formulae as an algebraic data type in the following way.
 
@@ -1204,7 +1204,7 @@ Now we can show that our easier to use equivalence relation is equivalent to the
 ≈ˢ→≈ : ∀ f g → f ≈ˢ g → f ≈ g
 \end{code}
 
-\subsection{Normal Form}
+\subsection{Normal form}
 
 %format BF = "\D{BF}"
 %format PG = "\D{PG}"
@@ -1212,7 +1212,7 @@ Now we can show that our easier to use equivalence relation is equivalent to the
 %format Lit = "\D{Lit}"
 %format Node = "\D{Node}"
 
-We say that a normal form (|NF|) of PG formula (|PG|) is an overlay of literals (|Lit|) where each literal is a |Node| annotated with a condition and each node is either a variable (|V|) or two variables connected with a sequence operator. We encode these definitions assuming boolean formulae (|BF|) as conditions.
+We say that a normal form (|NF|) of PG formula (|PG|) is an overlay of literals (|Lit|) where each literal is a |Node| annotated with a condition and each node is either a variable (|V|) or two variables connected with a sequence operator. We encode these definitions assuming Boolean formulae (|BF|) as conditions.
 
 \begin{code}
 Node = V ⊎ V × V

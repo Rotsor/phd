@@ -1,14 +1,6 @@
 
 \chapter{Introduction}
 
-%We explore the available formalisms for design of asynchronous digital
-%circuits and compare them with the principle of compositionality in
-%mind. We propose improvements to the existing techniques and
-%propose a new formalism, Parametrised Graph (PG) theory, which is a
-%generalisation of the existing CPOG formalism. We furhter study 
-%the theory of PG Algebra and present mechanised formal proofs of certain properties.
-
-
 % productivity gap
 The major challenge for the future of semiconductor industry is the infamous design productivity gap. This gap is caused by the exponential complexity growth of electronic systems~\cite{Moore_1965_e}  while capability of design tools cannot cope with this pace, see Fig.~\ref{fig:productivity_gap}. The only way to deal with the increasing complexity of Integrated Circuits (ICs) is to improve the efficiency of the design process, in particular, by heavily reusing system components and by advancing the design automation methods.
 
@@ -50,28 +42,7 @@ The major drawback of the circuits obtained by the syntax-driven translation is 
 The composition of circuit components is of structural nature - they are combined via input-output interfaces according to the casual dependency between the operation they perform, as shown in Fig.~\ref{fig:composition_structural}.
 Another compositional aspect is a combination of several mutually exclusive behaviours in the same circuit. A naive way to build such a circuit is to implement the different behaviour scenarious in separate modules and structurally compose them with the use of multiplexers and demultiplexers, as shown in Fig.~\ref{fig:composition_behavioural_naive}. A mode selection code on the (de)multiplexors determines the current scenario.  While this is a valid implementation of multi-modal functionality, it ignores the mutually exclusive feature of the implemented behaviours and looses a possibility of partial hardware reuse for common functionality, as shown in Fig.~\ref{fig:composition_behavioural}. 
 
-A model which naturally captures the structural and behavioural aspects of composition in a single formalism is Conditional Partial Order Graphs (CPOGs)~\cite{2009_mokhov_phd}. This graph-based model is capable of expressing the structural composition by means of causality arcs (similar to Petri nets) and the behavioural composition by means of boolean "visibility" conditions on its vertices. While CPOGs is a convenient tool for reasoning on small benchmarks, it lacks the means for capturing and transformation of large systems. An ambitious goal of this thesis is to generalise the CPOGs model and introduce a theory for their manipulation in algebraic form, which is a more suitable representation for complex benchmarks.
-
-
-
-%\section{Motivation}
-%
-%With constantly growing transistor counts and consumer demands, the complexity of digital circuits must grow too.
-%
-%With the rising complexity of digital circuits, it becomes increasingly important to reuse parts of existing designs.
-%
-%The reuse of the components must be facilitated by the design language.
-%
-%One of the difficulties in designing modern hardware systems is the
-%necessity to comprehend and to deal with a very large number of system
-%configurations, operational modes, and behavioural scenarios. 
-%
-%\subsection{Compositionality}
-%
-%The key property facilitating component reuse is compositionality.
-%
-%Compositionality is a property of a given language where the meaning of a language construct is determined by the meanings of its parts.
-%
+A model which naturally captures the structural and behavioural aspects of composition in a single formalism is Conditional Partial Order Graphs (CPOGs)~\cite{2009_mokhov_phd}. This graph-based model is capable of expressing the structural composition by means of causality arcs (similar to Petri nets) and the behavioural composition by means of Boolean "visibility" conditions on its vertices. While CPOGs is a convenient tool for reasoning on small benchmarks, it lacks the means for capturing and transformation of large systems. An ambitious goal of this thesis is to generalise the CPOGs model and introduce a theory for their manipulation in algebraic form, which is a more suitable representation for complex benchmarks.
 
 \section{Contributions}
 
@@ -107,6 +78,6 @@ Chapter~\ref{chap:ParComp} describes the proposed improved parallel composition 
 
 Chapter~\ref{chap:PGAlgebra} introduces Parametrised Graph (PG) theory, defining and studying an algebraic structure that generalises Conditional Partial Order Graph formalism. This chapter is based on the results previously published in~\cite{pg_algebra}.
 
-Chapter~\ref{chap:PGEncoding} describes a technique for optimal encoding of processor instruction sets defined using TPG formalism. This chapter is based on the results previously published in~\cite{cpog_encoding_best_paper} and~\cite{cpog_encoding}. The former has qualified for a best paper award at the ACSD conference.
+Chapter~\ref{chap:PGEncoding} describes a technique for optimal encoding of processor instruction sets defined using PG formalism. This chapter is based on the results previously published in~\cite{cpog_encoding_best_paper} and~\cite{cpog_encoding}. The former has qualified for a best paper award at the ACSD conference.
 
 Chapter~\ref{chap:Conclusion} summarises the achieved results and proposes ideas for future research.

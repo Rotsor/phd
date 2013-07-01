@@ -1,6 +1,6 @@
 \chapter{Conclusions\label{chap:Conclusion}}
 
-\section{Parallel Composition}
+\section{Improved parallel composition}
 
 We have presented an improved algorithm for computing the
 parallel composition of STGs or labelled Petri nets. Under the
@@ -25,7 +25,7 @@ requirement is to pass an additional command-line option to
 proposed optimisation.
 
 
-\section{PG Algebra}
+\section{PG theory}
 
 We introduced a new formalism called Parametrised Graphs and the
 corresponding algebra. The formalism allows to manage a large number
@@ -64,7 +64,19 @@ the important problems that needs to be automated is that of simplification
 of (T)PG expressions, in the sense of deriving an equivalent expression
 with the minimum possible number of operators. Our preliminary research
 suggests that this problem is strongly related to modular decomposition
-of graphs~\cite{2005_McConnell_modular}.\\
+of graphs~\cite{2005_McConnell_modular}.
+
+We have formalised the definitions of algebra of parametrised graph in Agda, and developed the machine-checked proofs of several properties of that algebra.
+
+The formula representation data structure was designed together with the custom structural equivalence relation on formula representations for convenient formula manipulations. The equivalence relation has been proved equivalent to the one defined using formula semantics, thus showing its adequacy.
+
+The normal form representation data structure for PG formulae was designed with its semantics defined as translation to the corresponding general formula representations.
+
+The algorithm of finding the normal form of general formulae was developed and was proved to be correct.
+
+The immediate future work includes formalising the proof of CPOG being a model of PG Algebra and modification of algorithm to compute the canonical form (where each graph node is mentioned no more than once) instead of just a normal form. Canonical form is much more useful because its size is at most quadratic while the size of a normal form is exponential in general.
+
+The code used in this thesis is attached as an appendix.
 
 \section{PG Encoding}
 
@@ -86,14 +98,3 @@ and optimisation of the encoding algorithms.
 
 
 \section{PG Algebra Formalisation}
-We have formalised the definitions of algebra of parametrised graph in Agda, and developed the machine-checked proofs of several properties of that algebra.
-
-The formula representation data structure was designed together with the custom structural equivalence relation on formula representations for convenient formula manipulations. The equivalence relation has been proved equivalent to the one defined using formula semantics, thus showing its adequacy.
-
-The normal form representation data structure for PG formulae was designed with its semantics defined as translation to the corresponding general formula representations.
-
-The algorithm of finding the normal form of general formulae was developed and was proved to be correct.
-
-The immediate future work includes formalising the proof of CPOG being a model of PG Algebra and modification of algorithm to compute the canonical form (where each graph node is mentioned no more than once) instead of just a normal form. Canonical form is much more useful because its size is at most quadratic while the size of a normal form is exponential in general.
-
-The code used in this thesis is attached as an appendix.

@@ -8,24 +8,24 @@ of the TPG methodology at different stages of a processor design
 flow --- from architectural-level specification, design and behavioural
 description of an instruction set to its encoding and synthesis of
 the physical implementation of the microcontroller. The chapter is organised
-as follows. Section~\ref{sec:CPOG-model-essentials} briefly introduces
-the CPOG model providing a ground for formulating a set of problems
-of optimal instruction set encoding in Section~\ref{sec:Optimal-encoding-problem}.
+as follows. Section~\ref{sec:pg-encoding-problem-statement} introduces
+the TPG encoding problem, overviews the existing encoding techniques and gives
+a brief introduction to the new technique of globally optimal encoding.
 A method for automated translation of the problems into SAT instances
 is explained in Section~\ref{sec:SAT-formulation}. It is followed
-by a processor design example in Section~\ref{sec-processor} and
+by a processor design and synthesis example in Section~\ref{sec-processor} and
 conclusions.
 
 \label{chap:PGEncoding}
 
-The chapter is based on the results published in~\cite{cpog_encoding}. It shows how to represent processor instruction sets using CPOG formalism and provides
+The chapter is based on the results published in~\cite{cpog_encoding}. It shows how to represent processor instruction sets using TPG formalism and provides
 a ground for a concise formulation of several encoding problems, which
 are reducible to the well-known Boolean satisfiability (SAT) problem
 and can be efficiently solved by modern SAT solvers. Application of
 all the presented techniques is demonstrated on a processor design
 example.
 
-\section{Problem Statement}
+\section{Problem statement\label{sec:pg-encoding-problem-statement}}
 In microcontroller design, the encoding of an instruction set is a common reoccuring problem. A form of encoding optimality is essential to achieve a more compact instruction decoder logic, while, at the same time, offering higher decoding performance. The first step is to represent each instruction microcode as a TPG \emph{scenario}. Such scenario is a program each instruction of each is a reference to a microcontroller unit. The directed graph semantics underlaying PGs expresses the casual dependendencies between events of unit firings; informally, this means that instruction execution steps may be ordered sequentially or concurrently.   
 
 
@@ -150,9 +150,9 @@ The encoding function computes the $k$-th bit of $i$-th scenario opcode as a bin
  
 $$\theta_i(k) = \left \lfloor {i - 1 \over {2^{k-1}}} \right \rfloor ~\mathrm{mod}~2, \quad \text{where} ~ k ~ \text{is the bit position}$$
 
-\subsubsection{Weakly optimal}
+\subsubsection{Weakly optimal\label{sec:weakly-optimal-encoding}}
 
-The optimal encoding tries minimize the size of set $X$ within the universe of solutions with 1-restricted conditions. We say that a graph is 1-restricted if all the edge and vertex conditions contain at most one literal. It has been showin in \cite{2009_mokhov_phd} that the problem of computing an optimal encoding is NP-complete thus barring any attempts at brute force solutions. It is challenging to give a compact characterisation of optimal encoding in th terms of free variable set $X$ and coding function $\theta$. In the continuation of the Chapter we shall give a SAT formulation of this encoding approach. 
+The optimal encoding with unconstrained code length, which we call weakly optimal encoding, tries to minimize the size of set $X$ within the universe of solutions with 1-restricted conditions. We say that a graph is 1-restricted if all the edge and vertex conditions contain at most one literal. It has been showin in \cite{2009_mokhov_phd} that the problem of computing a weakly optimal encoding is NP-complete thus barring any attempts at brute force solutions. It is challenging to give a compact characterisation of optimal encoding in the terms of free variable set $X$ and coding function $\theta$. In the continuation of the Chapter we shall give a SAT formulation of this encoding approach. 
 
 
 \subsection{Globally optimal encoding\label{Sec:Generating-optimal-opcodes}}
@@ -205,9 +205,10 @@ to the size of the given SAT-instance.
 
 
 
-\subsection{Optimal encoding with unconstrained code length}
+\subsection{Weakly optimal encoding}
 
-To solve the unconstrained optimal encoding problem described in Subsection~\ref{sec:Method-for-optimal}
+To solve the weakly optimal encoding problem described 
+in Subsection~\ref{sec:pg-encoding-problem-statement}
 we minimise the number of colours used for a conflict graph colouring.
 Minimisation is performed by solving a series of instances of the
 following decision problem.
@@ -268,9 +269,9 @@ if $p_{k}=1$ then $\mathbf{e}_{k}$ is resolved by $x_{c_{k}}$,
 otherwise it is resolved by $\overline{x_{c_{k}}}$.
 
 
-\subsection{Optimal encoding with constrained code length}
+\subsection{Globally optimal encoding}
 
-The constrained version of the optimal encoding problem (see Subsection~\ref{Sec:Generating-optimal-opcodes})
+The version of the optimal encoding problem with constrained code length
 is significantly more complicated and computationally intensive. It
 requires finding a set of Boolean functions of $L$ arguments (where
 $L$ is the specified code length) and there are $2^{2^{L}}$ of them
@@ -283,11 +284,11 @@ or 3-input logic gates anyway. Importantly, every complex function
 can be represented as a composition of simpler ones, therefore our
 approach can find any function, albeit at the cost of introducing
 intermediate variables. This is similar to what actually happens during
-technology mapping\emph{ }and\emph{ }logic decomposition\emph{ }of
+technology mapping and logic decomposition of
 functional components into hardware gates~\cite{2002_cortadella_book}\cite{1994_de_micheli_book}.
 
 Formally, let $(\mathbf{e}_{1},\ \mathbf{e}_{2},\ \dots,\ \mathbf{e}_{n})$
-be a set of encoding constraints defined in Subsection~\ref{sec:Method-for-optimal},
+be a set of encoding constraints defined in Subsection~\ref{sec:pg-encoding-problem-statement},
 $S$ be the number of scenarios, and $L$ be the required code length.
 We are looking for such a vector $(\psi_{1},\ \psi_{2},\ \dots,\ \psi_{S})$
 of $L$-bit encodings and $n$ functions $F_{j},\ 1\le j\le n$ such
@@ -444,7 +445,6 @@ microcontroller design.
 
 \section{Processor design example\label{sec-processor}}
 
-
 %\subsection{Dump 2}
 %\input{pg-encoding/dump2}
 
@@ -452,18 +452,51 @@ microcontroller design.
 
 \subsection{Instructions encoding}
 
+\begin{table}[t]
+\centering
+
+\begin{tabular}{|c||c|c|c|c|}
+\hline 
+\multirow{2}{*}{Instructions class} & 
+\multirow{2}{*}{Trivial encoding} & 
+\multicolumn{3}{c|}{ Optimal encoding} \tabularnewline
+\cline{3-5}
+& & $L=8$ & {$L=3$} & {$L=5$} \tabularnewline
+\hline 
+\hline 
+{ ALU Rn to Rn} & { 000} & { 00000000} & { 000} & { 00000}\tabularnewline
+\hline 
+{ ALU \#123 to Rn} & { 001} & { 01001010} & { 110} & { 01001}\tabularnewline
+\hline 
+{ ALU Rn to PC} & { 010} & { 00010001} & { 101} & { 00010}\tabularnewline
+\hline 
+{ ALU \#123 to PC} & { 011} & { 01000010} & { 010} & { 01000}\tabularnewline
+\hline 
+{ Memory access} & { 100} & { 01000100} & { 100} & { 00100}\tabularnewline
+\hline 
+{ C/ALU Rn to Rn} & { 101} & { 00100000} & { 001} & { 10000}\tabularnewline
+\hline 
+{ C/ALU \#123 to Rn} & { 110} & { 10111010} & { 111} & { 11001}\tabularnewline
+\hline 
+{ C/ALU \#123 to PC} & { 111} & { 10110010} & { 011} & { 11000}\tabularnewline
+\hline 
+\end{tabular}
+
+\caption{Synthesised instruction codes\label{tab:Synthesised-instruction-codes}}
+\end{table}
+
 Now the instructions have to be encoded. The simplest way to do this
 is to use the binary encoding scheme, i.e. assign opcodes $\{000,\ \dots,\ 111\}$
 to the instructions in arbitrary order as shown in Table~\ref{tab:Synthesised-instruction-codes}
 (column `Trivial encoding'). This is not optimal in terms of area
 and latency of the final microcontroller implementation. To obtain
-the smallest possible CPOG specification one has to apply the optimal
-encoding procedure from Section~\ref{sec:Method-for-optimal}. Generated
+the smallest possible TPG specification one has to apply the optimal
+encoding procedure from Subsection~\ref{sec:weakly-optimal-encoding}. Generated
 opcodes have 8 bits instead of 3 (shown in column `Optimal encoding'
 of the same table). Whether 8 bit opcodes are affordable or not depends
 on the chosen width of instruction register IR and other design parameters.
 If it is not possible to use 8 bit opcodes one can try to apply the
-constrained synthesis problem from Section~\ref{Sec:Generating-optimal-opcodes}
+constrained synthesis problem from Subsection~\ref{Sec:Generating-optimal-opcodes}
 and generate instruction codes of required length $3\le L<8$ (it
 is not possible to use less than 3 bits, and there is no sense in
 setting $L\ge8$ because the optimal encoding uses 8 bits). We show

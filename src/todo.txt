@@ -1,9 +1,12 @@
+Documents:
+* Collaborative work list
+* Approved exact title of thesis:
+  is it the current one?
+
 Major things:
-* Chapter 6 - write it!
 * Introduction - introduce the Alex suggestions on Monday.
 
 Medium things:
-* Figure 3.3 description sucks
 * Expand the isomorphism/bisimilarity story
 * Spellcheck
 * Look at the LaTeX warning messages
