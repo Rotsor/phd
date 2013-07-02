@@ -3,6 +3,6 @@
 
 %%%%%%% BREAK HERE %%%%%%%
 
-\renewcommand{\hscodestyle}{\scriptsize}
+\renewcommand{\hscodestyle}{\footnotesize}
 
 \begin{code}
