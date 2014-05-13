@@ -1,2 +1,4 @@
+NIX_PATH=nixpkgs=./nixpkgs
 nix-build ./phd.nix -A phd
-
+rm -f thesis.pdf
+cp result/thesis.pdf ./

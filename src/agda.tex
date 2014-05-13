@@ -61,12 +61,14 @@
 \chapter{Theory of Parametrised Graphs}
 
 This chapter is based on the results previously published in~\cite{pg_algebra}. 
-It introduces a new formalism called Parametrised Graphs (PG), 
-based on CPOG formalism introduced in~\cite{2010_mokhov_ieee} and tries to capture its 
+It introduces a new formalism called Parametrised Graphs (PG) and tries to capture its 
 most important characteristics in an algebraic structure we call PG-algebra.
 We introduce some of the theorems in the theory of PG-algebra and provide their proofs.
 Many of the proofs are written in Agda~\cite{norell:thesis}, a formal proof language,
 so they can be machine-checked instead of being manually inspected.
+
+\section{Introduction}
+\input{introduction/pg_algebra}
 
 \label{chap:PGAlgebra}
 
@@ -82,7 +84,7 @@ of the system being designed, while the arcs would usually model the
 going from~$a$ to~$b$ then action~$a$ precedes action~$b$.
 We will denote the \emph{empty graph} $(\emptyset,\emptyset)$ by
 $\varepsilon$ and the \emph{singleton graphs} $(\{a\},\emptyset)$
-simply by $a$, for any $a\in\mathcal{A}$.
+simply by $a$, for any $a\in\mathcal{A}.$
 
 Let $G_{1}=(V_{1},E_{1})$ and $G_{2}=(V_{2},E_{2})$ be two graphs,
 where $V_{1}$ and $V_{2}$ as well as $E_{1}$ and $E_{2}$ are not
@@ -475,12 +477,9 @@ between the PGs with a set of axioms, thus obtaining an algebraic structure.
 A parametrised graph is a quintuple $(V, E, C, D, X)$
 where $E \subseteq V \times V$ and $C \in V \rightarrow \mathrm{FORMULA}(X)$, $D \in E \rightarrow \mathrm{FORMULA}(X)$ provide vertex and edge conditions; $X$ is the set of identifiers occuring free in parametrisation conditions. Some $\varphi$ from $\mathrm{FORMULA}(X)$ is a Boolean predicate with free variables from $X$. We consider a predicate equal to another predicate whenever they are extensionally equal. For any $x \in X$, we say that the formula $\mathsf{x} \in \mathrm{FORMULA}(X)$ is an atomic occurrence of $x$.
 
-In this section we define the \emph{algebraic structure of parametrised graphs}
-(PG-algebra).
-
 A PG-algebra is a tuple~$\left\langle \mathcal{G},+,\rightarrow,[0],[1]\right\rangle $,
 where~$\mathcal{G}$ is a set of graphs whose vertices are picked
-from the alphabet~$\mathcal{A}$ and the operations parallel those
+from the alphabet~$\mathcal{A}$ and the operations match those
 defined for graphs above. The equivalence relation is given by the
 following axioms.
 \begin{itemize}

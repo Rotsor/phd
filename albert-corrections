@@ -1,0 +1,41 @@
+
+First of all, you have Josep's copy with annotations. You have your own
+notes, and I gave you a list of typos to correct.
+
+Here is a list of more substantial modifications:
+
+Provide a list of acronyms. (provided)
+
+Section 1.1: remove the reference to Balsa. (corrected)
+
+Chapter 2: Add AGDA, give a brief example of what it looks like and explain
+how it is used. (corrected, \ref{sec:Agda-background})
+
+Chapter 3: some of the material should go into the introduction, and some
+in the conclusion. The whole chapter is out of place where it is now. (moved the content into the corresponding chapters) 
+
+Chapter 4, Figure 4.6: Compare the performance rather than the number of
+literals. (todo: can't do)
+
+Chapter 6: create a diagram similar to Figure 4.7, to show how the various
+methods used in the thesis fit together and how they are applied. Identify
+your own contributions. Such a diagram could also go into the introduction
+if you wish. (todo: added a paragraph clarifying this)
+
+Chapter 5: Explain how the material differs from process algebra. Justify
+the use of CPOG. Explain the differences between CPOG, PG and TPG, using
+examples. Explain the syntax and semantics of AGDA. (todo: added a paragraph)
+
+Chapter 6: section 6.3 should be moved forward, to motivate the example.
+The SAT part should be explained more thoroughly, and perhaps moved to
+an earlier part of the thesis. In section 6.1, justify the choice of TPG.
+(todo: section moved. choice of tpg clarified)
+
+Section 5.2: explain the precedence rules. (todo: explained)
+
+Remove the duplicate paragraphs identified by Josep. (done)
+Modify your citations to include the author's name. (todo?)
+page 36: label the vertical axis of the plots. (todo?)
+page 43: replace the phrase "real-life circuit" (done)
+page 45: explain that the table uses multiple instances to calculate the
+          total. (todo?)

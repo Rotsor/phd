@@ -3,10 +3,11 @@ let pkgs = import <nixpkgs> {}; in
   name = "phd";
   src = ./src;
   breaker_hs = ./breaker.hs;
-  buildInputs = with pkgs; [inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [haskellPlatform lhs2tex shake]))];
+  buildInputs = with pkgs; [inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [lhs2tex shake split]))];
   phases = [ "unpackPhase" "buildPhase" ];
   buildPhase = ''
 	set -e
+	set -v
 #	runhaskell ${./inkscaper.hs}
 	export BuildDir=`pwd`
 
@@ -19,9 +20,11 @@ let pkgs = import <nixpkgs> {}; in
 	cat listingSuffix >> listing.tex
 
 	lhs2TeX --agda listing.tex > listing-processed.tex
-
 	lhs2TeX --agda agda.tex > agda-processed.tex
+	lhs2TeX --agda background/agda.tex > agda-background-processed.tex
+
 	runhaskell $breaker_hs -o1 agda-preamble.tex -o2 agda-processed-body.tex < agda-processed.tex
+	runhaskell $breaker_hs -o1 /dev/null -o2 agda-background-body.tex < agda-background-processed.tex
 	runhaskell $breaker_hs -o1 /dev/null -o2 agda-listing-body.tex < listing-processed.tex
 	export TEXINPUTS=$BuildDir/styles:$BuildDir/DATE10_Balsa:$BuildDir/par_comp:
 	export BIBINPUTS=$BuildDir/par_comp:
@@ -32,6 +35,8 @@ let pkgs = import <nixpkgs> {}; in
 	echo RRR Latex 2
 	latex main > /dev/null
 	echo RRR Latex 3
+	latex main
+	echo RRR Latex 4
 	latex main
 	echo RRR DVIPDF
 	dvipdf main.dvi

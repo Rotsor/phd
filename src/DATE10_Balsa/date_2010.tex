@@ -1,5 +1,46 @@
 \section{Balsa workflow optimisation through STG resynthesis}
 
+The main obstacle for the wider acceptance of asynchronous systems is the inherent complexity of their design. Several solutions are
+accepted by the industry to help to simplify the design process through abstraction
+of predesigned asynchronous circuit parts as standardised high level
+components. A designer is able to use these components as ``building
+blocks'', and then obtain the final gate-level design through an
+automated mapping process. Some of the well-known asynchronous
+design automation packages, such as Tangram~\cite{berkel91}, and Balsa~\cite{balsa},
+define a high-level programming language that is used to describe
+systems. The language constructs are then directly translated into
+a network of \emph{handshake components}-- blocks with predefined
+functionality that use \emph{handshakes} to interface with other components,
+which are in turn mapped into a gate netlist~~\cite{van2004handshake}.
+
+Although this method greatly enhances the designer's productivity,
+it has several important drawbacks. Of these, the control-path overhead
+is the most decisive. The controllers obtained by syntax-directed
+mapping are usually far from optimal because the predesigned components
+are required to implement their declared protocols fully and correctly
+in order to be reusable in all possible circuit configurations. However,
+it is often the case that a significant part of their functionality
+becomes redundant due to the peculiarities of the specific configuration,
+e.g. in many cases full handshaking between the components can be
+avoided.
+
+This redundancy may be eliminated by replacing a manually designed
+gate-level implementation of the high level components with an equivalent
+STG~(signal transition graph) specification~\cite{Yakovlev_1998_cs}.
+The STGs of individual components are then composed together to form a
+ STG representation of the whole system STG~\cite{PC-96} and is optimised with \noun{petrify~}\cite{ckkly97}.
+An optimal gate-level implementation is then automatically produced
+from the STG using tools such as \noun{petrify}~\cite{ckkly97},
+\noun{SIS}~\cite{Sentovich:M92/41} and \noun{MPSat}~\cite{Khomenko_2004_MPSAT}.
+Automatic synthesis becomes problematic when the size of a STG becomes
+large: modern synthesis tools can handle STGs of no more than 100
+signals. The impact of this problem can be lessened by including STG decomposition tools~\cite{DesiJ} into the workflow. They break a large, optimised STG down into several smaller STGs that are synthesisable
+in reasonable time. Alternatively, the decomposition step is carried
+out at the level of handshake circuits, dividing a circuit into several
+smaller blocks of components.
+
+
+
 \label{sec:balsa-workflow}
 
 \begin{figure}
@@ -33,7 +74,7 @@ The proposed modification of this workflow is shown in~Figure~\ref{fig:Modified-
 The translation from Balsa language into Breeze netlist is retained
 (and is still done by the Balsa compiler), but the Breeze-netlist
 to gate-level-netlist mapping is replaced with the STG resynthesis
-flow as introduced in section~\ref{sec:Balsa-Introduction}. Instead of
+flow as introduced above. Instead of
 using Balsa tools to produce a gate-level netlist, the Breeze netlist
 is read by a special interpreted graph model plug-in to \noun{Workcraft
 }tool~\cite{DBLP:conf/apn/PoliakovKY09}, which replaces the handshake
@@ -160,7 +201,7 @@ to achieve CSC.
 \end{figure}
 
 
-This group of components is used to control the the corresponding
+This group of components is used to control the corresponding
 data path components that execute predefined operations on data. These
 operations are far too complex for automated synthesis, but the control
 path part can still be optimised using STG resynthesis, which makes
@@ -224,7 +265,7 @@ handshakes must be preserved.
 
 
 We have chosen the GCD controller~(Figure~\ref{fig:GCD}) to demonstrate
-how the proposed technique applies to real-life circuits. The GCD
+the proposed technique. The GCD
 controller is a good research example because it has components from
 every group described in section \ref{sec:Individual-component-examples}
 and its complexity does not allow omitting of the STG decomposition

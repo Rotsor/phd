@@ -1,6 +1,6 @@
 \section{Conditional Partial Order Graphs\label{sec:CPOG-model-essentials}}
 
-A \emph{Conditional Partial Order Graph}~\cite{2009_mokhov_phd}\cite{2010_mokhov_ieee}
+A \emph{Conditional Partial Order Graph} (CPOG)~\cite{2009_mokhov_phd}\cite{2010_mokhov_ieee}
 is a quintuple $H=(V,\ E,\ X,\ \rho,\ \phi)$, where $V$ is a finite
 set of \emph{vertices}, $E\subseteq V\times V$ is a set of \emph{arcs}
 between them, and $X$ is a finite set of \emph{operational}\emph{variables}. An \emph{opcode} is an assignment $(x_{1},\ x_{2},\ \dots,\ x_{|X|})\in\{0,\ 1\}^{|X|}$
@@ -93,4 +93,4 @@ the same step/clock cycle. Also, it requires explicit memory to track
 the current state of the automaton. We believe that partial orders
 are better suited for modelling instruction sets of processing units
 built on heterogeneous platforms, i.e. exhibiting both asynchronous
-and synchronous interactions~\cite{2011_mokhov_tr}.
+and synchronous interactions~\cite{2013_mokhov_ieee}.

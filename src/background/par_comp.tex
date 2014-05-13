@@ -119,7 +119,7 @@ the standard arbiter is deterministic).
 
 An STG with a set of all markings $S_2$ is said to \emph{simulate} another STG with 
 a set of all markings $S_1$ iff there exist an 
-$R \subset S_1 \times S_2$ such that $(M_{N 1},M_{N 2}) \in R$ and for any pair of markings 
+$R \subseteq S_1 \times S_2$ such that $(M_{N 1},M_{N 2}) \in R$ and for any pair of markings 
 $(M_1, M_2) \in R$, a label $l$ and a marking $M_1'$, $M_1\ifrs {l}  M_1'$ implies 
 $M_2 \ifrs {l} M_2'$ for some $M_2'$. We call $R$ the witness of simulation. Now we can say that STGs $N_1$ and $N_2$ are \emph{bisimilar} iff $N_2$ simulates $N_1$ with witness $R$ and $N_2$ simulates $N_1$ with witness $R^{-1}$.
 

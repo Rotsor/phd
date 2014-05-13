@@ -58,17 +58,17 @@ $Call$ (Fig.~\ref{fig:Call-HC}) is another component with three control ports: t
 It differs from Sync in that instead of expecting concurrent activation of both $s_1$ and $s_2$ it only expects one of them to be activated at a time and encloses $t$ into the one which happens.
 
 \item
-$Variable$ (Fig.~\ref{fig:Variable-HC}) is a component with a single input data port $w$, called the write port and a set of passive output data ports $r$, called read ports. 
-The component is parameterised on the bit width of the variable $w$, coinciding with the width of the data ports. It is also parameterised on the number of read ports $n$. 
-The behaviour  of $Variable$ is to remember the data written with the latest activation of $w$ and to output that data on any activation of a read port $r_i$.
-The behaviour is trivial from the control point of view: the only way the ports interact is through the data. However, there is a requirement that the write port activation does not overlap with any of the read port activations.
+$BinaryFunc$ (Fig.~\ref{fig:BinaryFunc-HC}) is a component with three pull data ports: a passive port $o$ and two active ports $i_1$ and $i_2$. It is parametrised on width of those ports and on a function it computes. Control-wise it is similar to Concur: it encloses the concurrent activation of $i_1$ and $i_2$ into the activation on $o$.
 
 \item
 $CallMux$ (Fig.~\ref{fig:CallMux-HC}) is a component similar to $Call$ with the difference that all of its ports are further extended to $w$-bit pull ports.
 Its behaviour is identical from the control point of view, with the additional data being received through $t$ and sent through the activated output port.
 
 \item
-$BinaryFunc$ (Fig.~\ref{fig:BinaryFunc-HC}) is a component with three pull data ports: a passive port $o$ and two active ports $i_1$ and $i_2$. It is parametrised on width of those ports and on a function it computes. Control-wise it is similar to Concur: it encloses the concurrent activation of $i_1$ and $i_2$ into the activation on $o$.
+$Variable$ (Fig.~\ref{fig:Variable-HC}) is a component with a single input data port $w$, called the write port and a set of passive output data ports $r$, called read ports. 
+The component is parameterised on the bit width of the variable $w$, coinciding with the width of the data ports. It is also parameterised on the number of read ports $n$. 
+The behaviour  of $Variable$ is to remember the data written with the latest activation of $w$ and to output that data on any activation of a read port $r_i$.
+The behaviour is trivial from the control point of view: the only way the ports interact is through the data. However, there is a requirement that the write port activation does not overlap with any of the read port activations.
 
 \item
 $While$ (Fig.~\ref{fig:While-HC}) is a component with a passive control port $s$, an active control port $t$ and an active one-bit input data port $c$. Its behaviour is to enclose into the activation on $s$ the following process:

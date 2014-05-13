@@ -1,9 +1,10 @@
+
 \chapter{Processor instruction set encoding}
 
 Main contributions of this chapter are: firstly, it formulates several
 instruction set encoding problems in terms of the TPG model; secondly,
-it presents the SAT characterisation of the problems leading to their
-efficient automated solution; thirdly, it demonstrates application
+it establishes that the problems can be reduced to the corresponding Boolean satisfiability (SAT) problem instances
+leading to their automated solution; thirdly, it demonstrates application
 of the TPG methodology at different stages of a processor design
 flow --- from architectural-level specification, design and behavioural
 description of an instruction set to its encoding and synthesis of
@@ -20,10 +21,12 @@ conclusions.
 
 The chapter is based on the results published in~\cite{cpog_encoding}. It shows how to represent processor instruction sets using TPG formalism and provides
 a ground for a concise formulation of several encoding problems, which
-are reducible to the well-known Boolean satisfiability (SAT) problem
+are reducible to the well-known SAT problem
 and can be efficiently solved by modern SAT solvers. Application of
 all the presented techniques is demonstrated on a processor design
 example.
+
+\input{intro}
 
 \section{Problem statement\label{sec:pg-encoding-problem-statement}}
 In microcontroller design, the encoding of an instruction set is a common reoccuring problem. A form of encoding optimality is essential to achieve a more compact instruction decoder logic, while, at the same time, offering higher decoding performance. The first step is to represent each instruction microcode as a TPG \emph{scenario}. Such scenario is a program each instruction of each is a reference to a microcontroller unit. The directed graph semantics underlaying PGs expresses the casual dependendencies between events of unit firings; informally, this means that instruction execution steps may be ordered sequentially or concurrently.   
@@ -152,7 +155,7 @@ $$\theta_i(k) = \left \lfloor {i - 1 \over {2^{k-1}}} \right \rfloor ~\mathrm{mo
 
 \subsubsection{Weakly optimal\label{sec:weakly-optimal-encoding}}
 
-The optimal encoding with unconstrained code length, which we call weakly optimal encoding, tries to minimize the size of set $X$ within the universe of solutions with 1-restricted conditions. We say that a graph is 1-restricted if all the edge and vertex conditions contain at most one literal. It has been showin in \cite{2009_mokhov_phd} that the problem of computing a weakly optimal encoding is NP-complete thus barring any attempts at brute force solutions. It is challenging to give a compact characterisation of optimal encoding in the terms of free variable set $X$ and coding function $\theta$. In the continuation of the Chapter we shall give a SAT formulation of this encoding approach. 
+The optimal encoding with unconstrained code length, which we call weakly optimal encoding, tries to minimize the size of set $X$ within the universe of solutions with 1-restricted conditions. We say that a graph is 1-restricted if all the edge and vertex conditions contain at most one literal. It has been shown in \cite{2009_mokhov_phd} that the problem of computing a weakly optimal encoding is NP-complete thus barring any attempts at brute force solutions. It is challenging to give a compact characterisation of optimal encoding in the terms of free variable set $X$ and coding function $\theta$. In the continuation of the Chapter we shall give a SAT formulation of this encoding approach. 
 
 
 \subsection{Globally optimal encoding\label{Sec:Generating-optimal-opcodes}}
@@ -628,6 +631,11 @@ is guaranteed.
 Finally, the chosen CPOG can be mapped into equations to produce the
 physical implementation of the microcontroller using the mapping algorithms
 from~\cite{2009_mokhov_phd}\cite{2010_mokhov_ieee}.
+
+\subsection{Differences between CPOGs, PGs and TPGs}
+
+
+
 
 \section{Summary}
 

@@ -1,5 +1,4 @@
-\section{Improved parallel composition of STGs}\label{sec_intro}
-
+\section{Introduction}\label{sec:parcomp_intro}
 
 Parallel composition (synchronous product) of labelled
 Petri nets is a fundamental operation in modular hardware design. It is
@@ -11,7 +10,7 @@ asynchronous circuits, and connecting circuits by wires. Hence
 performing this operation efficiently is important in practice.
 
 Unfortunately, the standard definition of parallel composition almost always yields a `messy' Petri net, with many implicit places even when the component Petri nets did not have them. Some of these places are computationally cheap to remove (\eg duplicate places -- places with identical pre- and postsets). In general, however, for removing remaining implicit places one needs full-blown model checking, something infeasible if the resulting composition is large ~\cite{Schaefer06strategiesfor}.
-Although implicit places do not have noticeable effect on tools based on state space exploration, such as \petrify~\cite{ckkly97}, the performance of tools that are based on structural methods, such as \desij~\cite{Sch07}, often deteriorates.
+Although implicit places do not have noticeable effect on tools based on state space exploration, such as \petrify~\cite{ckkly97}, the performance of tools that are based on structural methods, such as \desij~\cite{DesiJ}, often deteriorates.
 
 Consider the example in Fig.~\ref{fi-motivating-example1}. It
 depicts an STG specifications of two components (a,b) and
@@ -84,4 +83,4 @@ Hence FCI is a basic correctness requirement -- whenever it is violated there is
 
 The essence of the proposed method is illustrated by the example in Fig.~\ref{fi-motivating-example2}. Before computing a parallel composition, one can remove some of the places in the components (see (a--c) in Fig.~\ref{fi-motivating-example2}) and then compose the modified STGs. The precise conditions that allow us to remove a particular place will be stated in Sect.~\ref{se-main}. At this point we shall only mention that they are structural and thus can be efficiently checked. The method  guarantees that the number of places in the resulting Petri net is not larger and often much smaller (as the number of places in the composition is the total number of places in all the components), and, under the FCI assumption, the resulting behaviour is the same up to bisimularity. In the example, composing the modified components yields the STG in Fig.~\ref{fi-motivating-example2}(d), containing no implicit places. The modified components  may include unconstrained transitions and unbounded places and thus be non-implementable. Fortunately, this does not matter, as they are never used on their own, but only in composition with other components, and the resulting behaviour of the composition is guaranteed to correspond to that of the standard composition.
 
-Resynthesis (Section \ref{sec:balsa-workflow}) of asynchronous circuits is the intended application of the proposed method. However, we envisage that it may find a much wider applicability since composition of labelled Petri nets is a fundamental operation and the FCI assumption often holds for practically important examples.
+Resynthesis (Section \ref{sec:balsa-workflow}) of asynchronous circuits is the intended application of the proposed method. However, we envisage that it may find a much wider applicability since composition of labelled Petri nets is a fundamental operation and the FCI assumption is often known to hold for practically important examples.
