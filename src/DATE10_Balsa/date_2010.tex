@@ -290,35 +290,34 @@ additional third-party tools.
 
 \begin{table}[!t]
 \begin{centering}
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline 
-Component type & \noun{MPSat} cost & \noun{Petrify} cost & Best\tabularnewline
-\hline 
-\hline 
-BinaryFunc & 21 & 27 & 21\tabularnewline
-\hline 
-Case & 13 & 13 & 13\tabularnewline
-\hline 
-Fetch & 17 & 13 & 13\tabularnewline
-\hline 
-Concur & 16 & 16 & 16\tabularnewline
-\hline 
-Variable & 13 & 18 & 13\tabularnewline
-\hline 
-Sequence & 13 & 13 & 13\tabularnewline
-\hline 
-CallMux & 25 & 33 & 25\tabularnewline
-\hline 
-While & 17 & 17 & 17\tabularnewline
+Component type & Multiplicity & \noun{MPSat} cost & \noun{Petrify} cost & Best\tabularnewline
 \hline 
 \hline 
-\noun{Total} & 305 & 333 & 285\tabularnewline
+BinaryFunc & 4 & 21 & 27 & 21\tabularnewline
+\hline 
+Case & 1 & 13 & 13 & 13\tabularnewline
+\hline 
+Fetch & 5 & 17 & 13 & 13\tabularnewline
+\hline 
+Concur & 1 & 16 & 16 & 16\tabularnewline
+\hline 
+Variable & 2 & 13 & 18 & 13\tabularnewline
+\hline 
+Sequence & 1 & 13 & 13 & 13\tabularnewline
+\hline 
+CallMux & 2 & 25 & 33 & 25\tabularnewline
+\hline 
+While & 1 & 17 & 17 & 17\tabularnewline
+\hline 
+\hline 
+\noun{Total} & & 305 & 333 & 285\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
 
 \caption{Costs of individual components\label{tab:Costs-of-individual}}
-
 
 \end{table}
 
@@ -424,6 +423,7 @@ automated.
 In Table~\ref{tab:Costs-of-individual}, the costs of each standalone
 handshake component, synthesised from the STG specifications, are
 shown. The results are shown for both applied synthesis tools.
+The total circuit cost, computed as a sum of individual component costs taking their multiplicity into account.
 
 In Table~\ref{tab:Cost-of-optimally}, the cost of fully sythesised
 GCD controller is shown. The cost was derived for synthesis carried
