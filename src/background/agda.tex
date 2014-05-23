@@ -58,9 +58,9 @@
 
 \section{Agda\label{sec:Agda-background}}
 
-Agda~\ref{norell:thesis} is a system serving both as a programming language and as a proof assistant simultaneously.
+Agda~\cite{norell:thesis} is a system serving both as a programming language and as a proof assistant simultaneously.
 When viewed as a programming language, it is a purely functional language with its syntax largely inspired by 
-Haskell~\ref{haskell}. Its main distinguishing features are totality (the fact that every function is defined 
+Haskell. Its main distinguishing features are totality (the fact that every function is defined 
 on every possible input) and dependent typing system that allows for types to depend on the values.
 
 \subsection{Function definitions and algebraic data types}
@@ -128,8 +128,8 @@ Here we define natural number addition recursively by considering the cases for 
 
 \subsection{Indexed types and propositions}
 
-As pointed out by Curry and Howard \ref{curry-howard}, there is a close correspondence between types and
-logic. Specifically, types can be thought of as propositions where the type is inhabited if and only 
+There is a close correspondence between types and
+logic, a phenomenon known as Curry-Howard correspondence. Specifically, types can be thought of as propositions where the type is inhabited if and only 
 if the corresponding proposition holds true. Similarly, well-typed terms can be thought of as proofs 
 of the corresponding propositions. Consequently, the type-checker can be used as a proof checker.
 

@@ -58,7 +58,7 @@
 
 %%%%%%% BREAK HERE %%%%%%%
 
-\chapter{Theory of Parametrised Graphs}
+\chapter{Theory of Parametrised Graphs \label{chap:PGAlgebra}}
 
 This chapter is based on the results previously published in~\cite{pg_algebra}. 
 It introduces a new formalism called Parametrised Graphs (PG) and tries to capture its 
@@ -69,8 +69,6 @@ so they can be machine-checked instead of being manually inspected.
 
 \section{Introduction}
 \input{introduction/pg_algebra}
-
-\label{chap:PGAlgebra}
 
 \section{Parametrised Graphs\label{sec:Parametrised-Graphs}}
 
@@ -110,6 +108,8 @@ corresponds to their \emph{sequential composition}. One can observe
 that any non-empty graph can be obtained by successively applying
 the operations $+$ and $\rightarrow$ to the singleton graphs.
 
+To make notation cleaner we are going to use the following operator precedence rules:
+ $[0]$ and $[1]$ bind more tightly than $\rightarrow$ and $\rightarrow$ binds more tightly than $+$.
 
 \begin{figure*}[t]
 \begin{centering}

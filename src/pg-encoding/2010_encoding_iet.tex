@@ -26,7 +26,7 @@ and can be efficiently solved by modern SAT solvers. Application of
 all the presented techniques is demonstrated on a processor design
 example.
 
-\input{intro}
+\input{pg-encoding/intro}
 
 \section{Problem statement\label{sec:pg-encoding-problem-statement}}
 In microcontroller design, the encoding of an instruction set is a common reoccuring problem. A form of encoding optimality is essential to achieve a more compact instruction decoder logic, while, at the same time, offering higher decoding performance. The first step is to represent each instruction microcode as a TPG \emph{scenario}. Such scenario is a program each instruction of each is a reference to a microcontroller unit. The directed graph semantics underlaying PGs expresses the casual dependendencies between events of unit firings; informally, this means that instruction execution steps may be ordered sequentially or concurrently.   
