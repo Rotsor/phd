@@ -194,7 +194,7 @@ any boolean value |x| one of |x| and |¬ x| must be |true|:
 lemma₁ : (x : Bool) → Either (IsTrue x) (IsTrue (¬ x))
 lemma₁ true = left tt
 lemma₁ false = right tt
-\begin{code}
+\end{code}
 
 Finally, indexed inductive type families give you more flexibility by having the constructor choose the values for type parameter
 instead of having to construct a type for a given parameter value:
