@@ -1,9 +1,10 @@
 let pkgs = import <nixpkgs> {}; in
-{ phd = pkgs.stdenv.mkDerivation {
+{
+ phd = pkgs.stdenv.mkDerivation {
   name = "phd";
   src = ./src;
   breaker_hs = ./breaker.hs;
-  buildInputs = with pkgs; [inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [lhs2tex shake split]))];
+  buildInputs = with pkgs; [sed inkscape texLiveFull ghostscript (haskellPackages.ghcWithPackages (self : with self; [lhs2tex shake split]))];
   phases = [ "unpackPhase" "buildPhase" ];
   buildPhase = ''
 	set -e
@@ -15,6 +16,7 @@ let pkgs = import <nixpkgs> {}; in
 #	cat PG/*.agda >> listing.tex
 #	echo "\end{verbatim}" >> listing.tex
 
+	(cd PG; sed 's_-__g' -i *.agda)
 	cat listingPrefix >> listing.tex
 	cat PG/*.agda >> listing.tex
 	cat listingSuffix >> listing.tex
@@ -33,9 +35,9 @@ let pkgs = import <nixpkgs> {}; in
 	echo RRR Bibtex
 	bibtex main
 	echo RRR Latex 2
-	latex main > /dev/null
+	latex main > /dev/null 2&>1
 	echo RRR Latex 3
-	latex main
+	latex main > /dev/null 2&>1
 	echo RRR Latex 4
 	latex main
 	echo RRR DVIPDF

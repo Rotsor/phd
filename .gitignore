@@ -4,4 +4,7 @@
 /src/PG/tt
 /nixpkgs
 /thesis.pdf
-
+*.agdai
+**/#*#
+**/.#*
+*~

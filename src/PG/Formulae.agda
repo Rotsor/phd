@@ -24,13 +24,13 @@ data BoolFormula X : Set where
   ⊤ ⊥ : BoolFormula X
 
 
-pgeval : {A B G : Set} 
+pg-eval : {A B G : Set}
   → (_+ˢ_ _⇾ˢ_ : G → G → G) 
   → (εˢ : G) 
   → (varˢ : A → G) 
   → (condˢ : B → G → G) 
   → PGFormula B A → G
-pgeval {A} {B} {G} _+ˢ_ _⇾ˢ_ εˢ varˢ condˢ = go where
+pg-eval {A} {B} {G} _+ˢ_ _⇾ˢ_ εˢ varˢ condˢ = go where
   go : PGFormula B A → G
   go (x + y) = go x +ˢ go y
   go (x ⇾ y) = go x ⇾ˢ go y

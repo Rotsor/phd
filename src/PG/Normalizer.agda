@@ -9,7 +9,7 @@ open Product using(_,_; _×_)
 open import Level using () renaming (zero to ₀)
 
 open import PG.Formulae using 
-  (BoolFormula; _∧_; _∨_; ⊤; var; PGFormula; module PGFormula; pgeval)
+  (BoolFormula; _∧_; _∨_; ⊤; var; PGFormula; module PGFormula; pg-eval)
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality using (_≡_)
 import Data.List as List
@@ -22,7 +22,7 @@ Node = V ⊎ (V × V)
 Lit = Node × BF
 NF = List Lit
 
-module WithOrder {_<_ : V → V → Set} (ASTO : IsStrictTotalOrder _≡_ _<_) where
+module WithOrder {_<_ : V → V → Set} (A-STO : IsStrictTotalOrder _≡_ _<_) where
 
   module Semantics where
    open PGFormula
@@ -73,7 +73,7 @@ module WithOrder {_<_ : V → V → Set} (ASTO : IsStrictTotalOrder _≡_ _<_) w
   addCondition = mapConditions ∘ _∧_
 
   normalize : PG → NF
-  normalize = pgeval
+  normalize = pg-eval
                 _+_
                 _⇾_
                 []
