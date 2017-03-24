@@ -61,7 +61,6 @@ module WithBV {V : Set} where
  ≈-is-equivalence = is-eq-by-closure isEquivalence
 
  open import PG.Eq
- open import Data.Product
 
  pgformula-is-graph : IsGraph (equality _≈_) formula-graph-ops
  pgformula-is-graph = record {

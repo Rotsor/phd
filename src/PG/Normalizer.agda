@@ -21,55 +21,51 @@ Node = V ⊎ (V × V)
 Lit = Node
 NF = List Lit
 
-module WithOrder {_<_ : V → V → Set} (A-STO : IsStrictTotalOrder _≡_ _<_) where
+module Semantics where
+ open PGFormula
 
-  module Semantics where
-   open PGFormula
+ fromNode : Node → PG
+ fromNode (inj₁ x) = var x
+ fromNode (inj₂ (x , y)) = var x ⇾ var y
 
-   fromNode : Node → PG
-   fromNode (inj₁ x) = var x
-   fromNode (inj₂ (x , y)) = var x ⇾ var y
+ fromLit : Lit → PG
+ fromLit node = fromNode node
 
-   fromLit : Lit → PG
-   fromLit node = fromNode node
+ fromNF : NF → PG
+ fromNF = foldr _+_ ε ∘ map fromLit
+open Semantics public
 
-   fromNF : NF → PG
-   fromNF = foldr _+_ ε ∘ map fromLit
-  open Semantics public
+open import Category.Monad
+open RawMonad (List.monad {₀})
 
-  open import Category.Monad
-  open RawMonad (List.monad {₀})
+_+_ : NF → NF → NF
+a + b = a ++ b
 
-  _+_ : NF → NF → NF
-  a + b = a ++ b
+vertices : Node → List V
+vertices (inj₁ x) = x ∷ []
+vertices (inj₂ (x , y)) = x ∷ y ∷ []
 
-  vertices : Node → List V
-  vertices (inj₁ x) = x ∷ []
-  vertices (inj₂ (x , y)) = x ∷ y ∷ []
-  
-  newArrows : Node → Node → List Node
-  newArrows p q = map inj₂ (vertices p ⊗ vertices q)
-  
-  _⇾₁_ : Lit → Lit → List Lit
-  p ⇾₁ q = 
-    p ∷ q ∷ newArrows p q
+newArrows : Node → Node → List Node
+newArrows p q = map inj₂ (vertices p ⊗ vertices q)
 
-  _⇾ʳ_ : Lit → NF → NF
-  lit ⇾ʳ [] = lit ∷ []
-  lit ⇾ʳ (x ∷ xs) = (lit ⇾₁ x) + (lit ⇾ʳ xs)
+_⇾₁_ : Lit → Lit → List Lit
+p ⇾₁ q = 
+  p ∷ q ∷ newArrows p q
 
-  _⇾_ : NF → NF → NF
-  [] ⇾ b = b
-  (h ∷ t) ⇾ b = (h ⇾ʳ b) + (t ⇾ b)
+_⇾ʳ_ : Lit → NF → NF
+lit ⇾ʳ [] = lit ∷ []
+lit ⇾ʳ (x ∷ xs) = (lit ⇾₁ x) + (lit ⇾ʳ xs)
 
-  fromVar : V → NF
-  fromVar x = (inj₁ x) ∷ []
+_⇾_ : NF → NF → NF
+[] ⇾ b = b
+(h ∷ t) ⇾ b = (h ⇾ʳ b) + (t ⇾ b)
 
-  normalize : PG → NF
-  normalize = pg-eval
-                _+_
-                _⇾_
-                []
-                fromVar
+fromVar : V → NF
+fromVar x = (inj₁ x) ∷ []
 
-
+normalize : PG → NF
+normalize = pg-eval
+              _+_
+              _⇾_
+              []
+              fromVar
