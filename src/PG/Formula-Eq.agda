@@ -3,16 +3,15 @@ module PG.Formula-Eq where
 
 open import PG.Formulae
 open import PG.GraphAlgebra
-open import PG.PGAlgebra
 open import Function
 
-pg-eval' : ∀ {B V G : Set} → (V → G) → PGOps B G → PGFormula B V → G
-pg-eval' f ops = pg-eval Ops._+_ Ops._⇾_ Ops.ε f Ops.[_]_ where
-  module Ops = PGOps ops
+pg-eval' : ∀ {V G : Set} → (V → G) → GraphOps G → PGFormula V → G
+pg-eval' f ops = pg-eval Ops._+_ Ops._⇾_ Ops.ε f where
+  module Ops = GraphOps ops
 
-_≈ˢ_ : ∀ {B V : Set} → PGFormula B V → PGFormula B V → Set₁
-_≈ˢ_ {B} {V} f1 f2 = ∀ {G : Set} → (pg-algebra : PG B G) → (f : V → G)
-    → let open PG pg-algebra in pg-eval' f pg-ops f1 ≈ pg-eval' f pg-ops f2
+_≈ˢ_ : ∀ {B V : Set} → PGFormula V → PGFormula V → Set₁
+_≈ˢ_ {B} {V} f1 f2 = ∀ {G : Set} → (pg-algebra : Graph G) → (f : V → G)
+    → let open Graph pg-algebra in pg-eval' f ops f1 ≈ pg-eval' f ops f2
 
 module EQC where
  data EquivClosure {X : Set} (_~_ : X → X → Set) : X → X → Set where
@@ -24,41 +23,17 @@ open EQC
 open EQC public using(EquivClosure; module EquivClosure)
 
 
-formula-graph-ops : ∀ {B V : Set} → GraphOps (PGFormula B V)
+formula-graph-ops : ∀ {V : Set} → GraphOps (PGFormula V)
 formula-graph-ops = record
     { _+_ = _+_
     ; _⇾_ = _⇾_
     ; ε = ε }
 
-formula-ops : {B V : Set} → PGOps B (PGFormula B V)
-formula-ops = record
-  { graph-ops = formula-graph-ops
-  ; [_]_ = [_]_ }
-
-module WithBV {B : Set} {V : Set} where
+module WithBV {V : Set} where
 
  infix 3 _≈_
- infix 3 _B≈_
 
- data _B≈_ : BoolFormula B → BoolFormula B → Set where
-
-  isEquivalence : ∀ {a b} → EquivClosure _B≈_ a b → a B≈ b
-  ∧-cong : ∀ {p q r s} → p B≈ r → q B≈ s → p ∧ q B≈ r ∧ s
-  ∨-cong : ∀ {p q r s} → p B≈ r → q B≈ s → p ∨ q B≈ r ∨ s
-  ¬-cong : ∀ {p q} → p B≈ q → ¬ p B≈ ¬ q
-
-  ∨-complementʳ : ∀ {x} → x ∨ ¬ x B≈ ⊤
-  ∧-complementʳ : ∀ {x} → x ∧ ¬ x B≈ ⊥
-
-  ∨-comm : ∀ {x y} → x ∨ y B≈ y ∨ x
-  ∨-assoc : ∀ {x y z} → (x ∨ y) ∨ z B≈ x ∨ (y ∨ z)
-  ∧-comm : ∀ {x y} → x ∧ y B≈ y ∧ x
-  ∧-assoc : ∀ {x y z} → (x ∧ y) ∧ z B≈ x ∧ (y ∧ z)
-  ∨-absorbs-∧ : ∀ {x y} → x ∨ (x ∧ y) B≈ x
-  ∧-absorbs-∨ : ∀ {x y} → x ∧ (x ∨ y) B≈ x
-  ∨-distributes : ∀ {x y z} → (y ∧ z) ∨ x B≈ (y ∨ x) ∧ (z ∨ x)
-
- data _≈_ : PGFormula (BoolFormula B) V → PGFormula (BoolFormula B) V → Set where
+ data _≈_ : PGFormula V → PGFormula V → Set where
   isEquivalence : ∀ {a b} → EquivClosure _≈_ a b → a ≈ b
   +-cong : ∀ {p q r s} → p ≈ r → q ≈ s → p + q ≈ r + s
   ⇾-cong : ∀ {p q r s} → p ≈ r → q ≈ s → p ⇾ q ≈ r ⇾ s
@@ -71,17 +46,6 @@ module WithBV {B : Set} {V : Set} where
   distribˡ : ∀ {p q r} → p ⇾ (q + r) ≈ p ⇾ q + p ⇾ r
   distribʳ : ∀ {p q r} → (p + q) ⇾ r ≈ p ⇾ r + q ⇾ r
   decomposition : ∀ {p q r} → p ⇾ q ⇾ r ≈ p ⇾ q + p ⇾ r + q ⇾ r
-
-  cond-cong : ∀ {f g p q} → f B≈ g → p ≈ q → [ f ] p ≈ [ g ] q
-
-  true-condition : ∀ {x} → [ ⊤ ] x ≈ x
-  false-condition : ∀ {x} → [ ⊥ ] x ≈ ε
-  or-condition : ∀ {f g x} → [ f ∨ g ] x ≈ [ f ] x + [ g ] x
-  and-condition : ∀ {f g x} → [ f ∧ g ] x ≈ [ f ] [ g ] x
-
-  conditional-+ : ∀ {f x y} → [ f ] (x + y) ≈ [ f ] x + [ f ] y
-  conditional-⇾ : ∀ {f x y} → [ f ] (x ⇾ y) ≈ [ f ] x ⇾ [ f ] y
-  conditional-ε : ∀ {f} → [ f ] ε ≈ ε
 
  open import Relation.Binary
 
@@ -96,36 +60,8 @@ module WithBV {B : Set} {V : Set} where
  ≈-is-equivalence : IsEquivalence _≈_
  ≈-is-equivalence = is-eq-by-closure isEquivalence
 
- B≈-is-equivalence : IsEquivalence _B≈_
- B≈-is-equivalence = is-eq-by-closure isEquivalence
-
- bool-formula-ops : ∀ {B : Set} → BoolOps (BoolFormula B)
- bool-formula-ops = record
-   { _∨_ = _∨_
-   ; _∧_ = _∧_
-   ; ¬ = ¬_
-   ; ⊤ = ⊤
-   ; ⊥ = ⊥ }
  open import PG.Eq
  open import Data.Product
-
- bool-formula-is-bool-alg : IsBoolAlg (equality _B≈_) bool-formula-ops
- bool-formula-is-bool-alg = record
-   { isDistributiveLattice = record { 
-       isLattice = record {
-         isEquivalence = B≈-is-equivalence;
-         ∨-comm = λ x y → ∨-comm;
-         ∨-assoc = λ x y z → ∨-assoc;
-         ∨-cong = ∨-cong;
-         ∧-comm = λ x y → ∧-comm;
-         ∧-assoc = λ x y z → ∧-assoc;
-         ∧-cong = ∧-cong;
-         absorptive = (λ x y → ∨-absorbs-∧) , (λ x y → ∧-absorbs-∨) };
-       ∨-∧-distribʳ = λ x y z → ∨-distributes }
-   ; ∨-complementʳ = λ x → ∨-complementʳ
-   ; ∧-complementʳ = λ x → ∧-complementʳ
-   ; ¬-cong = ¬-cong
-   }
 
  pgformula-is-graph : IsGraph (equality _≈_) formula-graph-ops
  pgformula-is-graph = record {
@@ -141,15 +77,5 @@ module WithBV {B : Set} {V : Set} where
                         distribʳ = distribʳ;
                         decomposition = decomposition }
 
- pgformula-is-pg : IsPG (equality _B≈_) (equality _≈_) formula-ops bool-formula-ops
- pgformula-is-pg = record {
-                     is-graph = pgformula-is-graph;
-                     is-bool = bool-formula-is-bool-alg;
-                     cond-cong = λ l r → cond-cong l r;
-                     true-condition = λ x → true-condition;
-                     false-condition = λ x → false-condition;
-                     and-condition = λ f g x → and-condition;
-                     or-condition = λ f g x → or-condition;
-                     conditional-+ = λ f x y → conditional-+;
-                     conditional-⇾ = λ f x y → conditional-⇾ }
-
+ pgformula-is-pg : IsGraph (equality _≈_) formula-graph-ops
+ pgformula-is-pg = pgformula-is-graph
