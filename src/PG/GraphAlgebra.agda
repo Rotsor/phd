@@ -23,21 +23,21 @@ module GraphTheory {V : Set} where
   +-cong₂ : {p q r : P} → q ≈ r → p + q ≈ p + r
   +-cong₂ q≈r = refl ⟨ +-cong ⟩ q≈r
 
-  ⇾-cong₂ : {p q r : P} → q ≈ r → p ⇾ q ≈ p ⇾ r
-  ⇾-cong₂ q≈r = refl ⟨ ⇾-cong ⟩ q≈r
+  *-cong₂ : {p q r : P} → q ≈ r → p * q ≈ p * r
+  *-cong₂ q≈r = refl ⟨ *-cong ⟩ q≈r
 
-  ⇾-cong₁ : {p q r : P} → p ≈ r → p ⇾ q ≈ r ⇾ q
-  ⇾-cong₁ p≈r = p≈r ⟨ ⇾-cong ⟩ refl
+  *-cong₁ : {p q r : P} → p ≈ r → p * q ≈ r * q
+  *-cong₁ p≈r = p≈r ⟨ *-cong ⟩ refl
 
   r-deco : ∀ {a} → a + a + ε ≈ a
   r-deco {a} =
    begin
     a + a + ε
-     ≈⟨ sym (⇾-identityʳ ⟨ +-cong ⟩ ⇾-identityʳ ⟨ +-cong ⟩ ⇾-identityʳ) ⟩
-    a ⇾ ε + a ⇾ ε + ε ⇾ ε
+     ≈⟨ sym (*-identityʳ ⟨ +-cong ⟩ *-identityʳ ⟨ +-cong ⟩ *-identityʳ) ⟩
+    a * ε + a * ε + ε * ε
      ≈⟨ sym decomposition ⟩
-    a ⇾ ε ⇾ ε
-     ≈⟨ ⇾-identityʳ ≈≈≈ ⇾-identityʳ ⟩
+    a * ε * ε
+     ≈⟨ *-identityʳ ≈≈≈ *-identityʳ ⟩
     a
    ∎
 
@@ -63,42 +63,42 @@ module GraphTheory {V : Set} where
   idempotence : ∀ {p} → p + p ≈ p
   idempotence {p} = sym +-identityʳ ≈≈≈ r-deco
 
-  absorption : ∀ {a b : P} → a ⇾ b + a + b ≈ a ⇾ b
+  absorption : ∀ {a b : P} → a * b + a + b ≈ a * b
   absorption {a} {b} =
    begin
-    a ⇾ b + a + b
-     ≈⟨ sym (refl ⟨ +-cong ⟩ ⇾-identityʳ ⟨ +-cong ⟩  ⇾-identityʳ) ⟩
-    (a ⇾ b) + (a ⇾ ε) + (b ⇾ ε)
+    a * b + a + b
+     ≈⟨ sym (refl ⟨ +-cong ⟩ *-identityʳ ⟨ +-cong ⟩  *-identityʳ) ⟩
+    (a * b) + (a * ε) + (b * ε)
      ≈⟨ sym decomposition ⟩
-    a ⇾ b ⇾ ε
-     ≈⟨ ⇾-identityʳ ⟩
-    a ⇾ b
+    a * b * ε
+     ≈⟨ *-identityʳ ⟩
+    a * b
    ∎
 
-  absorptionˡ : {p q : P} → p ⇾ q + p ≈ p ⇾ q
+  absorptionˡ : {p q : P} → p * q + p ≈ p * q
   absorptionˡ {p} {q} =
    begin
-    p ⇾ q + p
+    p * q + p
      ≈⟨ +-cong₁ (sym absorption) ⟩
-    p ⇾ q + p + q + p
+    p * q + p + q + p
      ≈⟨ +-assoc ≈≈≈ +-cong₂ +-comm ≈≈≈ (sym +-assoc ≈≈≈ +-cong₁ +-assoc)  ⟩
-    p ⇾ q + (p + p) + q
+    p * q + (p + p) + q
      ≈⟨ +-cong₁ (+-cong₂ idempotence) ⟩
-    p ⇾ q + p + q
+    p * q + p + q
      ≈⟨ absorption ⟩
-    p ⇾ q
+    p * q
    ∎
 
-  absorptionʳ : ∀ {p} {q} → p ⇾ q + q ≈ p ⇾ q
+  absorptionʳ : ∀ {p} {q} → p * q + q ≈ p * q
   absorptionʳ {p} {q} =
    begin
-    p ⇾ q + q
+    p * q + q
      ≈⟨ +-cong₁ (sym absorption) ⟩
-    p ⇾ q + p + q + q
+    p * q + p + q + q
      ≈⟨ +-assoc ⟩
-    p ⇾ q + p + (q + q)
+    p * q + p + (q + q)
      ≈⟨ +-cong₂ idempotence ⟩
-    p ⇾ q + p + q
+    p * q + p + q
      ≈⟨ absorption ⟩
-    p ⇾ q
+    p * q
    ∎

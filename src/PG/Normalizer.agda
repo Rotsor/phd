@@ -19,7 +19,7 @@ module Semantics where
 
  fromLiteral : Literal → PG
  fromLiteral (vertex x) = var x
- fromLiteral (edge x y) = var x ⇾ var y
+ fromLiteral (edge x y) = var x * var y
 
  fromNF : NF → PG
  fromNF nf = foldr _+_ ε (map fromLiteral nf)
@@ -36,17 +36,17 @@ newArrows : Literal → Literal → List Literal
 newArrows p q =
   List.concatMap (λ v1 → List.map (λ v2 → edge v1 v2) (vertices q)) (vertices p)
 
-_⇾₁_ : Literal → Literal → List Literal
-p ⇾₁ q = 
+_*₁_ : Literal → Literal → List Literal
+p *₁ q = 
   p ∷ q ∷ newArrows p q
 
-_⇾ʳ_ : Literal → NF → NF
-lit ⇾ʳ [] = lit ∷ []
-lit ⇾ʳ (x ∷ xs) = (lit ⇾₁ x) + (lit ⇾ʳ xs)
+_*ʳ_ : Literal → NF → NF
+lit *ʳ [] = lit ∷ []
+lit *ʳ (x ∷ xs) = (lit *₁ x) + (lit *ʳ xs)
 
-_⇾_ : NF → NF → NF
-[] ⇾ b = b
-(h ∷ t) ⇾ b = (h ⇾ʳ b) + (t ⇾ b)
+_*_ : NF → NF → NF
+[] * b = b
+(h ∷ t) * b = (h *ʳ b) + (t * b)
 
 fromVar : V → NF
 fromVar x = vertex x ∷ []
@@ -54,6 +54,6 @@ fromVar x = vertex x ∷ []
 normalize : PG → NF
 normalize = pg-eval
               _+_
-              _⇾_
+              _*_
               []
               fromVar

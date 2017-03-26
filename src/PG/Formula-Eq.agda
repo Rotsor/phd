@@ -13,16 +13,16 @@ module _ {V : Set} where
   sym : ∀ {p q} → p ≈ q → _≈_ q p
   
   +-cong : ∀ {p q r s} → p ≈ r → q ≈ s → p + q ≈ r + s
-  ⇾-cong : ∀ {p q r s} → p ≈ r → q ≈ s → p ⇾ q ≈ r ⇾ s
+  *-cong : ∀ {p q r s} → p ≈ r → q ≈ s → p * q ≈ r * s
 
   +-assoc : ∀ {p q r} → (p + q) + r ≈ p + (q + r)
   +-comm : ∀ {p q} → p + q ≈ q + p
-  ⇾-assoc : ∀ {p q r} → (p ⇾ q) ⇾ r ≈ p ⇾ (q ⇾ r)
-  ⇾-identityˡ : ∀ {p} → ε ⇾ p ≈ p
-  ⇾-identityʳ : ∀ {p} → p ⇾ ε ≈ p
-  distribˡ : ∀ {p q r} → p ⇾ (q + r) ≈ p ⇾ q + p ⇾ r
-  distribʳ : ∀ {p q r} → (p + q) ⇾ r ≈ p ⇾ r + q ⇾ r
-  decomposition : ∀ {p q r} → p ⇾ q ⇾ r ≈ p ⇾ q + p ⇾ r + q ⇾ r
+  *-assoc : ∀ {p q r} → (p * q) * r ≈ p * (q * r)
+  *-identityˡ : ∀ {p} → ε * p ≈ p
+  *-identityʳ : ∀ {p} → p * ε ≈ p
+  distribˡ : ∀ {p q r} → p * (q + r) ≈ p * q + p * r
+  distribʳ : ∀ {p q r} → (p + q) * r ≈ p * r + q * r
+  decomposition : ∀ {p q r} → p * q * r ≈ p * q + p * r + q * r
 
  open import PG.Eq
 
