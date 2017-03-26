@@ -37,3 +37,11 @@ module _ {V : Set} where
      refl = refl
    }
   }
+
+ left : {op : WhichBinOp} → ∀ {a b c} → a ≈ b → bin-op op a c ≈ bin-op op b c
+ left {plus} eq = +-cong eq refl
+ left {mult} eq = *-cong eq refl
+
+ right : {op : WhichBinOp} → ∀ {a b c} → a ≈ b → bin-op op c a ≈ bin-op op c b
+ right {plus} eq = +-cong refl eq
+ right {mult} eq = *-cong refl eq

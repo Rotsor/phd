@@ -24,3 +24,11 @@ pg-eval {A} {G} _+ˢ_ _*ˢ_ εˢ varˢ = go where
   go (x * y) = go x *ˢ go y
   go ε = εˢ
   go (var a) = varˢ a
+
+
+data WhichBinOp : Set where
+  plus mult : WhichBinOp
+
+bin-op : {V : Set} → (op : WhichBinOp) → Graph-formula V → Graph-formula V → Graph-formula V
+bin-op plus a b = a + b
+bin-op mult a b = a * b

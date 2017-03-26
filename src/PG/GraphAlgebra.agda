@@ -17,18 +17,6 @@ module GraphTheory {V : Set} where
 
   infixl 8 _≈≈≈_
 
-  +-cong₁ : {p q r : P} → p ≈ r → p + q ≈ r + q
-  +-cong₁ p≈r = p≈r ⟨ +-cong ⟩ refl
-
-  +-cong₂ : {p q r : P} → q ≈ r → p + q ≈ p + r
-  +-cong₂ q≈r = refl ⟨ +-cong ⟩ q≈r
-
-  *-cong₂ : {p q r : P} → q ≈ r → p * q ≈ p * r
-  *-cong₂ q≈r = refl ⟨ *-cong ⟩ q≈r
-
-  *-cong₁ : {p q r : P} → p ≈ r → p * q ≈ r * q
-  *-cong₁ p≈r = p≈r ⟨ *-cong ⟩ refl
-
   r-deco : ∀ {a} → a + a + ε ≈ a
   r-deco {a} =
    begin
@@ -47,11 +35,11 @@ module GraphTheory {V : Set} where
     a + ε
      ≈⟨ sym r-deco ⟩
     (a + ε) + (a + ε) + ε
-     ≈⟨ +-cong₁ 
-        (+-assoc ≈≈≈ (+-cong₂ (+-comm ≈≈≈ +-assoc) ≈≈≈ sym +-assoc)) 
+     ≈⟨ left 
+        (+-assoc ≈≈≈ (right (+-comm ≈≈≈ +-assoc) ≈≈≈ sym +-assoc)) 
         ≈≈≈ +-assoc ⟩
     a + a + (ε + ε + ε)
-     ≈⟨ +-cong₂ r-deco ⟩
+     ≈⟨ right r-deco ⟩
     a + a + ε 
      ≈⟨ r-deco ⟩
     a
@@ -79,11 +67,11 @@ module GraphTheory {V : Set} where
   absorptionˡ {p} {q} =
    begin
     p * q + p
-     ≈⟨ +-cong₁ (sym absorption) ⟩
+     ≈⟨ left (sym absorption) ⟩
     p * q + p + q + p
-     ≈⟨ +-assoc ≈≈≈ +-cong₂ +-comm ≈≈≈ (sym +-assoc ≈≈≈ +-cong₁ +-assoc)  ⟩
+     ≈⟨ +-assoc ≈≈≈ right +-comm ≈≈≈ (sym +-assoc ≈≈≈ left +-assoc)  ⟩
     p * q + (p + p) + q
-     ≈⟨ +-cong₁ (+-cong₂ idempotence) ⟩
+     ≈⟨ left (right idempotence) ⟩
     p * q + p + q
      ≈⟨ absorption ⟩
     p * q
@@ -93,11 +81,11 @@ module GraphTheory {V : Set} where
   absorptionʳ {p} {q} =
    begin
     p * q + q
-     ≈⟨ +-cong₁ (sym absorption) ⟩
+     ≈⟨ left (sym absorption) ⟩
     p * q + p + q + q
      ≈⟨ +-assoc ⟩
     p * q + p + (q + q)
-     ≈⟨ +-cong₂ idempotence ⟩
+     ≈⟨ right idempotence ⟩
     p * q + p + q
      ≈⟨ absorption ⟩
     p * q
