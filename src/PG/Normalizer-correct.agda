@@ -1,58 +1,52 @@
 module PG.Normalizer-correct (A : Set) where
 
-open import Relation.Binary
-open import PG.Formulae
+open import PG.Formula
 
 open import PG.Formula-Eq
 import PG.Normalizer renaming (_+_ to _+'_; _⇾_ to _⇾'_)
 open PG.Normalizer A
-import Data.List as List
+import PG.List as List
 open List using ([]; _∷_; foldr; map)
-open import Function
-open WithBV {A}
+open import PG.Function
 
 import PG.GraphAlgebra as Alg
-module GT = Alg.GraphTheory (record {isGraph = pgformula-is-graph})
-open IsEquivalence ≈-is-equivalence
-import Relation.Binary.EqReasoning as EqR
-open EqR record { isEquivalence = ≈-is-equivalence }
+module GT = Alg.GraphTheory
+import PG.Reasoning
+open PG.Reasoning (graph-formula-equivalence {A})
 
-open import Algebra.Structures
+G = PG.Formula.Graph-formula A
 
-open import Data.Product using (_,_; proj₁; proj₂)
-open import Data.Sum using (inj₁; inj₂)
-
-absorption : ∀ {x y} → x + y + x ⇾ y ≈ x ⇾ y
+absorption : ∀ {x y : G} → x + y + x ⇾ y ≈ x ⇾ y
 absorption = +-comm ⟨ trans ⟩ (sym +-assoc ⟨ trans ⟩ GT.absorption)
 
 +-correct' : ∀ x y → fromNF x + fromNF y ≈ fromNF (x +' y)
 +-correct' [] y = GT.+-identityˡ -- (fromNF y)
 +-correct' (x ∷ xs) y = +-assoc ⟨ trans ⟩ +-cong refl (+-correct' xs y)
 
-sumNodes = foldr _+_ ε ∘ map fromNode
+sumNodes = λ x → foldr _+_ ε (map fromLiteral x)
 
-absorptionˡ : ∀ {x y} → x + x ⇾ y ≈ x ⇾ y
+absorptionˡ : ∀ {x y : G} → x + x ⇾ y ≈ x ⇾ y
 absorptionˡ = +-comm ⟨ trans ⟩ GT.absorptionˡ 
 
-absorptionʳ : ∀ {x y} → y + x ⇾ y ≈ x ⇾ y
+absorptionʳ : ∀ {x y : G} → y + x ⇾ y ≈ x ⇾ y
 absorptionʳ = +-comm ⟨ trans ⟩ GT.absorptionʳ
 
-newArrows-good : ∀ x y → fromNode x ⇾ fromNode y 
-    ≈ fromNode x + fromNode y + sumNodes (newArrows x y)
-newArrows-good (inj₁ x) (inj₁ y) = 
+newArrows-good : ∀ x y → fromLiteral x ⇾ fromLiteral y 
+    ≈ fromLiteral x + fromLiteral y + sumNodes (newArrows x y)
+newArrows-good (vertex x) (vertex y) = 
   sym (+-cong refl GT.+-identityʳ ⟨ trans ⟩ absorption)
-newArrows-good (inj₁ x) (inj₂ (y₁ , y₂)) =  
+newArrows-good (vertex x) (edge y₁ y₂) =  
   sym (+-cong +-comm (+-cong refl GT.+-identityʳ) 
   ⟨ trans ⟩ (+-assoc ⟨ trans ⟩ +-comm ⟨ trans ⟩ 
     +-cong (sym +-assoc ⟨ trans ⟩ +-cong absorptionˡ refl) refl) 
   ⟨ trans ⟩ sym decomposition 
   ⟨ trans ⟩ ⇾-assoc)
-newArrows-good (inj₂ (x₁ , x₂)) (inj₁ y) = 
+newArrows-good (edge x₁ x₂) (vertex y) = 
   sym (+-assoc ⟨ trans ⟩ 
     +-cong refl (sym +-assoc ⟨ trans ⟩ +-cong absorptionʳ GT.+-identityʳ) 
   ⟨ trans ⟩ sym +-assoc ⟨ trans ⟩ 
   sym decomposition)
-newArrows-good (inj₂ (x₁ , x₂)) (inj₂ (y₁ , y₂)) = 
+newArrows-good (edge x₁ x₂) (edge y₁ y₂) = 
   sym(+-assoc ⟨ trans ⟩ +-cong refl
    (+-cong (sym GT.idempotence) (+-cong refl (+-cong refl 
       (+-cong refl GT.+-identityʳ)) ⟨ trans ⟩ sym +-assoc ⟨ trans ⟩ +-comm)
@@ -66,19 +60,19 @@ newArrows-good (inj₂ (x₁ , x₂)) (inj₂ (y₁ , y₂)) =
          ⟨ trans ⟩ sym +-assoc 
          ⟨ trans ⟩ sym decomposition)
 
-⇾₁-preserves : ∀ x y → fromLit x ⇾ fromLit y ≈ fromNF (x ⇾₁ y)
+⇾₁-preserves : ∀ x y → fromLiteral x ⇾ fromLiteral y ≈ fromNF (x ⇾₁ y)
 ⇾₁-preserves x y =
  begin
-  fromLit x ⇾ fromLit y
+  fromLiteral x ⇾ fromLiteral y
    ≈⟨ newArrows-good x y ⟩
-  fromLit x + fromLit y + sumNodes (newArrows x y)
+  fromLiteral x + fromLiteral y + sumNodes (newArrows x y)
    ≈⟨ +-assoc ⟩
   fromNF (x ∷ y ∷ (newArrows x y))
    ≈⟨ refl ⟩
   fromNF (x ⇾₁ y)
  ∎
 
-⇾ʳ-preserves : ∀ x y → fromLit x ⇾ fromNF y ≈ fromNF (x ⇾ʳ y)
+⇾ʳ-preserves : ∀ x y → fromLiteral x ⇾ fromNF y ≈ fromNF (x ⇾ʳ y)
 ⇾ʳ-preserves x [] = ⇾-identityʳ ⟨ trans ⟩ sym GT.+-identityʳ
 ⇾ʳ-preserves x (y ∷ ys) = 
   distribˡ ⟨ trans ⟩ +-cong (⇾₁-preserves x y) (⇾ʳ-preserves x ys) 

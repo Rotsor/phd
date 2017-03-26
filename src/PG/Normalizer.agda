@@ -1,58 +1,46 @@
 
 module PG.Normalizer (V : Set) where
 
-open import Data.Empty
-open import Data.Sum using(_⊎_; inj₁; inj₂)
-open import Function using (id; flip; _∘_)
-import Data.Product as Product
-open Product using(_,_; _×_)
-open import Level using () renaming (zero to ₀)
-
-open import PG.Formulae using 
-  (var; PGFormula; module PGFormula; pg-eval)
-open import Relation.Binary
-open import Relation.Binary.PropositionalEquality using (_≡_)
-import Data.List as List
+open import PG.Formula using 
+  (var; Graph-formula; module Graph-formula; pg-eval)
+import PG.List as List
 open List using (foldr; List; concat; _++_; _∷_; []; map)
 
-PG = PGFormula V
+PG = Graph-formula V
 
-Node = V ⊎ (V × V)
-Lit = Node
-NF = List Lit
+data Literal : Set where
+  vertex : V → Literal
+  edge : V → V → Literal
+
+NF = List Literal
 
 module Semantics where
- open PGFormula
+ open Graph-formula
 
- fromNode : Node → PG
- fromNode (inj₁ x) = var x
- fromNode (inj₂ (x , y)) = var x ⇾ var y
-
- fromLit : Lit → PG
- fromLit node = fromNode node
+ fromLiteral : Literal → PG
+ fromLiteral (vertex x) = var x
+ fromLiteral (edge x y) = var x ⇾ var y
 
  fromNF : NF → PG
- fromNF = foldr _+_ ε ∘ map fromLit
+ fromNF nf = foldr _+_ ε (map fromLiteral nf)
 open Semantics public
-
-open import Category.Monad
-open RawMonad (List.monad {₀})
 
 _+_ : NF → NF → NF
 a + b = a ++ b
 
-vertices : Node → List V
-vertices (inj₁ x) = x ∷ []
-vertices (inj₂ (x , y)) = x ∷ y ∷ []
+vertices : Literal → List V
+vertices (vertex x) = x ∷ []
+vertices (edge x y) = x ∷ y ∷ []
 
-newArrows : Node → Node → List Node
-newArrows p q = map inj₂ (vertices p ⊗ vertices q)
+newArrows : Literal → Literal → List Literal
+newArrows p q =
+  List.concatMap (λ v1 → List.map (λ v2 → edge v1 v2) (vertices q)) (vertices p)
 
-_⇾₁_ : Lit → Lit → List Lit
+_⇾₁_ : Literal → Literal → List Literal
 p ⇾₁ q = 
   p ∷ q ∷ newArrows p q
 
-_⇾ʳ_ : Lit → NF → NF
+_⇾ʳ_ : Literal → NF → NF
 lit ⇾ʳ [] = lit ∷ []
 lit ⇾ʳ (x ∷ xs) = (lit ⇾₁ x) + (lit ⇾ʳ xs)
 
@@ -61,7 +49,7 @@ _⇾_ : NF → NF → NF
 (h ∷ t) ⇾ b = (h ⇾ʳ b) + (t ⇾ b)
 
 fromVar : V → NF
-fromVar x = (inj₁ x) ∷ []
+fromVar x = vertex x ∷ []
 
 normalize : PG → NF
 normalize = pg-eval
