@@ -17,15 +17,61 @@ module GraphTheory {V : Set} where
 
   infixl 8 _≈≈≈_
 
+  rotate-plus : ∀ {a b c} → a + b + c ≈ b + c + a
+  rotate-plus {a} {b} {c} =
+   begin
+    (a + b) + c
+     ≈⟨ +-assoc ⟩
+    a + (b + c)
+     ≈⟨ +-comm ⟩
+    (b + c) + a
+   ∎
+
+  rotate-triangle : ∀ {p q r} → (p * q) * r ≈ (q * r) * p
+  rotate-triangle {p} {q} {r} =
+   begin
+    (p * q) * r
+     ≈⟨ decomposition ⟩
+    p * q + q * r + r * p
+     ≈⟨ rotate-plus {p * q} {q * r} {r * p} ⟩
+    q * r + r * p + p * q
+     ≈⟨ sym decomposition ⟩
+    (q * r) * p
+   ∎
+
+  *-identityʳ : ∀ {r} → r * ε ≈ r
+  *-identityʳ {r} = sym (
+   begin
+    r
+     ≈⟨ sym (trans (*-cong *-identityˡ refl) *-identityˡ) ⟩
+    (ε * ε) * r
+     ≈⟨ rotate-triangle ⟩
+    (ε * r) * ε
+     ≈⟨ *-cong *-identityˡ refl ⟩
+    r * ε
+   ∎)
+
+  *-comm : ∀ {p q} → p * q ≈ q * p
+  *-comm {p} {q} =
+   begin
+    p * q
+     ≈⟨ sym *-identityʳ ⟩
+    p * q * ε
+     ≈⟨ rotate-triangle ⟩
+    q * ε * p
+     ≈⟨ *-cong *-identityʳ refl ⟩
+    q * p
+   ∎
+
   r-deco : ∀ {a} → a + a + ε ≈ a
   r-deco {a} =
    begin
     a + a + ε
-     ≈⟨ sym (*-identityʳ ⟨ +-cong ⟩ *-identityʳ ⟨ +-cong ⟩ *-identityʳ) ⟩
-    a * ε + a * ε + ε * ε
+     ≈⟨ sym (*-identityˡ ⟨ +-cong ⟩ *-identityʳ ⟨ +-cong ⟩ *-identityʳ) ⟩
+    ε * a  + a * ε + ε * ε
      ≈⟨ sym decomposition ⟩
-    a * ε * ε
-     ≈⟨ *-identityʳ ≈≈≈ *-identityʳ ⟩
+    ε * a * ε
+     ≈⟨ *-identityʳ ≈≈≈ *-identityˡ ⟩
     a
    ∎
 
@@ -55,8 +101,12 @@ module GraphTheory {V : Set} where
   absorption {a} {b} =
    begin
     a * b + a + b
-     ≈⟨ sym (refl ⟨ +-cong ⟩ *-identityʳ ⟨ +-cong ⟩  *-identityʳ) ⟩
-    (a * b) + (a * ε) + (b * ε)
+     ≈⟨ trans +-assoc (+-cong refl +-comm) ⟩
+    a * b + (b + a)
+     ≈⟨ sym +-assoc ⟩
+    a * b + b + a
+     ≈⟨ sym (refl ⟨ +-cong ⟩ *-identityʳ ⟨ +-cong ⟩  *-identityˡ) ⟩
+    (a * b) + (b * ε) + (ε * a)
      ≈⟨ sym decomposition ⟩
     a * b * ε
      ≈⟨ *-identityʳ ⟩
@@ -90,3 +140,34 @@ module GraphTheory {V : Set} where
      ≈⟨ absorption ⟩
     p * q
    ∎
+
+  *-assoc : ∀ {p q r} → (p * q) * r ≈ p * (q * r)
+  *-assoc {p} {q} {r} =
+   begin
+    (p * q) * r
+     ≈⟨ rotate-triangle ⟩
+    (q * r) * p
+     ≈⟨ *-comm ⟩
+    p * (q * r)
+   ∎
+
+  distribʳ : ∀ {p q r} → (q + r) * p ≈ (q * p) + (r * p)
+  distribʳ =
+    *-comm
+    ≈≈≈ 
+    distribˡ
+    ≈≈≈
+    +-cong *-comm *-comm
+
+  decomposition-old : ∀ {p q r} → p * q * r ≈ p * q + p * r + q * r
+  decomposition-old {p} {q} {r} =
+    decomposition ≈≈≈
+    (begin
+     p * q + q * r + r * p
+      ≈⟨ +-assoc ⟩
+     p * q + (q * r + r * p)
+      ≈⟨ +-cong refl (+-comm ≈≈≈ +-cong *-comm refl) ⟩
+     p * q + (p * r + q * r)
+      ≈⟨ sym +-assoc ⟩
+     p * q + p * r + q * r
+    ∎)

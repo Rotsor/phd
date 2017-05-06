@@ -39,13 +39,13 @@ newArrows-good (vertex x) (edge y₁ y₂) =
   sym (+-cong +-comm (+-cong refl GT.+-identityʳ) 
   ⟨ trans ⟩ (+-assoc ⟨ trans ⟩ +-comm ⟨ trans ⟩ 
     +-cong (sym +-assoc ⟨ trans ⟩ +-cong absorptionˡ refl) refl) 
-  ⟨ trans ⟩ sym decomposition 
-  ⟨ trans ⟩ *-assoc)
+  ⟨ trans ⟩ sym GT.decomposition-old 
+  ⟨ trans ⟩ GT.*-assoc)
 newArrows-good (edge x₁ x₂) (vertex y) = 
   sym (+-assoc ⟨ trans ⟩ 
     +-cong refl (sym +-assoc ⟨ trans ⟩ +-cong absorptionʳ GT.+-identityʳ) 
   ⟨ trans ⟩ sym +-assoc ⟨ trans ⟩ 
-  sym decomposition)
+  sym GT.decomposition-old)
 newArrows-good (edge x₁ x₂) (edge y₁ y₂) = 
   sym(+-assoc ⟨ trans ⟩ +-cong refl
    (+-cong (sym GT.idempotence) (+-cong refl (+-cong refl 
@@ -54,11 +54,11 @@ newArrows-good (edge x₁ x₂) (edge y₁ y₂) =
            ⟨ trans ⟩ +-cong (+-assoc ⟨ trans ⟩ +-cong refl +-comm) refl
            ⟨ trans ⟩ +-comm 
            ⟨ trans ⟩ sym +-assoc 
-           ⟨ trans ⟩ +-cong (sym decomposition) (sym decomposition) 
-           ⟨ trans ⟩ +-cong *-assoc *-assoc 
+           ⟨ trans ⟩ +-cong (sym GT.decomposition-old) (sym GT.decomposition-old) 
+           ⟨ trans ⟩ +-cong GT.*-assoc GT.*-assoc 
           )
          ⟨ trans ⟩ sym +-assoc 
-         ⟨ trans ⟩ sym decomposition)
+         ⟨ trans ⟩ sym GT.decomposition-old)
 
 *₁-preserves : ∀ x y → fromLiteral x * fromLiteral y ≈ fromNF (x *₁ y)
 *₁-preserves x y =
@@ -73,7 +73,7 @@ newArrows-good (edge x₁ x₂) (edge y₁ y₂) =
  ∎
 
 *ʳ-preserves : ∀ x y → fromLiteral x * fromNF y ≈ fromNF (x *ʳ y)
-*ʳ-preserves x [] = *-identityʳ ⟨ trans ⟩ sym GT.+-identityʳ
+*ʳ-preserves x [] = GT.*-identityʳ ⟨ trans ⟩ sym GT.+-identityʳ
 *ʳ-preserves x (y ∷ ys) = 
   distribˡ ⟨ trans ⟩ +-cong (*₁-preserves x y) (*ʳ-preserves x ys) 
   ⟨ trans ⟩ +-correct' (x *₁ y) (x *ʳ ys)
@@ -81,7 +81,7 @@ newArrows-good (edge x₁ x₂) (edge y₁ y₂) =
 *-correct' : ∀ x y → fromNF x * fromNF y ≈ fromNF (x *' y)
 *-correct' [] y = *-identityˡ
 *-correct' (x ∷ xs) y = 
-  distribʳ ⟨ trans ⟩ (+-cong (*ʳ-preserves x y) (*-correct' xs y) 
+  GT.distribʳ ⟨ trans ⟩ (+-cong (*ʳ-preserves x y) (*-correct' xs y) 
   ⟨ trans ⟩ +-correct' (x *ʳ y) (xs *' y))
 
 +-correct : ∀ x y → x + y ≈ fromNF (normalize x +' normalize y)
